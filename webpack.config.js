@@ -1,19 +1,49 @@
-const path = require('path');
+const path = require("path");
+const port = process.env.PORT || 3000;
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  mode: "development",
+  entry: "./src/index.js",
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
+  devServer: {
+    host: "localhost",
+    port: port,
+    open: true,
+  },
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: '../src/index.html',
+  //   })
+  // ],
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          "style-loader",
+          "css-loader"],
+        resolve: { extensions: [".js", ".jsx", ".css"] },
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+      { 
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              minimize: true,
+            },
+          },
+        ],
       },
     ],
   },
-
 };
