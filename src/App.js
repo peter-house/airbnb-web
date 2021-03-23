@@ -1,10 +1,12 @@
 import React from 'react';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+  return (
+  <div>
+    Hello, Webpack! test gkgkㄹㄹㄹ
+  </div>
+  );
+};
+
 
 export default App;
