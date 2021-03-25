@@ -1,13 +1,40 @@
 import React from "react";
-import css from "./Banner.css";
+// import css from "./Banner.css";
+import { jsx, css } from "@emotion/react";
+import styled from '@emotion/styled';
+
+const Button = styled.button`
+  color: red;
+`
+
+const BannerBg = styled.div`
+  background-color: black;
+  width: 100%;
+  height: 522px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 122px 0 0;
+`
+const BannerText = styled.div`
+  color: white;
+  font-size: 30px;
+  font-weight: 400;
+  font-family: "BlinkMacSystemFont";
+  padding: 27px 0 32px;
+  
+`
+const BannerImg = styled.img `
+ 
+`
 
 const Banner = () => {
   return (
     <>
-      <div className="banner-bg">
-        <img className="banner-img" srcSet="https://a0.muscache.com/im/pictures/166791ff-bc82-4b88-ba3d-49be1d462dce.jpg?im_w=2560 1x, https://a0.muscache.com/im/pictures/166791ff-bc82-4b88-ba3d-49be1d462dce.jpg?im_w=2560 2x"></img>
-        <div className="banner-text">호스트 분들이 있기에 가능합니다</div>
-      </div>
+      <BannerBg>
+        <BannerImg srcSet="https://a0.muscache.com/im/pictures/166791ff-bc82-4b88-ba3d-49be1d462dce.jpg?im_w=2560 1x, https://a0.muscache.com/im/pictures/166791ff-bc82-4b88-ba3d-49be1d462dce.jpg?im_w=2560 2x"></BannerImg>
+        <BannerText>호스트 분들이 있기에 가능합니다</BannerText>
+      </BannerBg>
     </>
   );
 };
