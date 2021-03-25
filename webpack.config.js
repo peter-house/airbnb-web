@@ -1,6 +1,6 @@
 const path = require("path");
 const port = process.env.PORT || 3000;
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -10,15 +10,15 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {
-    host: "localhost",
+    // contentBase: path.join(__dirname, 'dist'),
     port: port,
     open: true,
   },
-  // plugins: [
-  //   new HtmlWebpackPlugin({
-  //     template: '../src/index.html',
-  //   })
-  // ],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+    }),
+  ],
   module: {
     rules: [
       {
@@ -32,17 +32,6 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
-      },
-      { 
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              minimize: true,
-            },
-          },
-        ],
       },
     ],
   },

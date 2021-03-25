@@ -1,9 +1,9 @@
-import React from 'react';
-
+import Banner from './components/Banner';
 const App = () => {
   return (
   <div>
-    Hello, Webpack! test gkgkㄹㄹㄹ
+    <Banner/>sfasf
+    Hello, Webpack!
   </div>
   );
 };
