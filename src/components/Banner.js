@@ -2,10 +2,6 @@ import React from "react";
 import { jsx, css } from "@emotion/react";
 import styled from '@emotion/styled';
 
-const Button = styled.button`
-  color: red;
-`
-
 const BannerBg = styled.div`
   background-color: black;
   width: 100%;
@@ -20,11 +16,7 @@ const BannerText = styled.div`
   font-size: 30px;
   font-weight: 400;
   font-family: "BlinkMacSystemFont";
-  padding: 27px 0 32px;
-  
-`
-const BannerImg = styled.img `
- 
+  padding: 27px 0 32px; 
 `
 
 const Banner = () => {
