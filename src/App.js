@@ -4,8 +4,7 @@ import Banner from './components/Banner';
 const App = () => {
   return (
   <div>
-    <Banner/>sfasf
-    Hello, Webpack!
+    <Banner/>
   </div>
   );
 };
