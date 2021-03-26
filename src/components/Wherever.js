@@ -12,8 +12,6 @@ const WhereverTitle = styled.div`
   font-size: 32px;
 `;
 const WhereverPlacesContainer = styled.div`
-
-
 display: flex;
 `
 
