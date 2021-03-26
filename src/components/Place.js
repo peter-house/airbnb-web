@@ -28,7 +28,8 @@ const PlaceLink = styled.a `
   }
 `
 const NearPlaceTextsContainer =styled.div `
- 
+ display: flex;
+ flex-direction: column;
 `
 
 const Place = () => {

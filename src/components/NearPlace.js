@@ -19,20 +19,13 @@ const PlaceContainer = styled.div`
   align-items: center;
 `;
 const PlacesContainer =styled.ul `
+padding-left: 0px;
 list-style: none;
 display: flex;  
 flex-wrap: wrap;
-
-
 `
 
-
-
-
-
 const NearPlace = () => {
-
-
   return (
       <NearPlaceBg>
         <NearPlaceTitle>가까운 여행지 둘러보기</NearPlaceTitle>
@@ -42,5 +35,4 @@ const NearPlace = () => {
       </NearPlaceBg>
   );
 };
-
 export default NearPlace;
