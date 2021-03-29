@@ -22,13 +22,10 @@ const WhereverText = styled.div`
   font-weight: 600;
   margin-top: 10px;
 `;
-
 const WhereverPlaceWrapper = styled.li`
   margin-right: 20px;
 `;
-
 const WhereverPlace = (props) => {
- 
   return (
           <WhereverPlaceWrapper>
             <WhereverLink href={props.link}>
@@ -38,5 +35,4 @@ const WhereverPlace = (props) => {
           </WhereverPlaceWrapper>
   );
 };
-
 export default WhereverPlace;

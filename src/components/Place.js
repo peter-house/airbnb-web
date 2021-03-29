@@ -30,9 +30,7 @@ const NearPlaceTextsContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const Place = (props) => {
- 
   return (
           <PlaceLink href={props.link}>
             <PlaceContainer>
@@ -45,5 +43,4 @@ const Place = (props) => {
           </PlaceLink>
   );
 };
-
 export default Place;

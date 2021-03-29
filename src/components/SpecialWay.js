@@ -72,5 +72,4 @@ const SpecialWay = () => {
     </SpecialBg>
   );
 };
-
 export default SpecialWay;

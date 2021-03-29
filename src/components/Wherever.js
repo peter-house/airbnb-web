@@ -18,7 +18,6 @@ const WhereverPlaceContainer = styled.ul`
   padding-left: 0px;
   display: flex;
 `;
-
 const Wherever = () => {
   const PLACES = [
     {
@@ -50,7 +49,6 @@ const Wherever = () => {
       text: "반려동물 동반 가능",
     },
   ];
-
   return (
     <WhereverBg>
       <WhereverTitle>어디에서나, 여행은 살아보는거야!</WhereverTitle>
@@ -64,5 +62,4 @@ const Wherever = () => {
     </WhereverBg>
   );
 };
-
 export default Wherever;

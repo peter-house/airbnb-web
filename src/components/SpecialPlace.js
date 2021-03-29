@@ -33,7 +33,6 @@ const SpecialPlaceLink = styled.a`
     color: black;
   }
 `;
-
 const SpecialPlace = (props) => {
   return (
           <SpecialPlaceLink href={props.link}>
@@ -47,5 +46,4 @@ const SpecialPlace = (props) => {
           </SpecialPlaceLink>  
   );
 };
-
 export default SpecialPlace;

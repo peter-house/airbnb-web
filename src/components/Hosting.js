@@ -19,13 +19,11 @@ const HostingTextContainer = styled.div`
   padding-left: 80px;
   padding-top: 110px;
 `;
-
 const HostingText = styled.div`
   font-size: 48px;
   font-family: "Circular";
   color: white;
 `;
-
 const HostingSubText = styled.div`
   font-size: 18px;
   font-family: "Circular";
