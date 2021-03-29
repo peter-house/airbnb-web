@@ -46,12 +46,10 @@ const HostingBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
-
 `;
 const HostingBtnlink = styled.a `
     border: none:
     outline: none;
-
 `
 const Hosting = () => {
   const hostText = [
