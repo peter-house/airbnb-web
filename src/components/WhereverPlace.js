@@ -20,6 +20,7 @@ const WhereverText = styled.div`
   font-family: inherit;
   font-size: 18px;
   font-weight: 600;
+  margin-top: 10px;
 `;
 const WhereverPlaceContainer = styled.ul`
   list-style: none;

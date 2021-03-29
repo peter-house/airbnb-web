@@ -18,7 +18,7 @@ const BannerText = styled.div`
   padding: 27px 0 32px; 
 `
 const BannerImg = styled.img `
-display: flex;
+  display: flex;
 `
 
 const Banner = () => {

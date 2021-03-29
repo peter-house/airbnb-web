@@ -2,14 +2,14 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const HostingBg = styled.div`
-  margin-top: 50px;
-  max-width: 1100px;
+  margin-top: 100px;
+  max-width: 88.5vw;
   max-height: 400px;
   padding-left: 80px;
 `;
 const HostingBgImg = styled.div`
   background-image: url("https://a0.muscache.com/im/pictures/eff28e1d-51c4-49ff-8266-68d6929ea1ec.jpg?im_w=2560");
-  width: 1250px;
+  width: 88.5 vw;
   height: 483px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -52,7 +52,7 @@ const HostingBtn = styled.button`
 `;
 const HostingBtnlink = styled.a `
     border: none:
-  outline: none;
+    outline: none;
 
 `
 const Hosting = () => {

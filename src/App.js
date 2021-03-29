@@ -3,6 +3,7 @@ import Banner from './components/Banner';
 import NearPlace from './components/NearPlace';
 import Wherever from './components/Wherever';
 import Hosting from './components/Hosting';
+import SpecialWay from './components/SpecialWay';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
     <NearPlace/>
     <Wherever/>
     <Hosting/>
+    <SpecialWay/>
   </div>
   );
 };
