@@ -17,6 +17,8 @@ const BannerText = styled.div`
   font-family: "BlinkMacSystemFont";
   padding: 27px 0 32px; 
 `
+const BannerImg = styled.img `
+`
 
 const Banner = () => {
   return (
