@@ -94,13 +94,14 @@ const NearPlace = () => {
     <NearPlaceBg>
       <NearPlaceTitle>가까운 여행지 둘러보기</NearPlaceTitle>
       <PlacesContainer>
-        {PLACES.map((place) => {
+        {PLACES.map((place, index) => {
           return (
             <Place
               link={place.link}
               src={place.img}
               text={place.text}
               subText={place.subText}
+              key={index}
             />
           );
         })}

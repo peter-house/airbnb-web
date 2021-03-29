@@ -4,7 +4,7 @@ import SpecialPlace from "./SpecialPlace";
 
 const SpecialBg = styled.div`
   width: 100%;
-  height: 100%;
+  height: 82%;
   padding-top: 150px;
   padding-left: 80px;
 `;
@@ -58,13 +58,14 @@ const SpecialWay = () => {
         </SpecialSubText>
       </SpecialTextsContainer>
       <SpecialWaysCotainer>
-        {PLACES.map((place) => {
+        {PLACES.map((place, index) => {
           return (
           <SpecialPlace 
           link={place.link} 
           img={place.img} 
           text={place.text} 
           subText={place.subText} 
+          key={index}
           />
           );
         })}

@@ -22,8 +22,8 @@ const PlaceLink = styled.a`
   text-decoration: none;
   cursor: point;
   &:visited {
-  text-decoration: none;
-  color: black;
+    text-decoration: none;
+    color: black;
   }
 `;
 const NearPlaceTextsContainer = styled.div`
@@ -32,15 +32,15 @@ const NearPlaceTextsContainer = styled.div`
 `;
 const Place = (props) => {
   return (
-          <PlaceLink href={props.link}>
-            <PlaceContainer>
-              <NearPlaceIcon src={props.src}></NearPlaceIcon>
-              <NearPlaceTextsContainer>
-                <NearPlaceText>{props.text}</NearPlaceText>
-                <div className="nearplace-subtext">{props.subText}</div>
-              </NearPlaceTextsContainer>
-            </PlaceContainer>
-          </PlaceLink>
+    <PlaceLink href={props.link}>
+      <PlaceContainer>
+        <NearPlaceIcon src={props.src}></NearPlaceIcon>
+        <NearPlaceTextsContainer>
+          <NearPlaceText>{props.text}</NearPlaceText>
+          <div className="nearplace-subtext">{props.subText}</div>
+        </NearPlaceTextsContainer>
+      </PlaceContainer>
+    </PlaceLink>
   );
 };
 export default Place;
