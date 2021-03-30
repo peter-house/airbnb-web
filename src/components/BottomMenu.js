@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
+
 
 const BottonMenuBg = styled.div`
 display: flex:
@@ -60,74 +62,50 @@ const InstaIcon = styled.div `
 padding-right: 25px;
 `
 
-
 const BottomMenu = () => {
-  const INTRODUCE_MENUS = [
-    "에어비앤비 이용 방법",
-    "뉴스룸",
-    "투자자 정보",
-    "에어비앤비 플러스",
-    "에어비앤비 Luxe",
-    "호텔투나잇",
-    "에어비앤비 비즈니스 프로그램",
-    "호스트 분들이 있기에 가능합니다",
-    "채용정보",
-    "창립자 편지",
-  ];
-  const COMMUNITY_MENUS = [
-    "다양성 및 소속감",
-    "접근성",
-    "에어비앤비 어소시에이트",
-    "구호 인력을 위한 숙소",
-    "게스트 추천",
-    "Airbnb.org",
-  ];
-  const DO_HOSTING_MENUS = [
-    "숙소 호스팅",
-    "온라인 체험 호스팅하기",
-    "체험 호스팅하기",
-    "책이미감 있는 호스팅",
-    "자료 센터",
-    "커뮤니티 센터",
-  ];
-  const AIRBNB_SUPPORT_MENUS = [
-    "에어비앤비의 코로나19 대응 방안",
-    "도움말 센터",
-    "투자자 정보",
-    "예약 취소 옵션",
-    "에어비앤비 이웃 민원 지원",
-    "신뢰와 안전",
-  ];
+    const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
+
+  const getBottomMenuAPIs = () => {
+    fetch("http://localhost:3000/bottomMenus")
+    .then((res) => res.json())
+    .then((data) => {
+        setBottomMenuAPIs(data);
+    })
+  };
+
+  useEffect(() => {
+    getBottomMenuAPIs();
+  }, []);
+  
   return (
     <BottonMenuBg>
       <BottomMenusContainer>
         <Introduce>
           <BottomMenuTitles>소개</BottomMenuTitles>
-          {INTRODUCE_MENUS.map((introduceMenu, index) => {
+          {bottomMenuAPIs? bottomMenuAPIs[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
             return <IntroduceMenu key={index} >{introduceMenu}</IntroduceMenu>;
-          })}
+          }) : "loading.."}
         </Introduce>
 
         <Community>
           <BottomMenuTitles>커뮤니티</BottomMenuTitles>
-          {COMMUNITY_MENUS.map((introduceMenu, index) => {
+          {bottomMenuAPIs? bottomMenuAPIs[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
             return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          })}
+          }) : "loading.."}
         </Community>
 
         <DoHosting>
           <BottomMenuTitles>호스팅하기</BottomMenuTitles>
-          {DO_HOSTING_MENUS.map((introduceMenu, index) => {
+          {bottomMenuAPIs? bottomMenuAPIs[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
             return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          })}
+          }) : "loading.."}
         </DoHosting>
 
         <AirbnbSupport>
           <BottomMenuTitles>에어비앤비 지원</BottomMenuTitles>
-          {AIRBNB_SUPPORT_MENUS.map((introduceMenu, index) => {
+          {bottomMenuAPIs? bottomMenuAPIs[3].AIRBNB_SUPPORT_MENUS.map((introduceMenu, index) => {
             return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          })}
-        </AirbnbSupport>
+          }): "loading.."} </AirbnbSupport>
       </BottomMenusContainer>
       <BottomMenuBorder></BottomMenuBorder>
       <AirBnbRights>
