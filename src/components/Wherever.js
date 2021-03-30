@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import WhereverPlace from "./WhereverPlace";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const WhereverBg = styled.div`
   padding: 20px 0 9px 80px;
@@ -25,30 +25,32 @@ const Wherever = () => {
   const [whereverPlacesAPI, setWhereverPlacesAPI] = useState();
   const getWhereverPlacesAPIs = () => {
     fetch("http://localhost:3000/whereverPlaces")
-    .then((res) => res.json())
-    .then((data) => {
-      setWhereverPlacesAPI(data)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setWhereverPlacesAPI(data);
+      });
   };
   useEffect(() => {
     getWhereverPlacesAPIs();
-  },[])
+  }, []);
 
   return (
     <WhereverBg>
       <WhereverTitle>어디에서나, 여행은 살아보는거야!</WhereverTitle>
       <WhereverPlacesContainer>
         <WhereverPlaceContainer>
-          {whereverPlacesAPI? whereverPlacesAPI.map((place, index) => {
-            return (
-              <WhereverPlace
-                link={place.link}
-                src={place.img}
-                text={place.text}
-                key={index}
-              />
-            );
-          }) : "loading.."}
+          {whereverPlacesAPI
+            ? whereverPlacesAPI.map((place, index) => {
+                return (
+                  <WhereverPlace
+                    link={place.link}
+                    src={place.img}
+                    text={place.text}
+                    key={index}
+                  />
+                );
+              })
+            : "loading.."}
         </WhereverPlaceContainer>
       </WhereverPlacesContainer>
     </WhereverBg>

@@ -26,15 +26,13 @@ const PlacesContainer = styled.ul`
 `;
 const NearPlace = () => {
   const [placeAPI, setPlaceAPI] = useState();
-
   const getNearPlacesAPIs = () => {
     fetch("http://localhost:3000/nearPlaces")
-    .then((res) => res.json())
-    .then((data) => {
-          setPlaceAPI(data);
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPlaceAPI(data);
+      });
   };
-
   useEffect(() => {
     getNearPlacesAPIs();
   }, []);
@@ -43,17 +41,19 @@ const NearPlace = () => {
     <NearPlaceBg>
       <NearPlaceTitle>가까운 여행지 둘러보기</NearPlaceTitle>
       <PlacesContainer>
-        {placeAPI? placeAPI.map((place, index) => {
-          return (
-            <Place
-              link={place.link}
-              src={place.img}
-              text={place.text}
-              subText={place.subText}
-              key={index}
-            />
-          );
-        }) : "loading..."}
+        {placeAPI
+          ? placeAPI.map((place, index) => {
+              return (
+                <Place
+                  link={place.link}
+                  src={place.img}
+                  text={place.text}
+                  subText={place.subText}
+                  key={index}
+                />
+              );
+            })
+          : "loading..."}
       </PlacesContainer>
     </NearPlaceBg>
   );

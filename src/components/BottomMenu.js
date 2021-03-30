@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 
-
 const BottonMenuBg = styled.div`
 display: flex:
 flex-direction: colunm;
@@ -11,7 +10,6 @@ padding: 60px 80px 20px 80px ;
 background-color: #f7f7f7;
 border-top: 0.5px solid #C1C1C1;
 `;
-
 const BottomMenusContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -52,60 +50,79 @@ const RightsRight = styled.div`
   jusfity-content: space-between;
   width: 10vw;
 `;
-const FaceBookIcon = styled.div `
-padding-right: 25px;
-`
-const TweeterIcon = styled.div `
-padding-right: 25px;
-`
-const InstaIcon = styled.div `
-padding-right: 25px;
-`
+const FaceBookIcon = styled.div`
+  padding-right: 25px;
+`;
+const TweeterIcon = styled.div`
+  padding-right: 25px;
+`;
+const InstaIcon = styled.div`
+  padding-right: 25px;
+`;
 
 const BottomMenu = () => {
-    const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
+  const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
 
   const getBottomMenuAPIs = () => {
     fetch("http://localhost:3000/bottomMenus")
-    .then((res) => res.json())
-    .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         setBottomMenuAPIs(data);
-    })
+      });
   };
 
   useEffect(() => {
     getBottomMenuAPIs();
   }, []);
-  
+
   return (
     <BottonMenuBg>
       <BottomMenusContainer>
         <Introduce>
           <BottomMenuTitles>소개</BottomMenuTitles>
-          {bottomMenuAPIs? bottomMenuAPIs[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
-            return <IntroduceMenu key={index} >{introduceMenu}</IntroduceMenu>;
-          }) : "loading.."}
+          {bottomMenuAPIs
+            ? bottomMenuAPIs[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
+                return (
+                  <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
+                );
+              })
+            : "loading.."}
         </Introduce>
 
         <Community>
           <BottomMenuTitles>커뮤니티</BottomMenuTitles>
-          {bottomMenuAPIs? bottomMenuAPIs[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
-            return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          }) : "loading.."}
+          {bottomMenuAPIs
+            ? bottomMenuAPIs[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
+                return (
+                  <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
+                );
+              })
+            : "loading.."}
         </Community>
 
         <DoHosting>
           <BottomMenuTitles>호스팅하기</BottomMenuTitles>
-          {bottomMenuAPIs? bottomMenuAPIs[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
-            return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          }) : "loading.."}
+          {bottomMenuAPIs
+            ? bottomMenuAPIs[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
+                return (
+                  <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
+                );
+              })
+            : "loading.."}
         </DoHosting>
 
         <AirbnbSupport>
           <BottomMenuTitles>에어비앤비 지원</BottomMenuTitles>
-          {bottomMenuAPIs? bottomMenuAPIs[3].AIRBNB_SUPPORT_MENUS.map((introduceMenu, index) => {
-            return <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>;
-          }): "loading.."} </AirbnbSupport>
+          {bottomMenuAPIs
+            ? bottomMenuAPIs[3].AIRBNB_SUPPORT_MENUS.map(
+                (introduceMenu, index) => {
+                  return (
+                    <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
+                  );
+                }
+              )
+            : "loading.."}{" "}
+        </AirbnbSupport>
       </BottomMenusContainer>
       <BottomMenuBorder></BottomMenuBorder>
       <AirBnbRights>
@@ -114,14 +131,14 @@ const BottomMenu = () => {
           · 사이트맵 · 한국의 변경된 환불 정책 · 회사 세부정보
         </RightsLeft>
         <RightsRight>
-            <FaceBookIcon>
-          <FontAwesomeIcon icon={["fab", "facebook-f"]} />
+          <FaceBookIcon>
+            <FontAwesomeIcon icon={["fab", "facebook-f"]} />
           </FaceBookIcon>
           <TweeterIcon>
-          <FontAwesomeIcon icon={["fab", "twitter"]} />
+            <FontAwesomeIcon icon={["fab", "twitter"]} />
           </TweeterIcon>
           <InstaIcon>
-          <FontAwesomeIcon icon={["fab", "instagram"]} />
+            <FontAwesomeIcon icon={["fab", "instagram"]} />
           </InstaIcon>
         </RightsRight>
       </AirBnbRights>
