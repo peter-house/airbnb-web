@@ -35,15 +35,15 @@ const SpecialPlaceLink = styled.a`
 `;
 const SpecialPlace = (props) => {
   return (
-          <SpecialPlaceLink href={props.link}>
-            <SpecialPlaceWrapper>
-              <SpecialImg src={props.img}></SpecialImg>
-              <SpecialTexts>
-                <SpecialTitle>{props.text}</SpecialTitle>
-                <SpecialSubTitle>{props.subText}</SpecialSubTitle>
-              </SpecialTexts>
-            </SpecialPlaceWrapper>
-          </SpecialPlaceLink>  
+    <SpecialPlaceLink href={props.link}>
+      <SpecialPlaceWrapper>
+        <SpecialImg src={props.img}></SpecialImg>
+        <SpecialTexts>
+          <SpecialTitle>{props.text}</SpecialTitle>
+          <SpecialSubTitle>{props.subText}</SpecialSubTitle>
+        </SpecialTexts>
+      </SpecialPlaceWrapper>
+    </SpecialPlaceLink>
   );
 };
 export default SpecialPlace;

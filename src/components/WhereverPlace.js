@@ -27,12 +27,12 @@ const WhereverPlaceWrapper = styled.li`
 `;
 const WhereverPlace = (props) => {
   return (
-          <WhereverPlaceWrapper>
-            <WhereverLink href={props.link}>
-              <WhereverImg src={props.img}></WhereverImg>
-              <WhereverText>{props.text}</WhereverText>
-            </WhereverLink>
-          </WhereverPlaceWrapper>
+    <WhereverPlaceWrapper>
+      <WhereverLink href={props.link}>
+        <WhereverImg src={props.src}></WhereverImg>
+        <WhereverText>{props.text}</WhereverText>
+      </WhereverLink>
+    </WhereverPlaceWrapper>
   );
 };
 export default WhereverPlace;
