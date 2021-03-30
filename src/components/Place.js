@@ -8,7 +8,6 @@ const NearPlaceIcon = styled.img`
   border-radius: 10px;
 `;
 const NearPlaceText = styled.div`
-  
   font-size: 16px;
   font-weight: 600;
   padding-bottom: 2px;
@@ -19,18 +18,18 @@ const PlaceContainer = styled.li`
   width: 210px;
   margin-bottom: 25px;
 `;
-const PlaceLink = styled.a `
+const PlaceLink = styled.a`
   text-decoration: none;
   cursor: point;
   &:visited {
     text-decoration: none;
     color: black;
   }
-`
-const NearPlaceTextsContainer =styled.div `
- display: flex;
- flex-direction: column;
-`
+`;
+const NearPlaceTextsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Place = () => {
   const Places = [
@@ -98,24 +97,23 @@ const Place = () => {
       text: "서울",
       subText: "차로 15분거리",
     },
-    
   ];
 
   return (
     <>
-        {Places.map((place) => {
-          return (
-            <PlaceLink href={place.link}>
+      {Places.map((place) => {
+        return (
+          <PlaceLink href={place.link}>
             <PlaceContainer>
-            <NearPlaceIcon src={place.img}></NearPlaceIcon>
-            <NearPlaceTextsContainer>
-              <NearPlaceText>{place.text}</NearPlaceText>
-              <div className="nearplace-subtext">{place.subText}</div>
-            </NearPlaceTextsContainer>
+              <NearPlaceIcon src={place.img}></NearPlaceIcon>
+              <NearPlaceTextsContainer>
+                <NearPlaceText>{place.text}</NearPlaceText>
+                <div className="nearplace-subtext">{place.subText}</div>
+              </NearPlaceTextsContainer>
             </PlaceContainer>
-            </PlaceLink>
-          );
-        })}
+          </PlaceLink>
+        );
+      })}
     </>
   );
 };
