@@ -59,10 +59,9 @@ const TweeterIcon = styled.div`
 const InstaIcon = styled.div`
   padding-right: 25px;
 `;
-
+ 
 const BottomMenu = () => {
   const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
-
   const getBottomMenuAPIs = () => {
     fetch("http://localhost:3000/bottomMenus")
       .then((res) => res.json())
