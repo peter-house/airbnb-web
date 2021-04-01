@@ -47,7 +47,7 @@ height: 50px;
   margin-right: 10px;
 `;
 
-const NavbarSubComponentForAccommodation = (props) => {
+const NavbarSubComponentForexperience = (props) => {
   return (
     <NavbarSubBg accommodation={props.accommodation}>
       <NavbarSubForAccommodation>
@@ -58,16 +58,8 @@ const NavbarSubComponentForAccommodation = (props) => {
               <NaberLocationInput type="text" placeholder="어디로 여행가세요?"></NaberLocationInput>
               </div>
               <div>
-              <NavbarSubText>체크인</NavbarSubText>
-              <NavbarSubUnderText>날짜 입력</NavbarSubUnderText>
-              </div>
-              <div>
-              <NavbarSubText>체크아웃</NavbarSubText>
-              <NavbarSubUnderText>날짜 입력</NavbarSubUnderText>
-              </div>
-              <div>
-              <NavbarSubText>인원</NavbarSubText>
-              <NavbarSubUnderText>게스트 추가</NavbarSubUnderText>
+              <NavbarSubText>날짜</NavbarSubText>
+              <NavbarSubUnderText>원하는 날짜를 입력하세요.</NavbarSubUnderText>
               </div>
            <NavbarSearchIconLabel>
             <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
@@ -83,4 +75,4 @@ const NavbarSubComponentForAccommodation = (props) => {
   );
 };
 
-export default NavbarSubComponentForAccommodation;
+export default NavbarSubComponentForexperience;
