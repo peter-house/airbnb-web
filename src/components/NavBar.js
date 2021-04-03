@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavbarSubComponent from "./NavBarSub";
 import { useState, useEffect } from "react";
 
-
 const NavbarBg = styled.div`
   background-color: white;
   position: fixed;
@@ -31,27 +30,27 @@ const AirBnbTitle = styled.div`
 `;
 const NavbarMainLeft = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 const NavbarSub = styled.div``;
 const NavbarMainMiddle = styled.div``;
 const ScrolledMiddleText = styled.div`
-position: relative;
-left: 50px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-width: 300px;
-height: 45px;
-border: 1px solid #C1C1C1;
-border-radius: 30px;
-padding-left: 20px;
-padding-top: 1px;
-font-weight: 500;
-&:hover {
-  box-shadow: 0 2px 2px 2px #ddd;
-  cursor: pointer;
-}
-
+  position: relative;
+  left: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  height: 45px;
+  border: 1px solid #c1c1c1;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-top: 1px;
+  font-weight: 500;
+  &:hover {
+    box-shadow: 0 2px 2px 2px #ddd;
+    cursor: pointer;
+  }
 `;
 const NavbarSubSeachIconLabel = styled.div`
   display: flex;
@@ -65,7 +64,6 @@ const NavbarSubSeachIconLabel = styled.div`
   margin-right: 10px;
 `;
 const ScrolledMiddleTextContainer = styled.div`
-
   display: ${(props) => (props.scroll ? "block" : "none")};
 `;
 const NavbarMainMiddleTexts = styled.div`
@@ -75,116 +73,113 @@ const NavbarMainMiddleTexts = styled.div`
   margin-left: 100px;
 `;
 const NavbarMainMiddleTextsContainer = styled.div`
-position: relative;
-left: 20px;
-display: ${(props) => (props.scroll ? "none" : "block")};
+  position: relative;
+  left: 20px;
+  display: ${(props) => (props.scroll ? "none" : "block")};
 `;
 const NavbarAccommodation = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-&:after {
-  opacity: ${(props) => (props.accomodation ? "1" : "0")};
-  line-height: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  &:after {
+    opacity: ${(props) => (props.accomodation ? "1" : "0")};
+    line-height: 200;
     width: 16px;
     content: "";
     border: 1px solid white;
     border-radius: 30px;
-}
-&:hover {
-  color: #c6c6c6;
-  cursor: pointer;
-  &:after {
-    opacity: 1;
-    width: ${(props) => (props.accomodation ? "16px" : "3px")};
-    transition: all 0.1s linear;
   }
-}
+  &:hover {
+    color: #c6c6c6;
+    cursor: pointer;
+    &:after {
+      opacity: 1;
+      width: ${(props) => (props.accomodation ? "16px" : "3px")};
+      transition: all 0.1s linear;
+    }
+  }
 `;
 const NavbarExperience = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-&:after {
-  opacity: ${(props) => (props.experience ? "1" : "0")};
-  line-height: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  &:after {
+    opacity: ${(props) => (props.experience ? "1" : "0")};
+    line-height: 200;
     width: 16px;
     content: "";
     border: 1px solid white;
     border-radius: 30px;
-}
-&:hover {
-  color: #c6c6c6;
-  cursor: pointer;
-  &:after {
-    opacity: 1;
-    width: ${(props) => (props.experience ? "16px" : "3px")};
-    transition: all 0.1s linear;
   }
-}
+  &:hover {
+    color: #c6c6c6;
+    cursor: pointer;
+    &:after {
+      opacity: 1;
+      width: ${(props) => (props.experience ? "16px" : "3px")};
+      transition: all 0.1s linear;
+    }
+  }
 `;
 const NavbarOnlineExperience = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-&:after {
-  opacity: 0;
-  line-height: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  &:after {
+    opacity: 0;
+    line-height: 200;
     width: 1px;
     content: "";
     border: 1px solid white;
     border-radius: 30px;
-}
-&:hover {
-  color: #c6c6c6;
-  cursor: pointer;
-  &:after {
-    opacity: 1;
-    width: 3px;
-    transition: all 0.1s linear;
-    
   }
-}
-
-`
-
-  const OnlineExperienceLink = styled.a `
+  &:hover {
+    color: #c6c6c6;
+    cursor: pointer;
+    &:after {
+      opacity: 1;
+      width: 3px;
+      transition: all 0.1s linear;
+    }
+  }
+`;
+const OnlineExperienceLink = styled.a`
   color: inherit;
   text-decoration: none;
-  `
-
+`;
 const NavbarMainRight = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 220px;
 `;
-const NavbarMainRightGlobeIcon = styled.div `
-display: flex;
-justify-content: center;
-align-items: center;
-width: 40px;
-height: 40px;
-border: 1px solid transparent;
-border-radius: 30px;
-&:hover {
-background-color: ${(props) => (props.scroll ? "#f7f7f7" : "#262626")};
-}`
-const NavbarMainRightIcons =styled.div `
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-background-color: white;
+const NavbarMainRightGlobeIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  &:hover {
+    background-color: ${(props) => (props.scroll ? "#f7f7f7" : "#262626")};
+  }
+`;
+const NavbarMainRightIcons = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
 
-color: black;
-width: 75px;
-height: 40px;
-border: 1px solid #c7c7c7;
-border-radius: 30px;
-`
+  color: black;
+  width: 75px;
+  height: 40px;
+  border: 1px solid #c7c7c7;
+  border-radius: 30px;
+`;
 const HostLink = styled.a`
 display: flex;
 justify-content: center;
@@ -202,14 +197,15 @@ font-weight: 500;
   &:visited {
     text-decoration: none;
     color: inherit;
-`
+`;
 
 const NavBar = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(
+    true
+  );
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
-
   const scrollToggle = window.addEventListener("scroll", (e) => {
     const scrollPosition = window.scrollY;
     const navbarPosition = 70;
@@ -219,16 +215,15 @@ const NavBar = () => {
     } else if (navbarPosition >= scrollPosition) {
       setIsScrollToggled(false);
       setIsSubNavbarOn(false);
-      console.log(isAccommodationSubNavbarOn,"accommo")
-      console.log(isScrollToggled,'scroll')
+      console.log(isAccommodationSubNavbarOn, "accommo");
+      console.log(isScrollToggled, "scroll");
     }
   });
-  function clickAccommodationBtn () {
+  function clickAccommodationBtn() {
     setIsAccommodationSubNavbarOn(true);
     setIsExperienceSubNarbarOn(false);
-
   }
-  function clickExperienceBtn () {
+  function clickExperienceBtn() {
     setIsAccommodationSubNavbarOn(false);
     setIsExperienceSubNarbarOn(true);
   }
@@ -243,45 +238,68 @@ const NavBar = () => {
           <NavbarMainMiddleTextsContainer scroll={isScrollToggled}>
             <NavbarMainMiddleTexts>
               <div>
-                <NavbarAccommodation accomodation={isAccommodationSubNavbarOn} onClick={clickAccommodationBtn}>숙소</NavbarAccommodation>
+                <NavbarAccommodation
+                  accomodation={isAccommodationSubNavbarOn}
+                  onClick={clickAccommodationBtn}
+                >
+                  숙소
+                </NavbarAccommodation>
               </div>
               <div>
-                <NavbarExperience experience={isExperienceSubNarbarOn} onClick={clickExperienceBtn}>체험</NavbarExperience>
+                <NavbarExperience
+                  experience={isExperienceSubNarbarOn}
+                  onClick={clickExperienceBtn}
+                >
+                  체험
+                </NavbarExperience>
               </div>
               <OnlineExperienceLink href="https://www.airbnb.co.kr/s/experiences/online">
-                <NavbarOnlineExperience >온라인 체험</NavbarOnlineExperience>
+                <NavbarOnlineExperience>온라인 체험</NavbarOnlineExperience>
               </OnlineExperienceLink>
             </NavbarMainMiddleTexts>
           </NavbarMainMiddleTextsContainer>
           <ScrolledMiddleTextContainer scroll={isScrollToggled}>
             <ScrolledMiddleText>
-                <div>검색 시작하기</div>
-                <NavbarSubSeachIconLabel>
-                  <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-                </NavbarSubSeachIconLabel>
+              <div>검색 시작하기</div>
+              <NavbarSubSeachIconLabel>
+                <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+              </NavbarSubSeachIconLabel>
             </ScrolledMiddleText>
           </ScrolledMiddleTextContainer>
         </NavbarMainMiddle>
         <NavbarMainRight>
-
-          <HostLink scroll={isScrollToggled} href="https://www.airbnb.co.kr/host/homes">
+          <HostLink
+            scroll={isScrollToggled}
+            href="https://www.airbnb.co.kr/host/homes"
+          >
             <div>호스트 되기</div>
-            </HostLink>
-            <NavbarMainRightGlobeIcon scroll={isScrollToggled}>
-          <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
+          </HostLink>
+          <NavbarMainRightGlobeIcon scroll={isScrollToggled}>
+            <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
           <NavbarMainRightIcons>
-          <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
-          <FontAwesomeIcon icon={["fas", "user-circle"]} size="2x" color="#717171"/>
+            <div>
+              <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
+            </div>
+            <div>
+              <FontAwesomeIcon
+                icon={["fas", "user-circle"]}
+                size="2x"
+                color="#717171"
+              />
+            </div>
           </NavbarMainRightIcons>
-          
         </NavbarMainRight>
       </NavbarMain>
       <NavbarSub>
-        <NavbarSubComponent scroll={isScrollToggled} accommodation={isAccommodationSubNavbarOn} experience={isExperienceSubNarbarOn} subNavbar={ isSubNavbarOn}/>
+        <NavbarSubComponent
+          scroll={isScrollToggled}
+          accommodation={isAccommodationSubNavbarOn}
+          experience={isExperienceSubNarbarOn}
+          subNavbar={isSubNavbarOn}
+        />
       </NavbarSub>
     </NavbarBg>
   );
 };
-
 export default NavBar;

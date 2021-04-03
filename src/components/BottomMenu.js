@@ -14,7 +14,6 @@ const BottomMenusContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-right: 8vw;
 `;
 const BottomMenuTitles = styled.div`
   font-size: 12px;
@@ -59,7 +58,6 @@ const TweeterIcon = styled.div`
 const InstaIcon = styled.div`
   padding-right: 25px;
 `;
- 
 const BottomMenu = () => {
   const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
   const getBottomMenuAPIs = () => {
@@ -69,7 +67,6 @@ const BottomMenu = () => {
         setBottomMenuAPIs(data);
       });
   };
-
   useEffect(() => {
     getBottomMenuAPIs();
   }, []);
@@ -87,7 +84,6 @@ const BottomMenu = () => {
               })
             : "loading.."}
         </Introduce>
-
         <Community>
           <BottomMenuTitles>커뮤니티</BottomMenuTitles>
           {bottomMenuAPIs
@@ -98,7 +94,6 @@ const BottomMenu = () => {
               })
             : "loading.."}
         </Community>
-
         <DoHosting>
           <BottomMenuTitles>호스팅하기</BottomMenuTitles>
           {bottomMenuAPIs
@@ -109,7 +104,6 @@ const BottomMenu = () => {
               })
             : "loading.."}
         </DoHosting>
-
         <AirbnbSupport>
           <BottomMenuTitles>에어비앤비 지원</BottomMenuTitles>
           {bottomMenuAPIs
@@ -144,5 +138,4 @@ const BottomMenu = () => {
     </BottonMenuBg>
   );
 };
-
 export default BottomMenu;

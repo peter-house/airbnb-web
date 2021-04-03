@@ -14,10 +14,6 @@ const NearPlaceTitle = styled.div`
   font-weight: 700;
   padding-bottom: 20px;
 `;
-const PlaceContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
 const PlacesContainer = styled.ul`
   padding-left: 0px;
   list-style: none;

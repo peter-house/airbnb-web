@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const NavbarSubBg = styled.div`
   display: ${(props) => (props.subNavbar ? "none" : "block")};
 `;
-
 const NavbarSubForAccommodation = styled.div``;
 const NavbarSubForExperience = styled.div``;
 const ForAccommodationBg = styled.div`
@@ -23,37 +22,34 @@ const ForAccommodationTextsWrapper = styled.div`
   height: 64px;
   padding-left: 20px;
 `;
-
-const LocationTextContainer = styled.div `
-position: relative;
-left: -21px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-aling-items: center;
-width: ${(props) => (props.experience ? "39vw" : "300px")};
-height: 60px;
-border: 1px solid transparent;
-border-radius: 30px;
-cursor: pointer;
-&:hover {
+const LocationTextContainer = styled.div`
+  position: relative;
+  left: -21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  aling-items: center;
+  width: ${(props) => (props.experience ? "39vw" : "300px")};
+  height: 60px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  cursor: pointer;
+  &:hover {
     background-color: #ebebeb;
-}
-
-`
-
+  }
+`;
 const NavbarSubText = styled.div`
-padding-left: ${(props) => (props.padding ? "20px" : "none")};
+  padding-left: ${(props) => (props.padding ? "20px" : "none")};
   font-size: 12px;
   font-weight: 800;
 `;
 const NaberLocationInput = styled.input`
-padding-left: 20px;
-background-color: transparent;
+  padding-left: 20px;
+  background-color: transparent;
   border: none;
 `;
 const NavbarSubUnderText = styled.div`
-padding-left: ${(props) => (props.padding ? "20px" : "none")};
+  padding-left: ${(props) => (props.padding ? "20px" : "none")};
   font-size: 14px;
   font-weight: 400;
   color: #717171;
@@ -73,7 +69,7 @@ cursor: pointer;
     background-color: #ebebeb;
 }
 }
-`
+`;
 const CheckOutTextContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -88,7 +84,7 @@ cursor: pointer;
     background-color: #ebebeb;
 }
 }
-`
+`;
 const PersonnelTextContainer = styled.div`
 display: flex;
 justify-content: space-around;
@@ -102,10 +98,8 @@ cursor: pointer;
     background-color: #ebebeb;
 }
 }
-`
-const PersonnelTextWrapper = styled.div`
-
-`
+`;
+const PersonnelTextWrapper = styled.div``;
 const NavbarSubTextsWrapper = styled.div`
   display: flex;
   justify-content: start;
@@ -121,9 +115,9 @@ const NavbarSubTextsWrapper2 = styled.div`
   border: 1px solid transparent;
   border-radius: 30px;
   cursor: pointer;
-&:hover {
+  &:hover {
     background-color: #ebebeb;
-}
+  }
 `;
 const NavbarSubTextsContainer = styled.div`
   display: ${(props) => (props.accommodation ? "block" : "none")};
@@ -132,8 +126,8 @@ const NavbarSubTextsContainer2 = styled.div`
   display: ${(props) => (props.experience ? "block" : "none")};
 `;
 const NavbarSearchIconLabel = styled.label`
-position: relative;
-right: ${(props) => (props.position ? "0" : "-40px")};
+  position: relative;
+  right: ${(props) => (props.position ? "0" : "-40px")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,8 +144,6 @@ const NavbarSubComponent = (props) => {
     <NavbarSubBg subNavbar={props.subNavbar}>
       <NavbarSubForAccommodation>
         <ForAccommodationBg>
-
-
           <ForAccommodationTextsWrapper>
             <LocationTextContainer experience={props.experience}>
               <NavbarSubText padding>위치</NavbarSubText>
@@ -160,7 +152,6 @@ const NavbarSubComponent = (props) => {
                 placeholder="어디로 여행가세요?"
               ></NaberLocationInput>
             </LocationTextContainer>
-
 
             <NavbarSubTextsContainer accommodation={props.accommodation}>
               <NavbarSubTextsWrapper>
@@ -173,13 +164,13 @@ const NavbarSubComponent = (props) => {
                   <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
                 </CheckOutTextContainer>
                 <PersonnelTextContainer>
-                    <PersonnelTextWrapper>
-                  <NavbarSubText>인원</NavbarSubText>
-                  <NavbarSubUnderText>게스트 추가</NavbarSubUnderText>
+                  <PersonnelTextWrapper>
+                    <NavbarSubText>인원</NavbarSubText>
+                    <NavbarSubUnderText>게스트 추가</NavbarSubUnderText>
                   </PersonnelTextWrapper>
-                <NavbarSearchIconLabel>
-              <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-            </NavbarSearchIconLabel>
+                  <NavbarSearchIconLabel>
+                    <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+                  </NavbarSearchIconLabel>
                 </PersonnelTextContainer>
               </NavbarSubTextsWrapper>
             </NavbarSubTextsContainer>
@@ -193,17 +184,11 @@ const NavbarSubComponent = (props) => {
                   </NavbarSubUnderText>
                 </div>
                 <NavbarSearchIconLabel position>
-              <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-            </NavbarSearchIconLabel>
+                  <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+                </NavbarSearchIconLabel>
               </NavbarSubTextsWrapper2>
             </NavbarSubTextsContainer2>
-
-
-
-           
           </ForAccommodationTextsWrapper>
-
-
         </ForAccommodationBg>
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
