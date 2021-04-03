@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 
 const SpecialBg = styled.div`
-  width: 100%;
+  width: 80%;
   height: 82%;
   padding-top: 150px;
   padding-left: 80px;
