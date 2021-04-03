@@ -23,7 +23,7 @@ const PlacesContainer = styled.ul`
   margin-bottom: 10px;
 `;
 const NearPlace = () => {
-  const [placeAPI, setPlaceAPI] = useState();
+  const [placeList, setPlaceAPI] = useState();
   const getNearPlacesAPIs = () => {
     fetch("http://localhost:3000/nearPlaces")
       .then((res) => res.json())
@@ -39,8 +39,8 @@ const NearPlace = () => {
     <NearPlaceBg>
       <NearPlaceTitle>가까운 여행지 둘러보기</NearPlaceTitle>
       <PlacesContainer>
-        {placeAPI
-          ? placeAPI.map((place, index) => {
+        {placeList
+          ? placeList.map((place, index) => {
               return (
                 <Place
                   link={place.link}
