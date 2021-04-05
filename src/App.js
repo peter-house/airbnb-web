@@ -23,7 +23,7 @@ const App = () => {
   const [focusedInput, setFocusedInput] = useState();
 
   return (
-    <div>
+      <>
       <NavBar />
       <Banner />
       <NearPlace />
@@ -43,7 +43,7 @@ const App = () => {
         onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
       />
       <BottomMenu />
-    </div>
+      </>
   );
 };
 export default App;

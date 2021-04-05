@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect, useRef } from "react";
 import NavbarSubComponent from "./NavBarSub";
-import { useState, useEffect } from "react";
+import LoginMenu from "./LoginMenu";
+import GlobePage from "./GlobePage";
 
 const NavbarBg = styled.div`
   background-color: white;
@@ -164,6 +166,7 @@ const NavbarMainRightGlobeIcon = styled.div`
   height: 40px;
   border: 1px solid transparent;
   border-radius: 30px;
+  corsor: pointer;
   &:hover {
     background-color: ${(props) => (props.scroll ? "#f7f7f7" : "#262626")};
   }
@@ -202,21 +205,20 @@ font-weight: 500;
 const NavBar = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(
-    true
-  );
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
+  const [isGlobePageOn, setIsgelobePageOn] = useState(false);
+  const menuListBtnRef = useRef();
   const scrollToggle = window.addEventListener("scroll", (e) => {
     const scrollPosition = window.scrollY;
-    const navbarPosition = 70;
-    if (scrollPosition > navbarPosition) {
+    const NAVBAR_POSITION = 70;
+    if (scrollPosition > NAVBAR_POSITION) {
       setIsScrollToggled(true);
       setIsSubNavbarOn(true);
-    } else if (navbarPosition >= scrollPosition) {
+    } else if (NAVBAR_POSITION >= scrollPosition) {
       setIsScrollToggled(false);
       setIsSubNavbarOn(false);
-      console.log(isAccommodationSubNavbarOn, "accommo");
-      console.log(isScrollToggled, "scroll");
     }
   });
   function clickAccommodationBtn() {
@@ -227,6 +229,18 @@ const NavBar = () => {
     setIsAccommodationSubNavbarOn(false);
     setIsExperienceSubNarbarOn(true);
   }
+  function clickUserMenuBtn(e) {
+    setIsUserMenuListOn(!isUserMenuListOn);
+  };
+  function toggleUserMenuListOn(display) {
+    setIsUserMenuListOn(display)
+  };
+  function ClickGlobeIcon() {
+    setIsgelobePageOn(!isGlobePageOn);
+    console.log(isGlobePageOn)
+
+  }
+
   return (
     <NavbarBg>
       <NavbarMain scroll={isScrollToggled}>
@@ -274,10 +288,11 @@ const NavBar = () => {
           >
             <div>호스트 되기</div>
           </HostLink>
-          <NavbarMainRightGlobeIcon scroll={isScrollToggled}>
+          <NavbarMainRightGlobeIcon onClick={ClickGlobeIcon} scroll={isScrollToggled}>
             <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
-          <NavbarMainRightIcons>
+          <GlobePage/>
+          <NavbarMainRightIcons ref={menuListBtnRef} onClick={clickUserMenuBtn}>
             <div>
               <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
             </div>
@@ -289,6 +304,7 @@ const NavBar = () => {
               />
             </div>
           </NavbarMainRightIcons>
+              <LoginMenu userRef={menuListBtnRef} toggleUserMenuListOn={toggleUserMenuListOn} userMenu={isUserMenuListOn} isUserMenuListOn={isUserMenuListOn}/>
         </NavbarMainRight>
       </NavbarMain>
       <NavbarSub>
