@@ -238,7 +238,6 @@ const NavBar = () => {
   function ClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
     console.log(isGlobePageOn);
-
   }
 
   return (
