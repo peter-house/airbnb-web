@@ -2,32 +2,22 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const GlobePageBg = styled.div`
-position: absolute;
-top: 300px;
-left: 100px;
-width: 90vw;
-hegiht: 90vw;
-background-color: white;
-
-`
-
-const GlobePage = () => {   
-
-
-
-    return (
-
-   
-        <GlobePageBg>
-            hi
+  display: ${(props) => (props.isGlobePageOn ? "block" : "none")};
+  position: absolute;
+  top: 10px;
+  left: 250px;
+  width: 70vw;
+  height: 800px;
+  color: black;
+  z-index: 2;
+  border-radius: 13px;
+  background-color: white;
+`;
 
 
-        </GlobePageBg>
-       
-    )
+const GlobePage = (props) => {
+    console.log(props.isGlobePageOn)
+  return <GlobePageBg isGlobePageOn={props.isGlobePageOn}>hi</GlobePageBg>;
+};
 
- }
-
- export default GlobePage;
-
-
+export default GlobePage;

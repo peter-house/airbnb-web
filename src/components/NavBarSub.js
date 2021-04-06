@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchingNavbar from "./SearchingNavbar";
 
 const NavbarSubBg = styled.div`
   display: ${(props) => (props.subNavbar ? "none" : "block")};
@@ -64,7 +65,6 @@ border: 1px solid transparent;
 border-radius: 30px;
 margin-left: -20px;
 cursor: pointer;
-
 &:hover {
     background-color: #ebebeb;
 }
@@ -79,7 +79,6 @@ height: 60px;
 border: 1px solid transparent;
 border-radius: 30px;
 cursor: pointer;
-
 &:hover {
     background-color: #ebebeb;
 }
@@ -152,7 +151,6 @@ const NavbarSubComponent = (props) => {
                 placeholder="어디로 여행가세요?"
               ></NaberLocationInput>
             </LocationTextContainer>
-
             <NavbarSubTextsContainer accommodation={props.accommodation}>
               <NavbarSubTextsWrapper>
                 <CheckInTextContainer>
@@ -174,7 +172,6 @@ const NavbarSubComponent = (props) => {
                 </PersonnelTextContainer>
               </NavbarSubTextsWrapper>
             </NavbarSubTextsContainer>
-
             <NavbarSubTextsContainer2 experience={props.experience}>
               <NavbarSubTextsWrapper2>
                 <div>
@@ -192,6 +189,7 @@ const NavbarSubComponent = (props) => {
         </ForAccommodationBg>
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
+      {/* <SearchingNavbar/> */}
     </NavbarSubBg>
   );
 };

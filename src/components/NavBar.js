@@ -237,7 +237,7 @@ const NavBar = () => {
   };
   function ClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
-    console.log(isGlobePageOn)
+    console.log(isGlobePageOn);
 
   }
 
@@ -288,10 +288,10 @@ const NavBar = () => {
           >
             <div>호스트 되기</div>
           </HostLink>
-          <NavbarMainRightGlobeIcon onClick={ClickGlobeIcon} scroll={isScrollToggled}>
+          <NavbarMainRightGlobeIcon  onClick={ClickGlobeIcon} scroll={isScrollToggled}>
             <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
-          <GlobePage/>
+          <GlobePage isGlobePageOn={isGlobePageOn}/>
           <NavbarMainRightIcons ref={menuListBtnRef} onClick={clickUserMenuBtn}>
             <div>
               <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />

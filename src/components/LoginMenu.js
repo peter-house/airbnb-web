@@ -20,8 +20,8 @@ const UserMenuListWrapper = styled.div`
 
 const LoginMenu = (props) => {
   const menuListRef = useRef();
-  const userBtnRef = props.userRef;
-  console.log('박스',props.userMenu);
+  // const userBtnRef = props.userRef;
+  // console.log('박스',props.userMenu);
 
   // document.addEventListener("click", (event) => {
   //   const isMenuListClicked = [menuListRef.current].includes(event.target);    // 배경화면 클릭시 false / list 클릭되면 true
