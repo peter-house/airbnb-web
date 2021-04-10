@@ -3,6 +3,23 @@
     display: none;
 }
 
+.DateRangePickerInput__withBorder {
+  border: none;
+  margin-left: 85px;
+}
+
+.DateInput_input_1 {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.DayPicker__withBorder {
+  border: none;
+position: absolute;
+top: 50px;
+right: -500;
+}
 
 .CalendarDay__default {
   border: none;

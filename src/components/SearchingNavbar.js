@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { DateRangePicker } from "react-dates";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import style from "./react_dates_overrides.css";
@@ -10,26 +11,45 @@ import "moment/locale/ko";
 
 const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
+  overflow: hidden;
+  padding: 20px 20px;
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 320px;
+  left: 20vw;
   background-color: white;
-  width: 500px;
-  height: 400px;
-  border-radius: 13px;
+  width: 400px;
+  height: 250px;
+  border-radius: 40px;
+`;
+const LocationText = styled.div``;
+const LocationContentWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 15px;
+`;
+const MapIconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 47px;
+  height: 47px;
+  background-color: #ebebeb;
+  border: 1px solid #c1c1c1;
+  border-radius: 10px;
+  margin-right: 20px;
 `;
 const CheckInOutSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 320px;
+  left: 20w;
   background-color: white;
   width: 59vw;
   height: 400px;
-  border-radius: 13px;
+  border-radius: 40px;
 `;
-
 const PersonnelSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
@@ -39,7 +59,7 @@ const PersonnelSearching = styled.div`
   width: 330px;
   height: 230px;
   color: black;
-  border-radius: 13px;
+  border-radius: 40px;
 `;
 const Person = styled.div`
   font-size: 16px;
@@ -101,14 +121,14 @@ const PersonnelLine = styled.div`
   background-color: rgb(235, 235, 235);
 `;
 const SearchingNavbar = (props) => {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [focusedInput, setFocusedInput] = useState();
+  //   const [startDate, setStartDate] = useState();
+  //   const [endDate, setEndDate] = useState();
+  //   const [focusedInput, setFocusedInput] = useState();
   const [personnelAdultlNum, setPersonnelAdultlNum] = useState(0);
   const [personnelChildlNum, setPersonnelChildlNum] = useState(0);
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
-  moment.locale("ko");
+  //   moment.locale("ko");
 
   function handleClickPlusBtn(years) {
     switch (years) {
@@ -136,19 +156,44 @@ const SearchingNavbar = (props) => {
         break;
     }
   }
+  function handleClcikLocation(location) {
+    console.log("Wlrglsekdkdkdkdkdkdkdkdkdkdk");
+    props.selecteLocation(location);
+  }
+
   useEffect(() => {
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     props.handleGuestNum(personnelNum);
   });
 
+  console.log("props", props.typedLocation);
+  console.log("props", props.filteredLocation);
+
   return (
     <SearchingNavbarBg>
       <LocationSearching display={props.isLocationDisplayOn}>
-        {" "}
-        Location
+        {props.filteredLocation ? (
+          props.filteredLocation.map((location,index) => {
+            return (
+              <LocationContentWrapper key={index} onClick={(location => {handleClcikLocation(location)})}>
+                <MapIconWrapper>
+                  <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
+                </MapIconWrapper>
+                <LocationText>{location}</LocationText>
+              </LocationContentWrapper>
+            );
+          })
+        ) : (
+          <LocationContentWrapper>
+            <MapIconWrapper>
+              <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
+            </MapIconWrapper>
+            <LocationText>가까운 여행지 둘러보기 </LocationText>
+          </LocationContentWrapper>
+        )}
       </LocationSearching>
       <CheckInOutSearching display={props.isChechInOutDisplayOn}>
-        <DateRangePicker
+        {/* <DateRangePicker
           startDate={startDate}
           startDateId="start-date"
           endDate={endDate}
@@ -158,7 +203,7 @@ const SearchingNavbar = (props) => {
             setEndDate(endDate);
           }}
           focusedInput={focusedInput}
-          onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
+          onFocusChange={(focusedInput) => setFocusedInput(focusedInput)} */}
         />
       </CheckInOutSearching>
       <PersonnelSearching display={props.isPersonnelDisplayOn}>
