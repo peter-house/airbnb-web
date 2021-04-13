@@ -44,7 +44,7 @@ const CheckInOutSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 20w;
+  left: 20vw;
   background-color: white;
   width: 59vw;
   height: 400px;
@@ -121,14 +121,14 @@ const PersonnelLine = styled.div`
   background-color: rgb(235, 235, 235);
 `;
 const SearchingNavbar = (props) => {
-  //   const [startDate, setStartDate] = useState();
-  //   const [endDate, setEndDate] = useState();
-  //   const [focusedInput, setFocusedInput] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [focusedInput, setFocusedInput] = useState();
   const [personnelAdultlNum, setPersonnelAdultlNum] = useState(0);
   const [personnelChildlNum, setPersonnelChildlNum] = useState(0);
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
-  //   moment.locale("ko");
+  moment.locale("ko");
 
   function handleClickPlusBtn(years) {
     switch (years) {
@@ -173,9 +173,14 @@ const SearchingNavbar = (props) => {
     <SearchingNavbarBg>
       <LocationSearching display={props.isLocationDisplayOn}>
         {props.filteredLocation ? (
-          props.filteredLocation.map((location,index) => {
+          props.filteredLocation.map((location, index) => {
             return (
-              <LocationContentWrapper key={index} onClick={(location => {handleClcikLocation(location)})}>
+              <LocationContentWrapper
+                key={index}
+                onClick={(location) => {
+                  handleClcikLocation(location);
+                }}
+              >
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
@@ -193,7 +198,12 @@ const SearchingNavbar = (props) => {
         )}
       </LocationSearching>
       <CheckInOutSearching display={props.isChechInOutDisplayOn}>
-        {/* <DateRangePicker
+        <DateRangePicker
+          displayFormat={() => "M월 D일"}
+          readOnly={true}
+          keepOpenOnDateSelect={true}
+          startDatePlaceholderText={"날짜입력"}
+          endDatePlaceholderText={"날짜입력"}
           startDate={startDate}
           startDateId="start-date"
           endDate={endDate}
@@ -203,7 +213,7 @@ const SearchingNavbar = (props) => {
             setEndDate(endDate);
           }}
           focusedInput={focusedInput}
-          onFocusChange={(focusedInput) => setFocusedInput(focusedInput)} */}
+          onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>
       <PersonnelSearching display={props.isPersonnelDisplayOn}>

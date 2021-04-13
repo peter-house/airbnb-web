@@ -4,9 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchingNavbar from "./SearchingNavbar";
 import { useState } from "react";
 
-import moment from "moment";
-import "moment/locale/ko";
-import { DateRangePicker } from "react-dates";
 
 const NavbarSubBg = styled.div`
   display: ${(props) => (props.subNavbar ? "none" : "block")};
@@ -67,7 +64,7 @@ const CheckInTextContainer = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: center;
-width: 30vw;
+width: 12vw;
 height: 60px;
 border: 1px solid transparent;
 border-radius: 30px;
@@ -147,10 +144,6 @@ const NavbarSearchIconLabel = styled.label`
 `;
 
 const NavbarSubComponent = (props) => {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [focusedInput, setFocusedInput] = useState();
-  moment.locale("ko");
 
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
   const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
@@ -239,32 +232,14 @@ const NavbarSubComponent = (props) => {
             <NavbarSubTextsContainer accommodation={props.accommodation}>
               <NavbarSubTextsWrapper>
                 <CheckInTextContainer onClick={clickCheckInBtn}>
-                  <DateRangePicker
-                    displayFormat={() => "M월 D일"}
-                    readOnly={true}
-                    keepOpenOnDateSelect={true}
-                    startDatePlaceholderText={"날짜입력"}
-                    endDatePlaceholderText={"날짜입력"}
-                    startDate={startDate}
-                    startDateId="start-date"
-                    endDate={endDate}
-                    endDateId="end-date"
-                    onDatesChange={({ startDate, endDate }) => {
-                      setStartDate(startDate);
-                      setEndDate(endDate);
-                    }}
-                    focusedInput={focusedInput}
-                    onFocusChange={(focusedInput) =>
-                      setFocusedInput(focusedInput)
-                    }
-                  />
-                  {/* <NavbarSubText padding>체크인</NavbarSubText>
-                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText> */}
+              
+                  <NavbarSubText padding>체크인</NavbarSubText>
+                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
                 </CheckInTextContainer>
-                {/* <CheckOutTextContainer onClick={clickCheckOutBtn}>
+                <CheckOutTextContainer onClick={clickCheckOutBtn}>
                   <NavbarSubText padding>체크아웃</NavbarSubText>
                   <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
-                </CheckOutTextContainer> */}
+                </CheckOutTextContainer>
                 <PersonnelTextContainer onClick={clickPesonnelBtn}>
                   <PersonnelTextWrapper>
                     <NavbarSubText>인원</NavbarSubText>

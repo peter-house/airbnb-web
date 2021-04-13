@@ -5,20 +5,38 @@
 
 .DateRangePickerInput__withBorder {
   border: none;
-  margin-left: 85px;
+  margin-left: 10px;
 }
+.DateRangePickerInput{
+  position: relative;
+  left: 20vw;
+
+  
+}
+.DateRangePickerInput_arrow_svg {
+  display: none;
+}
+
+
 
 .DateInput_input_1 {
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;
 }
+.DateInput_input:hover{
+  background-color: transparent;
+}
+
+.DateInput_input{
+  background-color: transparent;
+}
 
 .DayPicker__withBorder {
   border: none;
-position: absolute;
-top: 50px;
-right: -500;
+position: relative;
+top: -20px;
+left: -10vw;
 }
 
 .CalendarDay__default {
