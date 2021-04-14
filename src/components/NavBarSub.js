@@ -155,13 +155,14 @@ const NavbarSubComponent = (props) => {
   const [selectedLocation, setSelectedLocation] = useState();
 
   function selecteLocation(location) {
+    console.log('이게나와야',location)
     setSelectedLocation(location);
-    console.log(selectedLocation);
+
   }
 
   function clickLocationBtn() {
     console.log("clickedsdfsdfsd");
-    setIsLocationDisplayOn(!isLocationDisplayOn);
+    setIsLocationDisplayOn(true);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(false);
   }
@@ -212,6 +213,9 @@ const NavbarSubComponent = (props) => {
     setTypedLocation(typedLocation);
     setFilteredLocation(filterLocation());
   }
+  function HandleOnModifyMode() {
+    setSelectedLocation();
+  }
 
   return (
     <NavbarSubBg subNavbar={props.subNavbar}>
@@ -224,9 +228,11 @@ const NavbarSubComponent = (props) => {
             >
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
+                onClick={HandleOnModifyMode}
                 onKeyUpCapture={handleLocationKeyDown}
                 type="text"
-                placeholder="어디로 여행가세요?"
+                placeholder={"어디로 여행가세요?"}
+                value= {selectedLocation}
               ></NaberLocationInput>
             </LocationTextContainer>
             <NavbarSubTextsContainer accommodation={props.accommodation}>

@@ -28,6 +28,9 @@ const LocationContentWrapper = styled.div`
   justify-content: start;
   align-items: center;
   margin: 15px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const MapIconWrapper = styled.div`
   display: flex;
@@ -156,9 +159,18 @@ const SearchingNavbar = (props) => {
         break;
     }
   }
-  function handleClcikLocation(location) {
-    console.log("Wlrglsekdkdkdkdkdkdkdkdkdkdk");
-    props.selecteLocation(location);
+  function handleClcikLocation(event) {                           
+    let selectedPlace = event.target.innerHTML;
+
+    props.selecteLocation(selectedPlace);
+    console.log("seseeeeeeeeeeeee",selectedPlace)
+  }
+  function getFormatDate (date) { 
+      
+        let month = (1 + date.getMonth());
+        let day = date.getDate();       
+        day = day >= 10 ? day : '0' + day;  
+        return month + '월 ' + day + '일';      
   }
 
   useEffect(() => {
@@ -166,21 +178,13 @@ const SearchingNavbar = (props) => {
     props.handleGuestNum(personnelNum);
   });
 
-  console.log("props", props.typedLocation);
-  console.log("props", props.filteredLocation);
-
   return (
     <SearchingNavbarBg>
       <LocationSearching display={props.isLocationDisplayOn}>
         {props.filteredLocation ? (
           props.filteredLocation.map((location, index) => {
             return (
-              <LocationContentWrapper
-                key={index}
-                onClick={(location) => {
-                  handleClcikLocation(location);
-                }}
-              >
+              <LocationContentWrapper key={index} onClick={handleClcikLocation}>
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
@@ -211,6 +215,7 @@ const SearchingNavbar = (props) => {
           onDatesChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
+            getFormatDate(startDate._d);                                       /////////
           }}
           focusedInput={focusedInput}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
