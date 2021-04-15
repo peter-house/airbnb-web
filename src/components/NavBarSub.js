@@ -144,7 +144,6 @@ const NavbarSearchIconLabel = styled.label`
 `;
 
 const NavbarSubComponent = (props) => {
-
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
   const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
   const [isPersonnelDisplayOn, setIsPersonnelDisplayOn] = useState(false);
@@ -153,11 +152,32 @@ const NavbarSubComponent = (props) => {
   const [typedLocation, setTypedLocation] = useState();
   const [filteredLocation, setFilteredLocation] = useState();
   const [selectedLocation, setSelectedLocation] = useState();
+  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState();
 
+  function handleStartDate (date) {
+    setStartDate( getFormatDate(date));
+    console.log('start',startDate);
+  }
+  function handleEndDate (date) {
+    if (date === "날짜 입력") {
+      return;
+    }
+    setEndDate( getFormatDate(date));
+    console.log('end',endDate)
+  }
+//   function offLocationDisplay() {
+// setIsLocationDisplayOn(false);
+//   } 
+   function getFormatDate (date) { 
+    let month = (1 + date.getMonth());
+    let day = date.getDate();       
+    day = day >= 10 ? day : '0' + day;  
+    let showingDate =  month + '월 ' + day + '일';
+    return showingDate;
+ }
   function selecteLocation(location) {
-    console.log('이게나와야',location)
     setSelectedLocation(location);
-
   }
 
   function clickLocationBtn() {
@@ -205,7 +225,6 @@ const NavbarSubComponent = (props) => {
     });
     return locationList;
   }
-
   function handleLocationKeyDown(event) {
     console.log("click");
     const typedLocation = event.target.value;
@@ -216,7 +235,6 @@ const NavbarSubComponent = (props) => {
   function HandleOnModifyMode() {
     setSelectedLocation();
   }
-
   return (
     <NavbarSubBg subNavbar={props.subNavbar}>
       <NavbarSubForAccommodation>
@@ -240,11 +258,11 @@ const NavbarSubComponent = (props) => {
                 <CheckInTextContainer onClick={clickCheckInBtn}>
               
                   <NavbarSubText padding>체크인</NavbarSubText>
-                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
+                  <NavbarSubUnderText padding>{startDate || "날짜 입력"}</NavbarSubUnderText>
                 </CheckInTextContainer>
                 <CheckOutTextContainer onClick={clickCheckOutBtn}>
                   <NavbarSubText padding>체크아웃</NavbarSubText>
-                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
+                  <NavbarSubUnderText padding>{endDate || "날짜 입력"}</NavbarSubUnderText>
                 </CheckOutTextContainer>
                 <PersonnelTextContainer onClick={clickPesonnelBtn}>
                   <PersonnelTextWrapper>
@@ -279,6 +297,8 @@ const NavbarSubComponent = (props) => {
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
       <SearchingNavbar
+      handleStartDate={handleStartDate}
+      handleEndDate={handleEndDate}
         typedLocation={typedLocation}
         filteredLocation={filteredLocation}
         handleGuestNum={handleGuestNum}

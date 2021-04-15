@@ -161,17 +161,18 @@ const SearchingNavbar = (props) => {
   }
   function handleClcikLocation(event) {                           
     let selectedPlace = event.target.innerHTML;
-
     props.selecteLocation(selectedPlace);
-    console.log("seseeeeeeeeeeeee",selectedPlace)
+    // props.offLocationDisplay();
+    // props.
+
   }
-  function getFormatDate (date) { 
-      
-        let month = (1 + date.getMonth());
-        let day = date.getDate();       
-        day = day >= 10 ? day : '0' + day;  
-        return month + '월 ' + day + '일';      
-  }
+//   function getFormatDate (date) { 
+//         let month = (1 + date.getMonth());
+//         let day = date.getDate();       
+//         day = day >= 10 ? day : '0' + day;  
+//         let showingDate =  month + '월 ' + day + '일';
+//         return showingDate;
+//   }
 
   useEffect(() => {
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
@@ -211,12 +212,19 @@ const SearchingNavbar = (props) => {
           startDate={startDate}
           startDateId="start-date"
           endDate={endDate}
-          endDateId="end-date"
           onDatesChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
-            getFormatDate(startDate._d);                                       /////////
+            props.handleStartDate(startDate._d || '날짜 입력');  
+            props.handleEndDate(endDate? endDate._d : '날짜 입력');                 
           }}
+          onFocusChange={({ startDate, endDate }) => {
+            setStartDate(startDate);
+            setEndDate(endDate);
+            props.handleStartDate(startDate._d || '날짜 입력');  
+            props.handleEndDate(endDate? endDate._d : '날짜 입력');                 
+          }}
+          endDateId="end-date"
           focusedInput={focusedInput}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
