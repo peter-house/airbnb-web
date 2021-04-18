@@ -11,15 +11,16 @@ import "moment/locale/ko";
 
 const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
-  overflow: hidden;
-  padding: 20px 20px;
+  overflow-y: scroll;
+  padding: 15px 15px;
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
   left: 20vw;
   background-color: white;
   width: 400px;
-  height: 250px;
+  height: auto;
+  max-height: 270;
   border-radius: 40px;
 `;
 const LocationText = styled.div``;
@@ -39,7 +40,7 @@ const MapIconWrapper = styled.div`
   width: 47px;
   height: 47px;
   background-color: #ebebeb;
-  border: 1px solid #c1c1c1;
+  border: ${(props) => (props.border ? "1px solid #c1c1c" : "none")};
   border-radius: 10px;
   margin-right: 20px;
 `;
@@ -69,6 +70,7 @@ const Person = styled.div`
   font-weight: 600;
 `;
 const Age = styled.div`
+  color: #717171;
   font-size: 14px;
   font-weight: 400;
 `;
@@ -123,6 +125,10 @@ const PersonnelLine = styled.div`
   height: 1px;
   background-color: rgb(235, 235, 235);
 `;
+const LocationIconImg = styled.img`
+  width: 47px;
+  height: 47px;
+`;
 const SearchingNavbar = (props) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -159,20 +165,19 @@ const SearchingNavbar = (props) => {
         break;
     }
   }
-  function handleClcikLocation(event) {                           
+  function handleClcikLocation(event) {
     let selectedPlace = event.target.innerHTML;
     props.selecteLocation(selectedPlace);
-    // props.offLocationDisplay();
-    // props.
-
+    props.offLocationDisplay();
+    props.onChechInOutDisplay();
   }
-//   function getFormatDate (date) { 
-//         let month = (1 + date.getMonth());
-//         let day = date.getDate();       
-//         day = day >= 10 ? day : '0' + day;  
-//         let showingDate =  month + '월 ' + day + '일';
-//         return showingDate;
-//   }
+  //   function getFormatDate (date) {
+  //         let month = (1 + date.getMonth());
+  //         let day = date.getDate();
+  //         day = day >= 10 ? day : '0' + day;
+  //         let showingDate =  month + '월 ' + day + '일';
+  //         return showingDate;
+  //   }
 
   useEffect(() => {
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
@@ -195,8 +200,8 @@ const SearchingNavbar = (props) => {
           })
         ) : (
           <LocationContentWrapper>
-            <MapIconWrapper>
-              <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
+            <MapIconWrapper border>
+              <LocationIconImg src="https://a0.muscache.com/im/pictures/fc42dde0-36a7-460e-af89-10b5e44e48d8.jpg?im_w=240&im_q=lowq"></LocationIconImg>
             </MapIconWrapper>
             <LocationText>가까운 여행지 둘러보기 </LocationText>
           </LocationContentWrapper>
@@ -215,14 +220,14 @@ const SearchingNavbar = (props) => {
           onDatesChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
-            props.handleStartDate(startDate._d || '날짜 입력');  
-            props.handleEndDate(endDate? endDate._d : '날짜 입력');                 
+            props.handleStartDate(startDate._d || "날짜 입력");
+            props.handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           onFocusChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
-            props.handleStartDate(startDate._d || '날짜 입력');  
-            props.handleEndDate(endDate? endDate._d : '날짜 입력');                 
+            props.handleStartDate(startDate._d || "날짜 입력");
+            props.handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           endDateId="end-date"
           focusedInput={focusedInput}

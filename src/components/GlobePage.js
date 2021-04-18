@@ -16,7 +16,6 @@ const GlobePageBg = styled.div`
 
 
 const GlobePage = (props) => {
-    console.log(props.isGlobePageOn)
   return <GlobePageBg isGlobePageOn={props.isGlobePageOn}>hi</GlobePageBg>;
 };
 

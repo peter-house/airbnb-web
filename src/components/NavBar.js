@@ -91,6 +91,7 @@ const NavbarAccommodation = styled.div`
     content: "";
     border: 1px solid white;
     border-radius: 30px;
+    background-color: white;
   }
   &:hover {
     color: #c6c6c6;
@@ -114,6 +115,7 @@ const NavbarExperience = styled.div`
     content: "";
     border: 1px solid white;
     border-radius: 30px;
+    background-color: white;
   }
   &:hover {
     color: #c6c6c6;
@@ -176,12 +178,14 @@ const NavbarMainRightIcons = styled.div`
   justify-content: space-evenly;
   align-items: center;
   background-color: white;
-
   color: black;
   width: 75px;
   height: 40px;
   border: 1px solid #c7c7c7;
   border-radius: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const HostLink = styled.a`
 display: flex;
@@ -205,11 +209,14 @@ font-weight: 500;
 const NavBar = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(
+    true
+  );
   const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
   const [isGlobePageOn, setIsgelobePageOn] = useState(false);
   const menuListBtnRef = useRef();
+
   const scrollToggle = window.addEventListener("scroll", (e) => {
     const scrollPosition = window.scrollY;
     const NAVBAR_POSITION = 70;
@@ -229,16 +236,15 @@ const NavBar = () => {
     setIsAccommodationSubNavbarOn(false);
     setIsExperienceSubNarbarOn(true);
   }
-  function clickUserMenuBtn(e) {
+  function clickUserMenuBtn(event) {
     setIsUserMenuListOn(!isUserMenuListOn);
-  };
-  function toggleUserMenuListOn(display) {
-    setIsUserMenuListOn(display)
-  };
+    event.stopPropagation();
+  }
   function handleClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
-    console.log(isGlobePageOn);
-    
+  }
+  function offUserMenuList(display) {
+    setIsUserMenuListOn(display);
   }
 
   return (
@@ -288,10 +294,13 @@ const NavBar = () => {
           >
             <div>호스트 되기</div>
           </HostLink>
-          <NavbarMainRightGlobeIcon  onClick={handleClickGlobeIcon} scroll={isScrollToggled}>
+          <NavbarMainRightGlobeIcon
+            onClick={handleClickGlobeIcon}
+            scroll={isScrollToggled}
+          >
             <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
-          <GlobePage isGlobePageOn={isGlobePageOn}/>
+          <GlobePage isGlobePageOn={isGlobePageOn} />
           <NavbarMainRightIcons ref={menuListBtnRef} onClick={clickUserMenuBtn}>
             <div>
               <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
@@ -304,7 +313,11 @@ const NavBar = () => {
               />
             </div>
           </NavbarMainRightIcons>
-              <LoginMenu userRef={menuListBtnRef} toggleUserMenuListOn={toggleUserMenuListOn} userMenu={isUserMenuListOn} isUserMenuListOn={isUserMenuListOn}/>
+          <LoginMenu
+            userRef={menuListBtnRef}
+            isUserMenuListOn={isUserMenuListOn}
+            offUserMenuList={offUserMenuList}
+          />
         </NavbarMainRight>
       </NavbarMain>
       <NavbarSub>

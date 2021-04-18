@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useRef } from "react";
 import { checkPropTypes } from "prop-types";
 
 const UserMenuList = styled.div``;
 const UserMenuListWrapper = styled.div`
-  display: ${(props) => (props.userMenu ? "block" : "none")};
+  // display: ${(props) => (props.isUserMenuListOn ? "block" : "none")};
   background-color: white;
   color: black;
   font-weight: normal;
@@ -20,6 +20,15 @@ const UserMenuListWrapper = styled.div`
 
 const LoginMenu = (props) => {
   const menuListRef = useRef();
+  const isUserMenuListOn = props.isUserMenuListOn;
+
+  function handleClickOutside ({target}) {
+    console.log("this is target",target)
+    console.log('menuList', menuListRef.current)
+    console.log('isUserMenuListOn',isUserMenuListOn);
+
+    if(isUserMenuListOn && !menuListRef.current.contains(target)) {console.log("offfffff")};
+  }
   // const userBtnRef = props.userRef;
   // console.log('박스',props.userMenu);
 
@@ -34,9 +43,19 @@ const LoginMenu = (props) => {
   //     props.toggleUserMenuListOn(false);
   //   }
   // });
-
-  return (
-    <UserMenuListWrapper userMenu={props.userMenu}  ref={menuListRef} >
+  const handleGlobalClick = () =>  {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }
+  useEffect(() => {
+    handleGlobalClick();
+  },[])
+  
+  return ( 
+    props.isUserMenuListOn && 
+    <UserMenuListWrapper userMenu={props.isUserMenuListOn}  ref={menuListRef} >
       <UserMenuList>
         <div>회원가입</div>
         <div>로그인</div>
@@ -45,6 +64,7 @@ const LoginMenu = (props) => {
         <div>도움말</div>
       </UserMenuList>
     </UserMenuListWrapper>
-  );
+    );
 };
+
 export default LoginMenu;
