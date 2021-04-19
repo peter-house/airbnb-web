@@ -151,9 +151,9 @@ const NavbarSearchIconLabel = styled.label`
   }
 `;
 const NavbarSearchBtnWrapper = styled.a`
-&:hover {
-  cursor: pointer;
-}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const NavbarSubComponent = (props) => {

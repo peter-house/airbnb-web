@@ -168,9 +168,9 @@ const NavbarMainRightGlobeIcon = styled.div`
   height: 40px;
   border: 1px solid transparent;
   border-radius: 30px;
-  corsor: pointer;
   &:hover {
     background-color: ${(props) => (props.scroll ? "#f7f7f7" : "#262626")};
+    cursor: pointer;
   }
 `;
 const NavbarMainRightIcons = styled.div`
@@ -246,6 +246,9 @@ const NavBar = () => {
   function offUserMenuList(display) {
     setIsUserMenuListOn(display);
   }
+  useEffect(() => {
+    console.log(isUserMenuListOn);
+  }, []);
 
   return (
     <NavbarBg>

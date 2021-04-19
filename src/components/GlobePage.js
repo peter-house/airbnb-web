@@ -14,7 +14,6 @@ const GlobePageBg = styled.div`
   background-color: white;
 `;
 
-
 const GlobePage = (props) => {
   return <GlobePageBg isGlobePageOn={props.isGlobePageOn}>hi</GlobePageBg>;
 };
