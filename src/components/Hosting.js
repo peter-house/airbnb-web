@@ -47,10 +47,10 @@ const HostingBtn = styled.button`
     cursor: pointer;
   }
 `;
-const HostingBtnlink = styled.a `
+const HostingBtnlink = styled.a`
     border: none:
     outline: none;
-`
+`;
 const Hosting = () => {
   const hostText = [
     "여러분의 세상을",
@@ -68,7 +68,7 @@ const Hosting = () => {
             남는 공간을 활용해 새로운 기회를 만들어 보세요.
           </HostingSubText>
           <HostingBtnlink href="https://www.airbnb.co.kr/host/homes">
-          <HostingBtn>호스팅 시작하기</HostingBtn>
+            <HostingBtn>호스팅 시작하기</HostingBtn>
           </HostingBtnlink>
         </HostingTextContainer>
       </HostingBgImg>
