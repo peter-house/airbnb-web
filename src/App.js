@@ -9,18 +9,13 @@ import NavBar from "./components/NavBar";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import "react-dates/initialize";
-import { DateRangePicker } from "react-dates";
-import "react-dates/lib/css/_datepicker.css";
 import { useState } from "react";
-import style from "./components/react_dates_overrides.css";
+
 
 library.add(fab, fas);
 
 const App = () => {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [focusedInput, setFocusedInput] = useState();
+ 
 
   return (
       <>
@@ -30,18 +25,6 @@ const App = () => {
       <Wherever />
       <Hosting />
       <SpecialWay />
-      <DateRangePicker
-        startDate={startDate}
-        startDateId="start-date"
-        endDate={endDate}
-        endDateId="end-date"
-        onDatesChange={({ startDate, endDate }) => {
-          setStartDate(startDate);
-          setEndDate(endDate);
-        }}
-        focusedInput={focusedInput}
-        onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
-      />
       <BottomMenu />
       </>
   );

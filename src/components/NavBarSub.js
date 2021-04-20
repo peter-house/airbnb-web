@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchingNavbar from "./SearchingNavbar";
+import {useState} from 'react';
 
 const NavbarSubBg = styled.div`
   display: ${(props) => (props.subNavbar ? "none" : "block")};
@@ -48,6 +49,9 @@ const NaberLocationInput = styled.input`
   padding-left: 20px;
   background-color: transparent;
   border: none;
+  :focus {
+    outline: none;
+  }
 `;
 const NavbarSubUnderText = styled.div`
   padding-left: ${(props) => (props.padding ? "20px" : "none")};
@@ -139,12 +143,47 @@ const NavbarSearchIconLabel = styled.label`
 `;
 
 const NavbarSubComponent = (props) => {
+  const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
+  const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
+  const [isPersonnelDisplayOn, setIsPersonnelDisplayOn] = useState(false);
+  const [guestNum, setGuestNum] = useState(0);
+
+  function clickLocationBtn () {
+    console.log('clickedsdfsdfsd')
+    setIsLocationDisplayOn(!isLocationDisplayOn);
+    setIsChechInOutDisplayOn(false);
+    setIsPersonnelDisplayOn(false);
+  }
+  function clickCheckInBtn () {
+    console.log('chechoutin')
+    setIsLocationDisplayOn(false);
+    setIsPersonnelDisplayOn(false);
+    setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+
+  }
+  function clickCheckOutBtn () {
+    console.log('chechoutin')
+    setIsLocationDisplayOn(false);
+    setIsPersonnelDisplayOn(false);
+    setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+
+  }
+  function clickPesonnelBtn () {
+    console.log('personnel')
+    setIsLocationDisplayOn(false);
+    setIsChechInOutDisplayOn(false);
+    setIsPersonnelDisplayOn(!isPersonnelDisplayOn);
+  }
+  function handleGuestNum (numOfGuest) {
+    setGuestNum(numOfGuest);
+  } 
+  console.log(isLocationDisplayOn)
   return (
     <NavbarSubBg subNavbar={props.subNavbar}>
       <NavbarSubForAccommodation>
         <ForAccommodationBg>
           <ForAccommodationTextsWrapper>
-            <LocationTextContainer experience={props.experience}>
+            <LocationTextContainer onClick={clickLocationBtn} experience={props.experience}>
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
                 type="text"
@@ -153,18 +192,18 @@ const NavbarSubComponent = (props) => {
             </LocationTextContainer>
             <NavbarSubTextsContainer accommodation={props.accommodation}>
               <NavbarSubTextsWrapper>
-                <CheckInTextContainer>
+                <CheckInTextContainer onClick={clickCheckInBtn}>
                   <NavbarSubText padding>체크인</NavbarSubText>
                   <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
                 </CheckInTextContainer>
-                <CheckOutTextContainer>
+                <CheckOutTextContainer onClick={clickCheckOutBtn}>
                   <NavbarSubText padding>체크아웃</NavbarSubText>
                   <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
                 </CheckOutTextContainer>
-                <PersonnelTextContainer>
+                <PersonnelTextContainer onClick={clickPesonnelBtn}>
                   <PersonnelTextWrapper>
                     <NavbarSubText>인원</NavbarSubText>
-                    <NavbarSubUnderText>게스트 추가</NavbarSubUnderText>
+                    <NavbarSubUnderText>{guestNum == 0? "게스트 추가" : "게스트 " + guestNum + " 명"}</NavbarSubUnderText>
                   </PersonnelTextWrapper>
                   <NavbarSearchIconLabel>
                     <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
@@ -189,7 +228,7 @@ const NavbarSubComponent = (props) => {
         </ForAccommodationBg>
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
-      {/* <SearchingNavbar/> */}
+      <SearchingNavbar handleGuestNum={handleGuestNum} isLocationDisplayOn={isLocationDisplayOn} isChechInOutDisplayOn={isChechInOutDisplayOn} isPersonnelDisplayOn={isPersonnelDisplayOn}  />
     </NavbarSubBg>
   );
 };
