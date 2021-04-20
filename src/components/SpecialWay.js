@@ -3,10 +3,8 @@ import styled from "@emotion/styled";
 import SpecialPlace from "./SpecialPlace";
 import { useState, useEffect } from "react";
 
-
-
 const SpecialBg = styled.div`
-  width: 100%;
+  width: 80%;
   height: 82%;
   padding-top: 150px;
   padding-left: 80px;
@@ -26,12 +24,11 @@ const SpecialWay = () => {
   const [specialPlaceAPI, setSpecialPlaceAPI] = useState();
   const getSpecialPlaceAPI = () => {
     fetch("http://localhost:3000/specialPlaces")
-    .then((res) => res.json())
-    .then((data) => {
-      setSpecialPlaceAPI(data);
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecialPlaceAPI(data);
+      });
   };
-
   useEffect(() => {
     getSpecialPlaceAPI();
   }, []);
@@ -46,17 +43,19 @@ const SpecialWay = () => {
         </SpecialSubText>
       </div>
       <SpecialWaysCotainer>
-        {specialPlaceAPI? specialPlaceAPI.map((place, index) => {
-          return (
-          <SpecialPlace 
-            link={place.link} 
-            img={place.img} 
-            text={place.text} 
-            subText={place.subText} 
-            key={index}
-          />
-          );
-        }) : "Loading..."}
+        {specialPlaceAPI
+          ? specialPlaceAPI.map((place, index) => {
+              return (
+                <SpecialPlace
+                  link={place.link}
+                  img={place.img}
+                  text={place.text}
+                  subText={place.subText}
+                  key={index}
+                />
+              );
+            })
+          : "Loading..."}
       </SpecialWaysCotainer>
     </SpecialBg>
   );

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const NearPlaceBg = styled.div`
   max-width: 1760px;
   height: 250px;
-  padding: 60px 80px 0px 80px;
+  padding: 60px 80px 25px 80px;
 `;
 const NearPlaceTitle = styled.div`
   width: 100%;
@@ -14,18 +14,16 @@ const NearPlaceTitle = styled.div`
   font-weight: 700;
   padding-bottom: 20px;
 `;
-const PlaceContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
 const PlacesContainer = styled.ul`
   padding-left: 0px;
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom: 10px;
 `;
 const NearPlace = () => {
-  const [placeAPI, setPlaceAPI] = useState();
+  const [placeList, setPlaceAPI] = useState();
   const getNearPlacesAPIs = () => {
     fetch("http://localhost:3000/nearPlaces")
       .then((res) => res.json())
@@ -41,8 +39,8 @@ const NearPlace = () => {
     <NearPlaceBg>
       <NearPlaceTitle>가까운 여행지 둘러보기</NearPlaceTitle>
       <PlacesContainer>
-        {placeAPI
-          ? placeAPI.map((place, index) => {
+        {placeList
+          ? placeList.map((place, index) => {
               return (
                 <Place
                   link={place.link}

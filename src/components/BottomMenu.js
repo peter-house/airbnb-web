@@ -14,7 +14,6 @@ const BottomMenusContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-right: 8vw;
 `;
 const BottomMenuTitles = styled.div`
   font-size: 12px;
@@ -59,10 +58,8 @@ const TweeterIcon = styled.div`
 const InstaIcon = styled.div`
   padding-right: 25px;
 `;
-
 const BottomMenu = () => {
-  const [bottomMenuAPIs, setBottomMenuAPIs] = useState();
-
+  const [bottomMenuList, setBottomMenuAPIs] = useState();
   const getBottomMenuAPIs = () => {
     fetch("http://localhost:3000/bottomMenus")
       .then((res) => res.json())
@@ -70,7 +67,6 @@ const BottomMenu = () => {
         setBottomMenuAPIs(data);
       });
   };
-
   useEffect(() => {
     getBottomMenuAPIs();
   }, []);
@@ -80,41 +76,38 @@ const BottomMenu = () => {
       <BottomMenusContainer>
         <Introduce>
           <BottomMenuTitles>소개</BottomMenuTitles>
-          {bottomMenuAPIs
-            ? bottomMenuAPIs[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
+          {bottomMenuList
+            ? bottomMenuList[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
                 return (
                   <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
                 );
               })
             : "loading.."}
         </Introduce>
-
         <Community>
           <BottomMenuTitles>커뮤니티</BottomMenuTitles>
-          {bottomMenuAPIs
-            ? bottomMenuAPIs[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
+          {bottomMenuList
+            ? bottomMenuList[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
                 return (
                   <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
                 );
               })
             : "loading.."}
         </Community>
-
         <DoHosting>
           <BottomMenuTitles>호스팅하기</BottomMenuTitles>
-          {bottomMenuAPIs
-            ? bottomMenuAPIs[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
+          {bottomMenuList
+            ? bottomMenuList[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
                 return (
                   <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
                 );
               })
             : "loading.."}
         </DoHosting>
-
         <AirbnbSupport>
           <BottomMenuTitles>에어비앤비 지원</BottomMenuTitles>
-          {bottomMenuAPIs
-            ? bottomMenuAPIs[3].AIRBNB_SUPPORT_MENUS.map(
+          {bottomMenuList
+            ? bottomMenuList[3].AIRBNB_SUPPORT_MENUS.map(
                 (introduceMenu, index) => {
                   return (
                     <IntroduceMenu key={index}>{introduceMenu}</IntroduceMenu>
@@ -145,5 +138,4 @@ const BottomMenu = () => {
     </BottonMenuBg>
   );
 };
-
 export default BottomMenu;
