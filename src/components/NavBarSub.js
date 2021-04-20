@@ -195,8 +195,15 @@ const NavbarSubComponent = (props) => {
     return [year, month, day].join("-");
   }
   function changeIsLocationDisPlay(onOff) {
-    setIsLocationDisplayOn(onOff)
+    setIsLocationDisplayOn(onOff);
   }
+  function changeIsCheckInOutDisplay(onOff) {
+    setIsChechInOutDisplayOn(onOff);
+  }
+  function changeIsPersonnelDisplay(onOff) {
+    setIsPersonnelDisplayOn(onOff);
+  }
+
   function handleStartDate(date) {
     setRawSartDate(getRawformatDate(date));
     setStartDate(getFormatDate(date));
@@ -232,20 +239,24 @@ const NavbarSubComponent = (props) => {
     setIsPersonnelDisplayOn(false);
     event.stopPropagation();
   }
-  function clickCheckInBtn() {
+  function clickCheckInBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    event.stopPropagation();
+
   }
-  function clickCheckOutBtn() {
+  function clickCheckOutBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    event.stopPropagation();
   }
-  function clickPesonnelBtn() {
+  function clickPesonnelBtn(event) {
     setIsLocationDisplayOn(false);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(!isPersonnelDisplayOn);
+    event.stopPropagation();
   }
   function handleGuestNum(numOfGuest) {
     setGuestNum(numOfGuest);
@@ -356,6 +367,8 @@ const NavbarSubComponent = (props) => {
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
       <SearchingNavbar
+      changeIsCheckInOutDisplay={changeIsCheckInOutDisplay}
+      changeIsPersonnelDisplay={changeIsPersonnelDisplay}
       changeIsLocationDisPlay={changeIsLocationDisPlay}
         onChechInOutDisplay={onChechInOutDisplay}
         offLocationDisplay={offLocationDisplay}

@@ -138,6 +138,9 @@ const SearchingNavbar = (props) => {
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
   const locationPageRef = useRef();
+  const checkInOutPageRef = useRef();
+  const personnelPlageRef = useRef();
+
   moment.locale("ko");
 
   function handleClickPlusBtn(years) {
@@ -172,24 +175,49 @@ const SearchingNavbar = (props) => {
     props.offLocationDisplay();
     props.onChechInOutDisplay();
   }
-  function handleClickOutside({ target }) {
+
+
+
+  function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
       props.changeIsLocationDisPlay(true);
-      console.log("return true");
       return true;
     } else {
       props.changeIsLocationDisPlay(false);
-      console.log("return false");
       return false;
     }
   }
+  function handleClickOutsideCheckInOut({ target }) {
+    if (checkInOutPageRef.current.contains(target)) {
+      props.changeIsCheckInOutDisplay(true);
+      return true;
+    } else {
+      props.changeIsCheckInOutDisplay(false);
+      return false;
+    }
+  }
+  function handleClickOutsidePersonnel({ target }) {
+    if (personnelPlageRef.current.contains(target)) {
+      props.changeIsPersonnelDisplay(true);
+      return true;
+    } else {
+      props.changeIsPersonnelDisplay(false);
+      return false;
+    }
+  }
+
+  function handleClickOutside(target) {
+    handleClickOutsideLocation(target);
+    handleClickOutsideCheckInOut(target);
+    handleClickOutsidePersonnel(target);
+  }
+
   const handleGlobalClick = () => {
     window.addEventListener("click", handleClickOutside);
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
   };
-
   useEffect(() => {
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
@@ -219,7 +247,7 @@ const SearchingNavbar = (props) => {
           </LocationContentWrapper>
         )}
       </LocationSearching>
-      <CheckInOutSearching display={props.isChechInOutDisplayOn}>
+      <CheckInOutSearching display={props.isChechInOutDisplayOn} ref={checkInOutPageRef}>
         <DateRangePicker
           displayFormat={() => "M월 D일"}
           readOnly={true}
@@ -246,7 +274,7 @@ const SearchingNavbar = (props) => {
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>
-      <PersonnelSearching display={props.isPersonnelDisplayOn}>
+      <PersonnelSearching display={props.isPersonnelDisplayOn} ref={personnelPlageRef}>
         <PersonnelListContainer>
           <PersonnelWrapper>
             <div>
