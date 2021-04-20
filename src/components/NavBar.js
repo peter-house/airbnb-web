@@ -228,6 +228,9 @@ const NavBar = () => {
       setIsSubNavbarOn(false);
     }
   });
+  function changeIsUserMenuListOn(onOff) {
+    setIsUserMenuListOn(onOff);
+  }
   function clickAccommodationBtn() {
     setIsAccommodationSubNavbarOn(true);
     setIsExperienceSubNarbarOn(false);
@@ -317,6 +320,7 @@ const NavBar = () => {
             </div>
           </NavbarMainRightIcons>
           <LoginMenu
+          changeIsUserMenuListOn={changeIsUserMenuListOn}
             userRef={menuListBtnRef}
             isUserMenuListOn={isUserMenuListOn}
             offUserMenuList={offUserMenuList}

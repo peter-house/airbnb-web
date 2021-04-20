@@ -194,6 +194,9 @@ const NavbarSubComponent = (props) => {
     if (day.length < 2) day = "0" + day;
     return [year, month, day].join("-");
   }
+  function changeIsLocationDisPlay(onOff) {
+    setIsLocationDisplayOn(onOff)
+  }
   function handleStartDate(date) {
     setRawSartDate(getRawformatDate(date));
     setStartDate(getFormatDate(date));
@@ -223,10 +226,11 @@ const NavbarSubComponent = (props) => {
     setSelectedLocation(location);
   }
 
-  function clickLocationBtn() {
+  function clickLocationBtn(event) {
     setIsLocationDisplayOn(true);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(false);
+    event.stopPropagation();
   }
   function clickCheckInBtn() {
     setIsLocationDisplayOn(false);
@@ -352,6 +356,7 @@ const NavbarSubComponent = (props) => {
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
       <SearchingNavbar
+      changeIsLocationDisPlay={changeIsLocationDisPlay}
         onChechInOutDisplay={onChechInOutDisplay}
         offLocationDisplay={offLocationDisplay}
         handleStartDate={handleStartDate}

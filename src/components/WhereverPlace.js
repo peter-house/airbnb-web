@@ -25,6 +25,7 @@ const WhereverText = styled.div`
 const WhereverPlaceWrapper = styled.li`
   margin-right: 20px;
 `;
+
 const WhereverPlace = (props) => {
   return (
     <WhereverPlaceWrapper>
@@ -35,4 +36,5 @@ const WhereverPlace = (props) => {
     </WhereverPlaceWrapper>
   );
 };
+
 export default WhereverPlace;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { DateRangePicker } from "react-dates";
@@ -137,6 +137,7 @@ const SearchingNavbar = (props) => {
   const [personnelChildlNum, setPersonnelChildlNum] = useState(0);
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
+  const locationPageRef = useRef();
   moment.locale("ko");
 
   function handleClickPlusBtn(years) {
@@ -171,15 +172,33 @@ const SearchingNavbar = (props) => {
     props.offLocationDisplay();
     props.onChechInOutDisplay();
   }
+  function handleClickOutside({ target }) {
+    if (locationPageRef.current.contains(target)) {
+      props.changeIsLocationDisPlay(true);
+      console.log("return true");
+      return true;
+    } else {
+      props.changeIsLocationDisPlay(false);
+      console.log("return false");
+      return false;
+    }
+  }
+  const handleGlobalClick = () => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  };
 
   useEffect(() => {
+    handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     props.handleGuestNum(personnelNum);
   });
 
   return (
     <SearchingNavbarBg>
-      <LocationSearching display={props.isLocationDisplayOn}>
+      <LocationSearching display={props.isLocationDisplayOn} ref={locationPageRef}>
         {props.filteredLocation ? (
           props.filteredLocation.map((location, index) => {
             return (

@@ -35,10 +35,17 @@ const LoginMenu = (props) => {
   const isUserMenuListOn = props.isUserMenuListOn;
 
   function handleClickOutside({ target }) {
-    console.log("this is target", target);
-    console.log("menuList", menuListRef.current);
-    console.log("isUserMenuListOn", isUserMenuListOn);
-
+    if (menuListRef.current.contains(target)) {
+      console.log(menuListRef.current)
+      props.changeIsUserMenuListOn(true);
+      console.log("hi");
+      return true;
+    } else {
+      props.changeIsUserMenuListOn(false);
+      console.log("return false");
+      return false;
+    }
+  }
   const handleGlobalClick = () => {
     window.addEventListener("click", handleClickOutside);
     return () => {
