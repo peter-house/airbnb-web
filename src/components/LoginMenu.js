@@ -36,13 +36,10 @@ const LoginMenu = (props) => {
 
   function handleClickOutside({ target }) {
     if (menuListRef.current.contains(target)) {
-      console.log(menuListRef.current)
       props.changeIsUserMenuListOn(true);
-      console.log("hi");
       return true;
     } else {
       props.changeIsUserMenuListOn(false);
-      console.log("return false");
       return false;
     }
   }

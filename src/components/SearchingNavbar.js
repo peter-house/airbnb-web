@@ -140,7 +140,6 @@ const SearchingNavbar = (props) => {
   const locationPageRef = useRef();
   const checkInOutPageRef = useRef();
   const personnelPlageRef = useRef();
-
   moment.locale("ko");
 
   function handleClickPlusBtn(years) {
@@ -169,22 +168,18 @@ const SearchingNavbar = (props) => {
         break;
     }
   }
-  function handleClcikLocation(event) {
+  function handleClickLocation(event) {
     let selectedPlace = event.target.innerHTML;
     props.selecteLocation(selectedPlace);
     props.offLocationDisplay();
     props.onChechInOutDisplay();
+    
   }
-
-
-
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
-      props.changeIsLocationDisPlay(true);
-      return true;
+      props.changeIsLocationDisPlay(false);
     } else {
       props.changeIsLocationDisPlay(false);
-      return false;
     }
   }
   function handleClickOutsideCheckInOut({ target }) {
@@ -205,7 +200,6 @@ const SearchingNavbar = (props) => {
       return false;
     }
   }
-
   function handleClickOutside(target) {
     handleClickOutsideLocation(target);
     handleClickOutsideCheckInOut(target);
@@ -226,11 +220,14 @@ const SearchingNavbar = (props) => {
 
   return (
     <SearchingNavbarBg>
-      <LocationSearching display={props.isLocationDisplayOn} ref={locationPageRef}>
+      <LocationSearching
+        display={props.isLocationDisplayOn}
+        ref={locationPageRef}
+      >
         {props.filteredLocation ? (
           props.filteredLocation.map((location, index) => {
             return (
-              <LocationContentWrapper key={index} onClick={handleClcikLocation}>
+              <LocationContentWrapper key={index} onClick={handleClickLocation}>
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
@@ -247,7 +244,10 @@ const SearchingNavbar = (props) => {
           </LocationContentWrapper>
         )}
       </LocationSearching>
-      <CheckInOutSearching display={props.isChechInOutDisplayOn} ref={checkInOutPageRef}>
+      <CheckInOutSearching
+        display={props.isChechInOutDisplayOn}
+        ref={checkInOutPageRef}
+      >
         <DateRangePicker
           displayFormat={() => "M월 D일"}
           readOnly={true}
@@ -274,7 +274,10 @@ const SearchingNavbar = (props) => {
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>
-      <PersonnelSearching display={props.isPersonnelDisplayOn} ref={personnelPlageRef}>
+      <PersonnelSearching
+        display={props.isPersonnelDisplayOn}
+        ref={personnelPlageRef}
+      >
         <PersonnelListContainer>
           <PersonnelWrapper>
             <div>

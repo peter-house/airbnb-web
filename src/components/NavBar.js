@@ -249,10 +249,7 @@ const NavBar = () => {
   function offUserMenuList(display) {
     setIsUserMenuListOn(display);
   }
-  useEffect(() => {
-    console.log(isUserMenuListOn);
-  }, []);
-
+  
   return (
     <NavbarBg>
       <NavbarMain scroll={isScrollToggled}>

@@ -95,6 +95,8 @@ cursor: pointer;
 }
 `;
 const PersonnelTextContainer = styled.div`
+position: relative;
+right: -40x;
 display: flex;
 justify-content: space-around;
 align-items: center;
@@ -136,7 +138,7 @@ const NavbarSubTextsContainer2 = styled.div`
 `;
 const NavbarSearchIconLabel = styled.label`
   position: relative;
-  right: ${(props) => (props.position ? "0" : "-40px")};
+  right: ${(props) => (props.position ? "0" : "-47px")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -155,6 +157,11 @@ const NavbarSearchBtnWrapper = styled.a`
     cursor: pointer;
   }
 `;
+const NabarSubSearchingBtnWrapper = styled.a`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const NavbarSubComponent = (props) => {
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
@@ -167,16 +174,18 @@ const NavbarSubComponent = (props) => {
   const [selectedLocation, setSelectedLocation] = useState();
   const [endDate, setEndDate] = useState();
   const [startDate, setStartDate] = useState();
-  const [RawSartDate, setRawSartDate] = useState();
-  const [RawEndDate, setRawEndDate] = useState();
+  const [rawStartDate, setRawStartDate] = useState();
+  const [rawEndDate, setRawEndDate] = useState();
 
-  const splitSearchedLocation = searchedLocation || "없음".split("");
+  const splitSearchedLocation = selectedLocation
+    ? selectedLocation.split(" ")
+    : " ";
 
   const searchBtnUrl =
     "https://www.airbnb.co.kr/s/대한민국-서울-용산구/homes?tab_id=home_tab&refinement_paths%5B%5D=%2Fhomes&flexible_trip_dates%5B%5D=april&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
-    RawSartDate +
+    rawStartDate +
     "&checkout=" +
-    RawEndDate +
+    rawEndDate +
     "&adults=" +
     guestNum +
     "&query=대한민국%20" +
@@ -205,7 +214,7 @@ const NavbarSubComponent = (props) => {
   }
 
   function handleStartDate(date) {
-    setRawSartDate(getRawformatDate(date));
+    setRawStartDate(getRawformatDate(date));
     setStartDate(getFormatDate(date));
   }
   function handleEndDate(date) {
@@ -214,7 +223,6 @@ const NavbarSubComponent = (props) => {
       return;
     }
     setEndDate(getFormatDate(date));
-    console.log("end", endDate);
   }
   function offLocationDisplay() {
     setIsLocationDisplayOn(false);
@@ -232,7 +240,6 @@ const NavbarSubComponent = (props) => {
   function selecteLocation(location) {
     setSelectedLocation(location);
   }
-
   function clickLocationBtn(event) {
     setIsLocationDisplayOn(true);
     setIsChechInOutDisplayOn(false);
@@ -244,7 +251,6 @@ const NavbarSubComponent = (props) => {
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
     event.stopPropagation();
-
   }
   function clickCheckOutBtn(event) {
     setIsLocationDisplayOn(false);
@@ -280,18 +286,13 @@ const NavbarSubComponent = (props) => {
     return locationList;
   }
   function handleLocationKeyDown(event) {
-    console.log("click");
     const typedLocation = event.target.value;
     getLocationDatas();
     setTypedLocation(typedLocation);
     setFilteredLocation(filterLocation());
   }
-  function HandleOnModifyMode() {
+  function handleOnModifyMode() {
     setSelectedLocation();
-  }
-  function stopPropagation(event) {
-    console.log(searchBtnUrl);
-    event.stopPropagation();
   }
   return (
     <NavbarSubBg subNavbar={props.subNavbar}>
@@ -305,7 +306,7 @@ const NavbarSubComponent = (props) => {
             >
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
-                onClick={HandleOnModifyMode}
+                onClick={handleOnModifyMode}
                 onKeyUpCapture={handleLocationKeyDown}
                 type="text"
                 placeholder={"어디로 여행가세요?"}
@@ -339,7 +340,6 @@ const NavbarSubComponent = (props) => {
                     </NavbarSubUnderText>
                   </PersonnelTextWrapper>
                   <NavbarSearchBtnWrapper
-                    onClick={stopPropagation}
                     href={searchBtnUrl}
                   >
                     <NavbarSearchIconLabel>
@@ -349,17 +349,38 @@ const NavbarSubComponent = (props) => {
                 </PersonnelTextContainer>
               </NavbarSubTextsWrapper>
             </NavbarSubTextsContainer>
-            <NavbarSubTextsContainer2 experience={props.experience}>
+            <NavbarSubTextsContainer2
+              onClick={clickCheckInBtn}
+              experience={props.experience}
+            >
               <NavbarSubTextsWrapper2>
                 <div>
                   <NavbarSubText padding>날짜</NavbarSubText>
                   <NavbarSubUnderText padding>
-                    원하는 날짜를 입력하세요.
+                    {endDate
+                      ? startDate + "-" + endDate
+                      : "원하는 날짜를 입력하세요."}
                   </NavbarSubUnderText>
                 </div>
-                <NavbarSearchIconLabel position>
-                  <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-                </NavbarSearchIconLabel>
+                <NabarSubSearchingBtnWrapper
+                  href={
+                    "https://www.airbnb.co.kr/s/대구-수성구/experiences?tab_id=experience_tab&refinement_paths%5B%5D=%2Fexperiences&flexible_trip_dates%5B%5D=june&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
+                    rawStartDate +
+                    "&checkout=" +
+                    rawEndDate +
+                    "&query=" +
+                    splitSearchedLocation[0] +
+                    "%20" +
+                    splitSearchedLocation[1] +
+                    "&place_id=ChIJpY5rStwJZjURdivnHaeJ4-4&source=structured_search_input_header&search_type=autocomplete_click"
+                  }
+                >
+                  <NavbarSearchIconLabel
+                    position
+                  >
+                    <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+                  </NavbarSearchIconLabel>
+                </NabarSubSearchingBtnWrapper>
               </NavbarSubTextsWrapper2>
             </NavbarSubTextsContainer2>
           </ForAccommodationTextsWrapper>
@@ -367,9 +388,9 @@ const NavbarSubComponent = (props) => {
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
       <SearchingNavbar
-      changeIsCheckInOutDisplay={changeIsCheckInOutDisplay}
-      changeIsPersonnelDisplay={changeIsPersonnelDisplay}
-      changeIsLocationDisPlay={changeIsLocationDisPlay}
+        changeIsCheckInOutDisplay={changeIsCheckInOutDisplay}
+        changeIsPersonnelDisplay={changeIsPersonnelDisplay}
+        changeIsLocationDisPlay={changeIsLocationDisPlay}
         onChechInOutDisplay={onChechInOutDisplay}
         offLocationDisplay={offLocationDisplay}
         handleStartDate={handleStartDate}
