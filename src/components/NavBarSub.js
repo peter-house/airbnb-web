@@ -5,7 +5,7 @@ import SearchingNavbar from "./SearchingNavbar";
 import { useState } from "react";
 
 const NavbarSubBg = styled.div`
-  display: ${(props) => (props.subNavbar ? "none" : "block")};
+  display: ${(props) => (props.isSubNavbarOn ? "none" : "block")};
 `;
 const NavbarSubForAccommodation = styled.div``;
 const NavbarSubForExperience = styled.div``;
@@ -35,7 +35,7 @@ const LocationTextContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   aling-items: center;
-  width: ${(props) => (props.experience ? "39vw" : "300px")};
+  width: ${(props) => (props.experience ? "39vw" : "20vw")};
   height: 60px;
   border: 1px solid transparent;
   border-radius: 30px;
@@ -95,10 +95,12 @@ cursor: pointer;
 }
 `;
 const PersonnelTextContainer = styled.div`
-position: relative;
-right: -40x;
+box-shadow: ${(props) =>
+  props.isPersonnelDisplayOn
+    ? ("-5px 0 5px -5px #ebebeb")
+    : "none"};
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
 align-items: center;
 width: 19.5vw;
 height: 60px;
@@ -110,7 +112,8 @@ cursor: pointer;
 }
 }
 `;
-const PersonnelTextWrapper = styled.div``;
+const PersonnelTextWrapper = styled.div`
+padding-left: 2vw;`;
 const NavbarSubTextsWrapper = styled.div`
   display: flex;
   justify-content: start;
@@ -137,8 +140,6 @@ const NavbarSubTextsContainer2 = styled.div`
   display: ${(props) => (props.experience ? "block" : "none")};
 `;
 const NavbarSearchIconLabel = styled.label`
-  position: relative;
-  right: ${(props) => (props.position ? "0" : "-47px")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -295,7 +296,7 @@ const NavbarSubComponent = (props) => {
     setSelectedLocation();
   }
   return (
-    <NavbarSubBg subNavbar={props.subNavbar}>
+    <NavbarSubBg isSubNavbarOn={props.isSubNavbarOn}>
       <NavbarSubForAccommodation>
         <ForAccommodationBg>
           <ForAccommodationTextsWrapper>
@@ -307,7 +308,7 @@ const NavbarSubComponent = (props) => {
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
                 onClick={handleOnModifyMode}
-                onKeyUpCapture={handleLocationKeyDown}
+                onKeyUp={handleLocationKeyDown}
                 type="text"
                 placeholder={"어디로 여행가세요?"}
                 value={selectedLocation}
@@ -330,7 +331,7 @@ const NavbarSubComponent = (props) => {
                     {endDate || "날짜 입력"}
                   </NavbarSubUnderText>
                 </CheckOutTextContainer>
-                <PersonnelTextContainer onClick={clickPesonnelBtn}>
+                <PersonnelTextContainer isPersonnelDisplayOn={isPersonnelDisplayOn} onClick={clickPesonnelBtn}>
                   <PersonnelTextWrapper>
                     <NavbarSubText>인원</NavbarSubText>
                     <NavbarSubUnderText>
@@ -339,9 +340,7 @@ const NavbarSubComponent = (props) => {
                         : "게스트 " + guestNum + " 명"}
                     </NavbarSubUnderText>
                   </PersonnelTextWrapper>
-                  <NavbarSearchBtnWrapper
-                    href={searchBtnUrl}
-                  >
+                  <NavbarSearchBtnWrapper href={searchBtnUrl}>
                     <NavbarSearchIconLabel>
                       <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
                     </NavbarSearchIconLabel>
@@ -375,9 +374,7 @@ const NavbarSubComponent = (props) => {
                     "&place_id=ChIJpY5rStwJZjURdivnHaeJ4-4&source=structured_search_input_header&search_type=autocomplete_click"
                   }
                 >
-                  <NavbarSearchIconLabel
-                    position
-                  >
+                  <NavbarSearchIconLabel position>
                     <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
                   </NavbarSearchIconLabel>
                 </NabarSubSearchingBtnWrapper>

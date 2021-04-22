@@ -173,7 +173,6 @@ const SearchingNavbar = (props) => {
     props.selecteLocation(selectedPlace);
     props.offLocationDisplay();
     props.onChechInOutDisplay();
-    
   }
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
