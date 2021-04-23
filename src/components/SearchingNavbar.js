@@ -204,7 +204,9 @@ const SearchingNavbar = (props) => {
     handleClickOutsideCheckInOut(target);
     handleClickOutsidePersonnel(target);
   }
-
+  function onFocusChange({ focused }) {
+    setFocusedInput({ calendarFocused: focused });
+  }
   const handleGlobalClick = () => {
     window.addEventListener("click", handleClickOutside);
     return () => {
@@ -216,7 +218,6 @@ const SearchingNavbar = (props) => {
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     props.handleGuestNum(personnelNum);
   });
-
   return (
     <SearchingNavbarBg>
       <LocationSearching
@@ -248,6 +249,7 @@ const SearchingNavbar = (props) => {
         ref={checkInOutPageRef}
       >
         <DateRangePicker
+          onFocusChange={onFocusChange}
           displayFormat={() => "M월 D일"}
           readOnly={true}
           keepOpenOnDateSelect={true}

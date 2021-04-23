@@ -209,7 +209,9 @@ font-weight: 500;
 const NavBar = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(
+    true
+  );
   const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
   const [isGlobePageOn, setIsgelobePageOn] = useState(false);
