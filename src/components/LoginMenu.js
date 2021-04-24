@@ -37,16 +37,15 @@ const BorderLine = styled.div`
   border-radius: 30px;
   background-color: #c1c1c1;
 `;
-const LoginMenu = (props) => {
+const LoginMenu = ({changeIsUserMenuListOn,isUserMenuListOn}) => {
   const menuListRef = useRef();
-  const isUserMenuListOn = props.isUserMenuListOn;
 
   function handleClickOutside({ target }) {
     if (menuListRef.current.contains(target)) {
-      props.changeIsUserMenuListOn(true);
+      changeIsUserMenuListOn(true);
       return true;
     } else {
-      props.changeIsUserMenuListOn(false);
+      changeIsUserMenuListOn(false);
       return false;
     }
   }
@@ -61,8 +60,8 @@ const LoginMenu = (props) => {
   }, []);
 
   return (
-    props.isUserMenuListOn && (
-      <UserMenuListWrapper userMenu={props.isUserMenuListOn} ref={menuListRef}>
+    isUserMenuListOn && (
+      <UserMenuListWrapper userMenu={isUserMenuListOn} ref={menuListRef}>
         <UserMenuList>
           <Lists href={"https://www.airbnb.co.kr/login"} bold>
             회원가입
