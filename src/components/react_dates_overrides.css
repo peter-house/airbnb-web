@@ -7,23 +7,22 @@
   border: none;
   margin-left: 10px;
 }
+
 .DateRangePickerInput{
   position: relative;
-  left: 20vw;
-
-  
+  left: 20vw;  
 }
+
 .DateRangePickerInput_arrow_svg {
   display: none;
 }
-
-
 
 .DateInput_input_1 {
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;
 }
+
 .DateInput_input:hover{
   background-color: transparent;
 }
@@ -46,7 +45,6 @@ left: -10vw;
   outline: none; 
 }
 
-
 .CalendarDay__default:hover {
   background: transparent;
   border: none;
@@ -54,20 +52,17 @@ left: -10vw;
   box-shadow: inset 0 0 0 1px black;
 }
 
-
 .CalendarDay__selected_span {
   background-color: #f7f7f7;
   border: none;
   color: black;
 }
 
-
 .CalendarDay__selected_span:active,
 .CalendarDay__selected_span:hover {
   color: black;
   background-color: #f7f7f7;
 }
-
 
 .CalendarDay__selected,
 .CalendarDay__selected:active,
@@ -76,7 +71,6 @@ left: -10vw;
   border: none;
   color: white;
 }
-
 
 .CalendarDay__blocked_calendar,
 .CalendarDay__blocked_calendar:active,
@@ -88,14 +82,12 @@ left: -10vw;
   text-decoration: line-through;
 }
 
-
 .CalendarDay__hovered_span,
 .CalendarDay__hovered_span:hover {
   color: black;
   background-color: #f7f7f7;
   border: none;
 }
-
 
 .CalendarMonth_caption {
   margin-bottom: 10px;

@@ -5,13 +5,12 @@ import { DateRangePicker } from "react-dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import style from "./react_dates_overrides.css";
+import style from "../../components/react_dates_overrides.css";
 import moment from "moment";
 import "moment/locale/ko";
 
 const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
-  overflow-y: scroll;
   padding: 15px 15px;
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
@@ -143,7 +142,7 @@ const SearchingNavbar = ({
   isLocationDisplayOn,
   isChechInOutDisplayOn,
   isPersonnelDisplayOn,
-  selecteLocation
+  selecteLocation,
 }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -219,15 +218,14 @@ const SearchingNavbar = ({
     handleClickOutsideCheckInOut(target);
     handleClickOutsidePersonnel(target);
   }
-  function onFocusChange({ focused }) {
-    setFocusedInput({ calendarFocused: focused });
-  }
+  
   const handleGlobalClick = () => {
     window.addEventListener("click", handleClickOutside);
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
   };
+
   useEffect(() => {
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
@@ -235,10 +233,7 @@ const SearchingNavbar = ({
   });
   return (
     <SearchingNavbarBg>
-      <LocationSearching
-        display={isLocationDisplayOn}
-        ref={locationPageRef}
-      >
+      <LocationSearching display={isLocationDisplayOn} ref={locationPageRef}>
         {filteredLocation ? (
           filteredLocation.map((location, index) => {
             return (
@@ -264,10 +259,8 @@ const SearchingNavbar = ({
         ref={checkInOutPageRef}
       >
         <DateRangePicker
-          onFocusChange={onFocusChange}
-          displayFormat={() => "M월 D일"}
-          readOnly={true}
           keepOpenOnDateSelect={true}
+          displayFormat={() => "M월 D일"}
           startDatePlaceholderText={"날짜입력"}
           endDatePlaceholderText={"날짜입력"}
           startDate={startDate}

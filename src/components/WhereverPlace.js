@@ -26,7 +26,7 @@ const WhereverPlaceWrapper = styled.li`
   margin-right: 20px;
 `;
 
-const WhereverPlace = ({link, src, text}) => {
+const WhereverPlace = ({ link, src, text }) => {
   return (
     <WhereverPlaceWrapper>
       <WhereverLink href={link}>
