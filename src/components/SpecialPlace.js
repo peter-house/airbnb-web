@@ -33,14 +33,14 @@ const SpecialPlaceLink = styled.a`
     color: black;
   }
 `;
-const SpecialPlace = (props) => {
+const SpecialPlace = ({link, img, text, subText}) => {
   return (
-    <SpecialPlaceLink href={props.link}>
+    <SpecialPlaceLink href={link}>
       <SpecialPlaceWrapper>
-        <SpecialImg src={props.img}></SpecialImg>
+        <SpecialImg src={img}></SpecialImg>
         <SpecialTexts>
-          <SpecialTitle>{props.text}</SpecialTitle>
-          <SpecialSubTitle>{props.subText}</SpecialSubTitle>
+          <SpecialTitle>{text}</SpecialTitle>
+          <SpecialSubTitle>{subText}</SpecialSubTitle>
         </SpecialTexts>
       </SpecialPlaceWrapper>
     </SpecialPlaceLink>

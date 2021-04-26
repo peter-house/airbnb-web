@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { DateRangePicker } from "react-dates";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import style from "./react_dates_overrides.css";
@@ -10,26 +11,49 @@ import "moment/locale/ko";
 
 const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
+  overflow-y: scroll;
+  padding: 15px 15px;
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 320px;
+  left: 20vw;
   background-color: white;
-  width: 500px;
-  height: 400px;
-  border-radius: 13px;
+  width: 400px;
+  height: auto;
+  max-height: 270;
+  border-radius: 40px;
+`;
+const LocationText = styled.div``;
+const LocationContentWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const MapIconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 47px;
+  height: 47px;
+  background-color: #ebebeb;
+  border: ${(props) => (props.border ? "1px solid #c1c1c" : "none")};
+  border-radius: 10px;
+  margin-right: 20px;
 `;
 const CheckInOutSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 320px;
+  left: 20vw;
   background-color: white;
   width: 59vw;
   height: 400px;
-  border-radius: 13px;
+  border-radius: 40px;
 `;
-
 const PersonnelSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
@@ -39,13 +63,14 @@ const PersonnelSearching = styled.div`
   width: 330px;
   height: 230px;
   color: black;
-  border-radius: 13px;
+  border-radius: 40px;
 `;
 const Person = styled.div`
   font-size: 16px;
   font-weight: 600;
 `;
 const Age = styled.div`
+  color: #717171;
   font-size: 14px;
   font-weight: 400;
 `;
@@ -100,7 +125,26 @@ const PersonnelLine = styled.div`
   height: 1px;
   background-color: rgb(235, 235, 235);
 `;
-const SearchingNavbar = (props) => {
+const LocationIconImg = styled.img`
+  width: 47px;
+  height: 47px;
+`;
+const SearchingNavbar = ({
+  changeIsCheckInOutDisplay,
+  changeIsPersonnelDisplay,
+  changeIsLocationDisPlay,
+  onChechInOutDisplay,
+  offLocationDisplay,
+  handleStartDate,
+  handleEndDate,
+  typedLocation,
+  filteredLocation,
+  handleGuestNum,
+  isLocationDisplayOn,
+  isChechInOutDisplayOn,
+  isPersonnelDisplayOn,
+  selecteLocation
+}) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focusedInput, setFocusedInput] = useState();
@@ -108,6 +152,9 @@ const SearchingNavbar = (props) => {
   const [personnelChildlNum, setPersonnelChildlNum] = useState(0);
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
+  const locationPageRef = useRef();
+  const checkInOutPageRef = useRef();
+  const personnelPlageRef = useRef();
   moment.locale("ko");
 
   function handleClickPlusBtn(years) {
@@ -136,32 +183,117 @@ const SearchingNavbar = (props) => {
         break;
     }
   }
+  function handleClickLocation(event) {
+    let selectedPlace = event.target.innerHTML;
+    selecteLocation(selectedPlace);
+    offLocationDisplay();
+    onChechInOutDisplay();
+  }
+  function handleClickOutsideLocation({ target }) {
+    if (locationPageRef.current.contains(target)) {
+      changeIsLocationDisPlay(false);
+    } else {
+      changeIsLocationDisPlay(false);
+    }
+  }
+  function handleClickOutsideCheckInOut({ target }) {
+    if (checkInOutPageRef.current.contains(target)) {
+      changeIsCheckInOutDisplay(true);
+      return true;
+    } else {
+      changeIsCheckInOutDisplay(false);
+      return false;
+    }
+  }
+  function handleClickOutsidePersonnel({ target }) {
+    if (personnelPlageRef.current.contains(target)) {
+      changeIsPersonnelDisplay(true);
+      return true;
+    } else {
+      changeIsPersonnelDisplay(false);
+      return false;
+    }
+  }
+  function handleClickOutside(target) {
+    handleClickOutsideLocation(target);
+    handleClickOutsideCheckInOut(target);
+    handleClickOutsidePersonnel(target);
+  }
+  function onFocusChange({ focused }) {
+    setFocusedInput({ calendarFocused: focused });
+  }
+  const handleGlobalClick = () => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  };
   useEffect(() => {
+    handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
-    props.handleGuestNum(personnelNum);
+    handleGuestNum(personnelNum);
   });
-
   return (
     <SearchingNavbarBg>
-      <LocationSearching display={props.isLocationDisplayOn}>
-        {" "}
-        Location
+      <LocationSearching
+        display={isLocationDisplayOn}
+        ref={locationPageRef}
+      >
+        {filteredLocation ? (
+          filteredLocation.map((location, index) => {
+            return (
+              <LocationContentWrapper key={index} onClick={handleClickLocation}>
+                <MapIconWrapper>
+                  <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
+                </MapIconWrapper>
+                <LocationText>{location}</LocationText>
+              </LocationContentWrapper>
+            );
+          })
+        ) : (
+          <LocationContentWrapper>
+            <MapIconWrapper border>
+              <LocationIconImg src="https://a0.muscache.com/im/pictures/fc42dde0-36a7-460e-af89-10b5e44e48d8.jpg?im_w=240&im_q=lowq"></LocationIconImg>
+            </MapIconWrapper>
+            <LocationText>가까운 여행지 둘러보기 </LocationText>
+          </LocationContentWrapper>
+        )}
       </LocationSearching>
-      <CheckInOutSearching display={props.isChechInOutDisplayOn}>
+      <CheckInOutSearching
+        display={isChechInOutDisplayOn}
+        ref={checkInOutPageRef}
+      >
         <DateRangePicker
+          onFocusChange={onFocusChange}
+          displayFormat={() => "M월 D일"}
+          readOnly={true}
+          keepOpenOnDateSelect={true}
+          startDatePlaceholderText={"날짜입력"}
+          endDatePlaceholderText={"날짜입력"}
           startDate={startDate}
           startDateId="start-date"
           endDate={endDate}
-          endDateId="end-date"
           onDatesChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
+            handleStartDate(startDate._d || "날짜 입력");
+            handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
+          onFocusChange={({ startDate, endDate }) => {
+            setStartDate(startDate);
+            setEndDate(endDate);
+            handleStartDate(startDate._d || "날짜 입력");
+            handleEndDate(endDate ? endDate._d : "날짜 입력");
+          }}
+          endDateId="end-date"
           focusedInput={focusedInput}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>
-      <PersonnelSearching display={props.isPersonnelDisplayOn}>
+      <PersonnelSearching
+        display={isPersonnelDisplayOn}
+        ref={personnelPlageRef}
+      >
         <PersonnelListContainer>
           <PersonnelWrapper>
             <div>

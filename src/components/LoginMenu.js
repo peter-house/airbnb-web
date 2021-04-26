@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useRef } from "react";
 import { checkPropTypes } from "prop-types";
 
 const UserMenuList = styled.div``;
 const UserMenuListWrapper = styled.div`
-  display: ${(props) => (props.userMenu ? "block" : "none")};
+  // display: ${(props) => (props.isUserMenuListOn ? "block" : "none")};
   background-color: white;
   color: black;
   font-weight: normal;
@@ -15,36 +15,70 @@ const UserMenuListWrapper = styled.div`
   border-radius: 13px;
   width: 200px;
   height: 200px;
-  padding: 15px 15px;
+  padding: 10px 0px;
 `;
-
-const LoginMenu = (props) => {
+const Lists = styled.a`
+  color: black;
+  display: flex;
+  flex-direction: coloumn;
+  font-weight: ${(props) => (props.bold ? "bold" : "normal")};
+  padding: 5px 0 5px 15px;
+  text-decoration: none;
+  &:hover {
+    background-color: #f7f7f7;
+  }
+`;
+const BorderLine = styled.div`
+  position: relative;
+  left: -10px;
+  width: 210px;
+  content: "";
+  border-top: 1px solid #c1c1c1;
+  border-radius: 30px;
+  background-color: #c1c1c1;
+`;
+const LoginMenu = ({changeIsUserMenuListOn,isUserMenuListOn}) => {
   const menuListRef = useRef();
-  // const userBtnRef = props.userRef;
-  // console.log('박스',props.userMenu);
 
-  // document.addEventListener("click", (event) => {
-  //   const isMenuListClicked = [menuListRef.current].includes(event.target);    // 배경화면 클릭시 false / list 클릭되면 true
-  //   const isMenuBtnClicked = [userBtnRef.current].includes(event.target);   //  배경화면 클릭시 false / menu 클릭되면 true
-  //   if (isMenuListClicked == true || isMenuBtnClicked == true ) {
-  //     if(props.isUserMenuListOn){
-  //       props.toggleUserMenuListOn(true);
-  //     }
-  //   }else{
-  //     props.toggleUserMenuListOn(false);
-  //   }
-  // });
+  function handleClickOutside({ target }) {
+    if (menuListRef.current.contains(target)) {
+      changeIsUserMenuListOn(true);
+      return true;
+    } else {
+      changeIsUserMenuListOn(false);
+      return false;
+    }
+  }
+  const handleGlobalClick = () => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  };
+  useEffect(() => {
+    handleGlobalClick();
+  }, []);
 
   return (
-    <UserMenuListWrapper userMenu={props.userMenu}  ref={menuListRef} >
-      <UserMenuList>
-        <div>회원가입</div>
-        <div>로그인</div>
-        <div>숙소 호스트 되기</div>
-        <div>체험 호스팅하기</div>
-        <div>도움말</div>
-      </UserMenuList>
-    </UserMenuListWrapper>
+    isUserMenuListOn && (
+      <UserMenuListWrapper userMenu={isUserMenuListOn} ref={menuListRef}>
+        <UserMenuList>
+          <Lists href={"https://www.airbnb.co.kr/login"} bold>
+            회원가입
+          </Lists>
+          <Lists href={"https://www.airbnb.co.kr/login"}>로그인</Lists>
+          <BorderLine></BorderLine>
+          <Lists href={"https://www.airbnb.co.kr/host/homes"}>
+            숙소 호스트 되기
+          </Lists>
+          <Lists href={"https://www.airbnb.co.kr/host/experiences?from_nav=1"}>
+            체험 호스팅하기
+          </Lists>
+          <Lists href={"https://www.airbnb.co.kr/help/home"}>도움말</Lists>
+        </UserMenuList>
+      </UserMenuListWrapper>
+    )
   );
 };
+
 export default LoginMenu;
