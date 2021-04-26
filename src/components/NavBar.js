@@ -249,9 +249,6 @@ const NavBar = () => {
   function handleClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
   }
-  function offUserMenuList(display) {
-    setIsUserMenuListOn(display);
-  }
   function changeIsScrollToggle() {
     setIsScrollToggled(false);
     setIsSubNavbarOn(false);
@@ -332,7 +329,6 @@ const NavBar = () => {
             changeIsUserMenuListOn={changeIsUserMenuListOn}
             userRef={menuListBtnRef}
             isUserMenuListOn={isUserMenuListOn}
-            offUserMenuList={offUserMenuList}
           />
         </NavbarMainRight>
       </NavbarMain>

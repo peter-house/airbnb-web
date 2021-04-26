@@ -164,7 +164,7 @@ const NabarSubSearchingBtnWrapper = styled.a`
   }
 `;
 
-const NavbarSubComponent = (props) => {
+const NavbarSubComponent = ({accommodation, experience, isSubNavbarOn}) => {
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
   const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
   const [isPersonnelDisplayOn, setIsPersonnelDisplayOn] = useState(false);
@@ -296,14 +296,14 @@ const NavbarSubComponent = (props) => {
     setSelectedLocation();
   }
   return (
-    <NavbarSubBg isSubNavbarOn={props.isSubNavbarOn}>
+    <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <NavbarSubForAccommodation>
         <ForAccommodationBg>
           <ForAccommodationTextsWrapper>
             <LocationTextContainer
               isLocationDisplayOn={isLocationDisplayOn}
               onClick={clickLocationBtn}
-              experience={props.experience}
+              experience={experience}
             >
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
@@ -314,7 +314,7 @@ const NavbarSubComponent = (props) => {
                 value={selectedLocation}
               ></NaberLocationInput>
             </LocationTextContainer>
-            <NavbarSubTextsContainer accommodation={props.accommodation}>
+            <NavbarSubTextsContainer accommodation={accommodation}>
               <NavbarSubTextsWrapper>
                 <CheckInTextContainer
                   isChechInOutDisplayOn={isChechInOutDisplayOn}
@@ -350,7 +350,7 @@ const NavbarSubComponent = (props) => {
             </NavbarSubTextsContainer>
             <NavbarSubTextsContainer2
               onClick={clickCheckInBtn}
-              experience={props.experience}
+              experience={experience}
             >
               <NavbarSubTextsWrapper2>
                 <div>

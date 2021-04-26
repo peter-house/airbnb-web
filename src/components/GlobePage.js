@@ -49,15 +49,15 @@ const SubText = styled.div`
   color: rgb(113, 113, 113);
 `;
 
-const GlobePage = (props) => {
+const GlobePage = ({closeGlobePage,isGlobePageOn}) => {
   function handleCloseGlobePage() {
-    props.closeGlobePage();
+    closeGlobePage();
   }
   function showAlert() {
     alert("한국어로 설정 되었습니다");
   }
   return (
-    <GlobePageBg isGlobePageOn={props.isGlobePageOn}>
+    <GlobePageBg isGlobePageOn={isGlobePageOn}>
       <GlobeCloseBtn onClick={handleCloseGlobePage}>X</GlobeCloseBtn>
       <h2>언어와 지역을 선택하세요</h2>
       <GlobeTextWrapper onClick={showAlert}>

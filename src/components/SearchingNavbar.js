@@ -129,7 +129,22 @@ const LocationIconImg = styled.img`
   width: 47px;
   height: 47px;
 `;
-const SearchingNavbar = (props) => {
+const SearchingNavbar = ({
+  changeIsCheckInOutDisplay,
+  changeIsPersonnelDisplay,
+  changeIsLocationDisPlay,
+  onChechInOutDisplay,
+  offLocationDisplay,
+  handleStartDate,
+  handleEndDate,
+  typedLocation,
+  filteredLocation,
+  handleGuestNum,
+  isLocationDisplayOn,
+  isChechInOutDisplayOn,
+  isPersonnelDisplayOn,
+  selecteLocation
+}) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focusedInput, setFocusedInput] = useState();
@@ -170,32 +185,32 @@ const SearchingNavbar = (props) => {
   }
   function handleClickLocation(event) {
     let selectedPlace = event.target.innerHTML;
-    props.selecteLocation(selectedPlace);
-    props.offLocationDisplay();
-    props.onChechInOutDisplay();
+    selecteLocation(selectedPlace);
+    offLocationDisplay();
+    onChechInOutDisplay();
   }
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
-      props.changeIsLocationDisPlay(false);
+      changeIsLocationDisPlay(false);
     } else {
-      props.changeIsLocationDisPlay(false);
+      changeIsLocationDisPlay(false);
     }
   }
   function handleClickOutsideCheckInOut({ target }) {
     if (checkInOutPageRef.current.contains(target)) {
-      props.changeIsCheckInOutDisplay(true);
+      changeIsCheckInOutDisplay(true);
       return true;
     } else {
-      props.changeIsCheckInOutDisplay(false);
+      changeIsCheckInOutDisplay(false);
       return false;
     }
   }
   function handleClickOutsidePersonnel({ target }) {
     if (personnelPlageRef.current.contains(target)) {
-      props.changeIsPersonnelDisplay(true);
+      changeIsPersonnelDisplay(true);
       return true;
     } else {
-      props.changeIsPersonnelDisplay(false);
+      changeIsPersonnelDisplay(false);
       return false;
     }
   }
@@ -216,16 +231,16 @@ const SearchingNavbar = (props) => {
   useEffect(() => {
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
-    props.handleGuestNum(personnelNum);
+    handleGuestNum(personnelNum);
   });
   return (
     <SearchingNavbarBg>
       <LocationSearching
-        display={props.isLocationDisplayOn}
+        display={isLocationDisplayOn}
         ref={locationPageRef}
       >
-        {props.filteredLocation ? (
-          props.filteredLocation.map((location, index) => {
+        {filteredLocation ? (
+          filteredLocation.map((location, index) => {
             return (
               <LocationContentWrapper key={index} onClick={handleClickLocation}>
                 <MapIconWrapper>
@@ -245,7 +260,7 @@ const SearchingNavbar = (props) => {
         )}
       </LocationSearching>
       <CheckInOutSearching
-        display={props.isChechInOutDisplayOn}
+        display={isChechInOutDisplayOn}
         ref={checkInOutPageRef}
       >
         <DateRangePicker
@@ -261,14 +276,14 @@ const SearchingNavbar = (props) => {
           onDatesChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
-            props.handleStartDate(startDate._d || "날짜 입력");
-            props.handleEndDate(endDate ? endDate._d : "날짜 입력");
+            handleStartDate(startDate._d || "날짜 입력");
+            handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           onFocusChange={({ startDate, endDate }) => {
             setStartDate(startDate);
             setEndDate(endDate);
-            props.handleStartDate(startDate._d || "날짜 입력");
-            props.handleEndDate(endDate ? endDate._d : "날짜 입력");
+            handleStartDate(startDate._d || "날짜 입력");
+            handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           endDateId="end-date"
           focusedInput={focusedInput}
@@ -276,7 +291,7 @@ const SearchingNavbar = (props) => {
         />
       </CheckInOutSearching>
       <PersonnelSearching
-        display={props.isPersonnelDisplayOn}
+        display={isPersonnelDisplayOn}
         ref={personnelPlageRef}
       >
         <PersonnelListContainer>
