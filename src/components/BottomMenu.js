@@ -21,15 +21,52 @@ const BottomMenuTitles = styled.div`
   padding-bottom: 20px;
   font-family: Circular;
 `;
-const Introduce = styled.div``;
-const IntroduceMenu = styled.div`
+const Introduce = styled.div`
+display: flex;
+flex-direction: column;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const IntroduceMenu = styled.a`
   font-size: 14px;
   font-family: inherit;
   padding-bottom: 20px;
+  text-decoration: none;
+color: black;
+display: flex;
+flex-direction: column;
+  &:hover {
+    cursor: pointer;
+  }
 `;
-const Community = styled.div``;
-const DoHosting = styled.div``;
-const AirbnbSupport = styled.div``;
+const Community = styled.a`
+display: flex;
+flex-direction: column;
+text-decoration: none;
+color: black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const DoHosting = styled.a`
+display: flex;
+flex-direction: column;
+text-decoration: none;
+color: black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const AirbnbSupport = styled.a`
+display: flex;
+flex-direction: column;
+text-decoration: none;
+color: black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const BottomMenuBorder = styled.div`
   margin: 30px 0;
   width: 100%;
@@ -74,7 +111,7 @@ const BottomMenu = () => {
   return (
     <BottonMenuBg>
       <BottomMenusContainer>
-        <Introduce>
+        <Introduce href={"https://www.airbnb.co.kr/help/home"}>
           <BottomMenuTitles>소개</BottomMenuTitles>
           {bottomMenuList
             ? bottomMenuList[0].INTRODUCE_MENUS.map((introduceMenu, index) => {
@@ -84,7 +121,7 @@ const BottomMenu = () => {
               })
             : "loading.."}
         </Introduce>
-        <Community>
+        <Community href={"https://www.airbnb.co.kr/help/home"}>
           <BottomMenuTitles>커뮤니티</BottomMenuTitles>
           {bottomMenuList
             ? bottomMenuList[1].COMMUNITY_MENUS.map((introduceMenu, index) => {
@@ -94,7 +131,7 @@ const BottomMenu = () => {
               })
             : "loading.."}
         </Community>
-        <DoHosting>
+        <DoHosting href={"https://www.airbnb.co.kr/help/home"}>
           <BottomMenuTitles>호스팅하기</BottomMenuTitles>
           {bottomMenuList
             ? bottomMenuList[2].DO_HOSTING_MENUS.map((introduceMenu, index) => {
@@ -103,8 +140,8 @@ const BottomMenu = () => {
                 );
               })
             : "loading.."}
-        </DoHosting>
-        <AirbnbSupport>
+        </DoHosting >
+        <AirbnbSupport href={"https://www.airbnb.co.kr/help/home"} >
           <BottomMenuTitles>에어비앤비 지원</BottomMenuTitles>
           {bottomMenuList
             ? bottomMenuList[3].AIRBNB_SUPPORT_MENUS.map(

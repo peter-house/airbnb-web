@@ -228,6 +228,9 @@ const NavBar = () => {
       setIsSubNavbarOn(false);
     }
   });
+  function closeGlobePage() {
+    setIsgelobePageOn(false);
+  }
   function changeIsUserMenuListOn(onOff) {
     setIsUserMenuListOn(onOff);
   }
@@ -246,10 +249,10 @@ const NavBar = () => {
   function handleClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
   }
-  function offUserMenuList(display) {
-    setIsUserMenuListOn(display);
+  function changeIsScrollToggle() {
+    setIsScrollToggled(false);
+    setIsSubNavbarOn(false);
   }
-  
   return (
     <NavbarBg>
       <NavbarMain scroll={isScrollToggled}>
@@ -281,7 +284,10 @@ const NavBar = () => {
               </OnlineExperienceLink>
             </NavbarMainMiddleTexts>
           </NavbarMainMiddleTextsContainer>
-          <ScrolledMiddleTextContainer scroll={isScrollToggled}>
+          <ScrolledMiddleTextContainer
+            onClick={changeIsScrollToggle}
+            scroll={isScrollToggled}
+          >
             <ScrolledMiddleText>
               <div>검색 시작하기</div>
               <NavbarSubSeachIconLabel>
@@ -303,7 +309,10 @@ const NavBar = () => {
           >
             <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
-          <GlobePage isGlobePageOn={isGlobePageOn} />
+          <GlobePage
+            closeGlobePage={closeGlobePage}
+            isGlobePageOn={isGlobePageOn}
+          />
           <NavbarMainRightIcons ref={menuListBtnRef} onClick={clickUserMenuBtn}>
             <div>
               <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
@@ -317,10 +326,9 @@ const NavBar = () => {
             </div>
           </NavbarMainRightIcons>
           <LoginMenu
-          changeIsUserMenuListOn={changeIsUserMenuListOn}
+            changeIsUserMenuListOn={changeIsUserMenuListOn}
             userRef={menuListBtnRef}
             isUserMenuListOn={isUserMenuListOn}
-            offUserMenuList={offUserMenuList}
           />
         </NavbarMainRight>
       </NavbarMain>
@@ -329,7 +337,7 @@ const NavBar = () => {
           scroll={isScrollToggled}
           accommodation={isAccommodationSubNavbarOn}
           experience={isExperienceSubNarbarOn}
-          subNavbar={isSubNavbarOn}
+          isSubNavbarOn={isSubNavbarOn}
         />
       </NavbarSub>
     </NavbarBg>
