@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchingNavbar from "./SearchingNavbar";
-import {useState} from 'react';
+import { useState } from "react";
 
 const NavbarSubBg = styled.div`
-  display: ${(props) => (props.subNavbar ? "none" : "block")};
+  display: ${(props) => (props.isSubNavbarOn ? "none" : "block")};
 `;
 const NavbarSubForAccommodation = styled.div``;
 const NavbarSubForExperience = styled.div``;
@@ -25,13 +25,17 @@ const ForAccommodationTextsWrapper = styled.div`
   padding-left: 20px;
 `;
 const LocationTextContainer = styled.div`
+  box-shadow: ${(props) =>
+    props.isLocationDisplayOn
+      ? ("5px 0px 10px #ebebeb", "5px 0px 10px #ebebeb")
+      : "none"};
   position: relative;
   left: -21px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   aling-items: center;
-  width: ${(props) => (props.experience ? "39vw" : "300px")};
+  width: ${(props) => (props.experience ? "39vw" : "20vw")};
   height: 60px;
   border: 1px solid transparent;
   border-radius: 30px;
@@ -60,6 +64,8 @@ const NavbarSubUnderText = styled.div`
   color: #717171;
 `;
 const CheckInTextContainer = styled.div`
+box-shadow: ${(props) =>
+  props.isChechInOutDisplayOn ? "5px 0px 10px #ebebeb" : "none"};
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -89,8 +95,12 @@ cursor: pointer;
 }
 `;
 const PersonnelTextContainer = styled.div`
+box-shadow: ${(props) =>
+  props.isPersonnelDisplayOn
+    ? ("-5px 0 5px -5px #ebebeb")
+    : "none"};
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
 align-items: center;
 width: 19.5vw;
 height: 60px;
@@ -102,7 +112,8 @@ cursor: pointer;
 }
 }
 `;
-const PersonnelTextWrapper = styled.div``;
+const PersonnelTextWrapper = styled.div`
+padding-left: 2vw;`;
 const NavbarSubTextsWrapper = styled.div`
   display: flex;
   justify-content: start;
@@ -129,8 +140,6 @@ const NavbarSubTextsContainer2 = styled.div`
   display: ${(props) => (props.experience ? "block" : "none")};
 `;
 const NavbarSearchIconLabel = styled.label`
-  position: relative;
-  right: ${(props) => (props.position ? "0" : "-40px")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,95 +149,257 @@ const NavbarSearchIconLabel = styled.label`
   height: 50px;
   background-color: ff385c;
   margin-right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const NavbarSearchBtnWrapper = styled.a`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const NabarSubSearchingBtnWrapper = styled.a`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-const NavbarSubComponent = (props) => {
+const NavbarSubComponent = ({accommodation, experience, isSubNavbarOn}) => {
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
   const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
   const [isPersonnelDisplayOn, setIsPersonnelDisplayOn] = useState(false);
   const [guestNum, setGuestNum] = useState(0);
+  const [searchedLocation, setSearchedLocation] = useState([]);
+  const [typedLocation, setTypedLocation] = useState();
+  const [filteredLocation, setFilteredLocation] = useState();
+  const [selectedLocation, setSelectedLocation] = useState();
+  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState();
+  const [rawStartDate, setRawStartDate] = useState();
+  const [rawEndDate, setRawEndDate] = useState();
 
-  function clickLocationBtn () {
-    console.log('clickedsdfsdfsd')
-    setIsLocationDisplayOn(!isLocationDisplayOn);
+  const splitSearchedLocation = selectedLocation
+    ? selectedLocation.split(" ")
+    : " ";
+
+  const searchBtnUrl =
+    "https://www.airbnb.co.kr/s/대한민국-서울-용산구/homes?tab_id=home_tab&refinement_paths%5B%5D=%2Fhomes&flexible_trip_dates%5B%5D=april&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
+    rawStartDate +
+    "&checkout=" +
+    rawEndDate +
+    "&adults=" +
+    guestNum +
+    "&query=대한민국%20" +
+    splitSearchedLocation[0] +
+    "%20" +
+    splitSearchedLocation[1] +
+    "&place_id=ChIJ0z8xfjyifDURF7H5KqUsNKQ&source=structured_search_input_header&search_type=autocomplete_click";
+
+  function getRawformatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [year, month, day].join("-");
+  }
+  function changeIsLocationDisPlay(onOff) {
+    setIsLocationDisplayOn(onOff);
+  }
+  function changeIsCheckInOutDisplay(onOff) {
+    setIsChechInOutDisplayOn(onOff);
+  }
+  function changeIsPersonnelDisplay(onOff) {
+    setIsPersonnelDisplayOn(onOff);
+  }
+
+  function handleStartDate(date) {
+    setRawStartDate(getRawformatDate(date));
+    setStartDate(getFormatDate(date));
+  }
+  function handleEndDate(date) {
+    setRawEndDate(getRawformatDate(date));
+    if (date === "날짜 입력") {
+      return;
+    }
+    setEndDate(getFormatDate(date));
+  }
+  function offLocationDisplay() {
+    setIsLocationDisplayOn(false);
+  }
+  function onChechInOutDisplay() {
+    setIsChechInOutDisplayOn(true);
+  }
+  function getFormatDate(date) {
+    let month = 1 + date.getMonth();
+    let day = date.getDate();
+    day = day >= 10 ? day : "0" + day;
+    let showingDate = month + "월 " + day + "일";
+    return showingDate;
+  }
+  function selecteLocation(location) {
+    setSelectedLocation(location);
+  }
+  function clickLocationBtn(event) {
+    setIsLocationDisplayOn(true);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(false);
+    event.stopPropagation();
   }
-  function clickCheckInBtn () {
-    console.log('chechoutin')
+  function clickCheckInBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
-
+    event.stopPropagation();
   }
-  function clickCheckOutBtn () {
-    console.log('chechoutin')
+  function clickCheckOutBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
-
+    event.stopPropagation();
   }
-  function clickPesonnelBtn () {
-    console.log('personnel')
+  function clickPesonnelBtn(event) {
     setIsLocationDisplayOn(false);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(!isPersonnelDisplayOn);
+    event.stopPropagation();
   }
-  function handleGuestNum (numOfGuest) {
+  function handleGuestNum(numOfGuest) {
     setGuestNum(numOfGuest);
-  } 
-  console.log(isLocationDisplayOn)
+  }
+  function getLocationDatas() {
+    fetch("http://localhost:3000/location")
+      .then((res) => res.json())
+      .then((data) => {
+        const locationList = data.map((eachData) => {
+          return eachData.place;
+        });
+        setSearchedLocation(locationList);
+      });
+  }
+  function filterLocation() {
+    const locationList = searchedLocation.filter((location) => {
+      if (location.includes(typedLocation)) {
+        return location;
+      }
+    });
+    return locationList;
+  }
+  function handleLocationKeyDown(event) {
+    const typedLocation = event.target.value;
+    getLocationDatas();
+    setTypedLocation(typedLocation);
+    setFilteredLocation(filterLocation());
+  }
+  function handleOnModifyMode() {
+    setSelectedLocation();
+  }
   return (
-    <NavbarSubBg subNavbar={props.subNavbar}>
+    <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <NavbarSubForAccommodation>
         <ForAccommodationBg>
           <ForAccommodationTextsWrapper>
-            <LocationTextContainer onClick={clickLocationBtn} experience={props.experience}>
+            <LocationTextContainer
+              isLocationDisplayOn={isLocationDisplayOn}
+              onClick={clickLocationBtn}
+              experience={experience}
+            >
               <NavbarSubText padding>위치</NavbarSubText>
               <NaberLocationInput
+                onClick={handleOnModifyMode}
+                onKeyUp={handleLocationKeyDown}
                 type="text"
-                placeholder="어디로 여행가세요?"
+                placeholder={"어디로 여행가세요?"}
+                value={selectedLocation}
               ></NaberLocationInput>
             </LocationTextContainer>
-            <NavbarSubTextsContainer accommodation={props.accommodation}>
+            <NavbarSubTextsContainer accommodation={accommodation}>
               <NavbarSubTextsWrapper>
-                <CheckInTextContainer onClick={clickCheckInBtn}>
+                <CheckInTextContainer
+                  isChechInOutDisplayOn={isChechInOutDisplayOn}
+                  onClick={clickCheckInBtn}
+                >
                   <NavbarSubText padding>체크인</NavbarSubText>
-                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
+                  <NavbarSubUnderText padding>
+                    {startDate || "날짜 입력"}
+                  </NavbarSubUnderText>
                 </CheckInTextContainer>
                 <CheckOutTextContainer onClick={clickCheckOutBtn}>
                   <NavbarSubText padding>체크아웃</NavbarSubText>
-                  <NavbarSubUnderText padding>날짜 입력</NavbarSubUnderText>
+                  <NavbarSubUnderText padding>
+                    {endDate || "날짜 입력"}
+                  </NavbarSubUnderText>
                 </CheckOutTextContainer>
-                <PersonnelTextContainer onClick={clickPesonnelBtn}>
+                <PersonnelTextContainer isPersonnelDisplayOn={isPersonnelDisplayOn} onClick={clickPesonnelBtn}>
                   <PersonnelTextWrapper>
                     <NavbarSubText>인원</NavbarSubText>
-                    <NavbarSubUnderText>{guestNum == 0? "게스트 추가" : "게스트 " + guestNum + " 명"}</NavbarSubUnderText>
+                    <NavbarSubUnderText>
+                      {guestNum == 0
+                        ? "게스트 추가"
+                        : "게스트 " + guestNum + " 명"}
+                    </NavbarSubUnderText>
                   </PersonnelTextWrapper>
-                  <NavbarSearchIconLabel>
-                    <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-                  </NavbarSearchIconLabel>
+                  <NavbarSearchBtnWrapper href={searchBtnUrl}>
+                    <NavbarSearchIconLabel>
+                      <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+                    </NavbarSearchIconLabel>
+                  </NavbarSearchBtnWrapper>
                 </PersonnelTextContainer>
               </NavbarSubTextsWrapper>
             </NavbarSubTextsContainer>
-            <NavbarSubTextsContainer2 experience={props.experience}>
+            <NavbarSubTextsContainer2
+              onClick={clickCheckInBtn}
+              experience={experience}
+            >
               <NavbarSubTextsWrapper2>
                 <div>
                   <NavbarSubText padding>날짜</NavbarSubText>
                   <NavbarSubUnderText padding>
-                    원하는 날짜를 입력하세요.
+                    {endDate
+                      ? startDate + "-" + endDate
+                      : "원하는 날짜를 입력하세요."}
                   </NavbarSubUnderText>
                 </div>
-                <NavbarSearchIconLabel position>
-                  <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
-                </NavbarSearchIconLabel>
+                <NabarSubSearchingBtnWrapper
+                  href={
+                    "https://www.airbnb.co.kr/s/대구-수성구/experiences?tab_id=experience_tab&refinement_paths%5B%5D=%2Fexperiences&flexible_trip_dates%5B%5D=june&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
+                    rawStartDate +
+                    "&checkout=" +
+                    rawEndDate +
+                    "&query=" +
+                    splitSearchedLocation[0] +
+                    "%20" +
+                    splitSearchedLocation[1] +
+                    "&place_id=ChIJpY5rStwJZjURdivnHaeJ4-4&source=structured_search_input_header&search_type=autocomplete_click"
+                  }
+                >
+                  <NavbarSearchIconLabel position>
+                    <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
+                  </NavbarSearchIconLabel>
+                </NabarSubSearchingBtnWrapper>
               </NavbarSubTextsWrapper2>
             </NavbarSubTextsContainer2>
           </ForAccommodationTextsWrapper>
         </ForAccommodationBg>
       </NavbarSubForAccommodation>
       <NavbarSubForExperience></NavbarSubForExperience>
-      <SearchingNavbar handleGuestNum={handleGuestNum} isLocationDisplayOn={isLocationDisplayOn} isChechInOutDisplayOn={isChechInOutDisplayOn} isPersonnelDisplayOn={isPersonnelDisplayOn}  />
+      <SearchingNavbar
+        changeIsCheckInOutDisplay={changeIsCheckInOutDisplay}
+        changeIsPersonnelDisplay={changeIsPersonnelDisplay}
+        changeIsLocationDisPlay={changeIsLocationDisPlay}
+        onChechInOutDisplay={onChechInOutDisplay}
+        offLocationDisplay={offLocationDisplay}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
+        typedLocation={typedLocation}
+        filteredLocation={filteredLocation}
+        handleGuestNum={handleGuestNum}
+        isLocationDisplayOn={isLocationDisplayOn}
+        isChechInOutDisplayOn={isChechInOutDisplayOn}
+        isPersonnelDisplayOn={isPersonnelDisplayOn}
+        selecteLocation={selecteLocation}
+      />
     </NavbarSubBg>
   );
 };

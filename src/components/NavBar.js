@@ -91,6 +91,7 @@ const NavbarAccommodation = styled.div`
     content: "";
     border: 1px solid white;
     border-radius: 30px;
+    background-color: white;
   }
   &:hover {
     color: #c6c6c6;
@@ -114,6 +115,7 @@ const NavbarExperience = styled.div`
     content: "";
     border: 1px solid white;
     border-radius: 30px;
+    background-color: white;
   }
   &:hover {
     color: #c6c6c6;
@@ -166,9 +168,9 @@ const NavbarMainRightGlobeIcon = styled.div`
   height: 40px;
   border: 1px solid transparent;
   border-radius: 30px;
-  corsor: pointer;
   &:hover {
     background-color: ${(props) => (props.scroll ? "#f7f7f7" : "#262626")};
+    cursor: pointer;
   }
 `;
 const NavbarMainRightIcons = styled.div`
@@ -176,12 +178,14 @@ const NavbarMainRightIcons = styled.div`
   justify-content: space-evenly;
   align-items: center;
   background-color: white;
-
   color: black;
   width: 75px;
   height: 40px;
   border: 1px solid #c7c7c7;
   border-radius: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const HostLink = styled.a`
 display: flex;
@@ -205,11 +209,14 @@ font-weight: 500;
 const NavBar = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(
+    true
+  );
   const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
   const [isGlobePageOn, setIsgelobePageOn] = useState(false);
   const menuListBtnRef = useRef();
+
   const scrollToggle = window.addEventListener("scroll", (e) => {
     const scrollPosition = window.scrollY;
     const NAVBAR_POSITION = 70;
@@ -221,6 +228,12 @@ const NavBar = () => {
       setIsSubNavbarOn(false);
     }
   });
+  function closeGlobePage() {
+    setIsgelobePageOn(false);
+  }
+  function changeIsUserMenuListOn(onOff) {
+    setIsUserMenuListOn(onOff);
+  }
   function clickAccommodationBtn() {
     setIsAccommodationSubNavbarOn(true);
     setIsExperienceSubNarbarOn(false);
@@ -229,18 +242,17 @@ const NavBar = () => {
     setIsAccommodationSubNavbarOn(false);
     setIsExperienceSubNarbarOn(true);
   }
-  function clickUserMenuBtn(e) {
+  function clickUserMenuBtn(event) {
     setIsUserMenuListOn(!isUserMenuListOn);
-  };
-  function toggleUserMenuListOn(display) {
-    setIsUserMenuListOn(display)
-  };
+    event.stopPropagation();
+  }
   function handleClickGlobeIcon() {
     setIsgelobePageOn(!isGlobePageOn);
-    console.log(isGlobePageOn);
-    
   }
-
+  function changeIsScrollToggle() {
+    setIsScrollToggled(false);
+    setIsSubNavbarOn(false);
+  }
   return (
     <NavbarBg>
       <NavbarMain scroll={isScrollToggled}>
@@ -272,7 +284,10 @@ const NavBar = () => {
               </OnlineExperienceLink>
             </NavbarMainMiddleTexts>
           </NavbarMainMiddleTextsContainer>
-          <ScrolledMiddleTextContainer scroll={isScrollToggled}>
+          <ScrolledMiddleTextContainer
+            onClick={changeIsScrollToggle}
+            scroll={isScrollToggled}
+          >
             <ScrolledMiddleText>
               <div>검색 시작하기</div>
               <NavbarSubSeachIconLabel>
@@ -288,10 +303,16 @@ const NavBar = () => {
           >
             <div>호스트 되기</div>
           </HostLink>
-          <NavbarMainRightGlobeIcon  onClick={handleClickGlobeIcon} scroll={isScrollToggled}>
+          <NavbarMainRightGlobeIcon
+            onClick={handleClickGlobeIcon}
+            scroll={isScrollToggled}
+          >
             <FontAwesomeIcon icon={["fas", "globe"]} size="1x" />
           </NavbarMainRightGlobeIcon>
-          <GlobePage isGlobePageOn={isGlobePageOn}/>
+          <GlobePage
+            closeGlobePage={closeGlobePage}
+            isGlobePageOn={isGlobePageOn}
+          />
           <NavbarMainRightIcons ref={menuListBtnRef} onClick={clickUserMenuBtn}>
             <div>
               <FontAwesomeIcon icon={["fas", "bars"]} size="1x" />
@@ -304,7 +325,11 @@ const NavBar = () => {
               />
             </div>
           </NavbarMainRightIcons>
-              <LoginMenu userRef={menuListBtnRef} toggleUserMenuListOn={toggleUserMenuListOn} userMenu={isUserMenuListOn} isUserMenuListOn={isUserMenuListOn}/>
+          <LoginMenu
+            changeIsUserMenuListOn={changeIsUserMenuListOn}
+            userRef={menuListBtnRef}
+            isUserMenuListOn={isUserMenuListOn}
+          />
         </NavbarMainRight>
       </NavbarMain>
       <NavbarSub>
@@ -312,7 +337,7 @@ const NavBar = () => {
           scroll={isScrollToggled}
           accommodation={isAccommodationSubNavbarOn}
           experience={isExperienceSubNarbarOn}
-          subNavbar={isSubNavbarOn}
+          isSubNavbarOn={isSubNavbarOn}
         />
       </NavbarSub>
     </NavbarBg>
