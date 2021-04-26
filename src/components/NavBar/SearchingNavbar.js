@@ -11,6 +11,7 @@ import "moment/locale/ko";
 
 const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
+  overflow-y: scroll;
   padding: 15px 15px;
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
