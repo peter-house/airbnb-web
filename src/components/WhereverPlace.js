@@ -25,14 +25,16 @@ const WhereverText = styled.div`
 const WhereverPlaceWrapper = styled.li`
   margin-right: 20px;
 `;
-const WhereverPlace = (props) => {
+
+const WhereverPlace = ({link, src, text}) => {
   return (
     <WhereverPlaceWrapper>
-      <WhereverLink href={props.link}>
-        <WhereverImg src={props.src}></WhereverImg>
-        <WhereverText>{props.text}</WhereverText>
+      <WhereverLink href={link}>
+        <WhereverImg src={src}></WhereverImg>
+        <WhereverText>{text}</WhereverText>
       </WhereverLink>
     </WhereverPlaceWrapper>
   );
 };
+
 export default WhereverPlace;
