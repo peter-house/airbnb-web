@@ -31,14 +31,14 @@ const NearPlaceTextsContainer = styled.div`
   flex-direction: column;
 `;
 
-const Place = (props) => {
+const Place = ({link,src,text,subText}) => {
   return (
-    <PlaceLink href={props.link}>
+    <PlaceLink href={link}>
       <PlaceContainer>
-        <NearPlaceIcon src={props.src}></NearPlaceIcon>
+        <NearPlaceIcon src={src}></NearPlaceIcon>
         <NearPlaceTextsContainer>
-          <NearPlaceText>{props.text}</NearPlaceText>
-          <div className="nearplace-subtext">{props.subText}</div>
+          <NearPlaceText>{text}</NearPlaceText>
+          <div className="nearplace-subtext">{subText}</div>
         </NearPlaceTextsContainer>
       </PlaceContainer>
     </PlaceLink>
