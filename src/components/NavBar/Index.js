@@ -119,9 +119,9 @@ const NavbarExperience = styled.div`
     line-height: 200;
     width: 16px;
     content: "";
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 30px;
-    background-color: white;
+    background-color: black;
   }
   &:hover {
     color: #c6c6c6;
@@ -143,7 +143,7 @@ const NavbarOnlineExperience = styled.div`
     line-height: 200;
     width: 1px;
     content: "";
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 30px;
   }
   &:hover {

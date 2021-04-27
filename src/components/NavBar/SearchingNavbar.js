@@ -13,7 +13,7 @@ const SearchingNavbarBg = styled.div``;
 const LocationSearching = styled.div`
   overflow-y: scroll;
   padding: 15px 15px;
-  display: ${(props) => (props.display ? "block" : "none")};
+  display: ${(props) => (props.isLocationDisplayOn ? "block" : "none")};
   position: absolute;
   top: 155px;
   left: 20vw;
@@ -22,6 +22,8 @@ const LocationSearching = styled.div`
   height: auto;
   max-height: 270;
   border-radius: 40px;
+  z-index: 100;
+
 `;
 const LocationText = styled.div``;
 const LocationContentWrapper = styled.div`
@@ -234,8 +236,8 @@ const SearchingNavbar = ({
   });
   return (
     <SearchingNavbarBg>
-      <LocationSearching display={isLocationDisplayOn} ref={locationPageRef}>
-        {filteredLocation ? (
+      <LocationSearching typedLocation={typedLocation} filteredLocation={filteredLocation} isLocationDisplayOn={isLocationDisplayOn} ref={locationPageRef}>
+        {typedLocation ? (
           filteredLocation.map((location, index) => {
             return (
               <LocationContentWrapper key={index} onClick={handleClickLocation}>

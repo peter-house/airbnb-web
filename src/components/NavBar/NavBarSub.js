@@ -32,9 +32,8 @@ const LocationTextContainer = styled.div`
   position: relative;
   left: -21px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  aling-items: center;
+  align-items: center;
+  justify-content: space-between;
   width: ${(props) => (props.experience ? "39vw" : "20vw")};
   height: 60px;
   border: 1px solid transparent;
@@ -44,6 +43,24 @@ const LocationTextContainer = styled.div`
     background-color: #ebebeb;
   }
 `;
+const TimesIconWrapper = styled.label`
+  margin-right: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background-color: ebebeb;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const TimesIconContainer = styled.div`
+  display: ${(props) => (props.typedLocation ? "block" : "none")}
+`
 const NavbarSubText = styled.div`
   padding-left: ${(props) => (props.padding ? "20px" : "none")};
   font-size: 12px;
@@ -181,6 +198,9 @@ const NavbarSubComponent = ({
   const [startDate, setStartDate] = useState();
   const [rawStartDate, setRawStartDate] = useState();
   const [rawEndDate, setRawEndDate] = useState();
+  const [typedWord, setTypedWord] = useState();
+
+
 
   // TODO: convert to util function
   const splitSearchedLocation = selectedLocation
@@ -201,7 +221,12 @@ const NavbarSubComponent = ({
     splitSearchedLocation[1] +
     "&place_id=ChIJ0z8xfjyifDURF7H5KqUsNKQ&source=structured_search_input_header&search_type=autocomplete_click";
 
-  function changeIsLocationDisPlay(onOff) {
+
+
+
+
+
+    function changeIsLocationDisPlay(onOff) {
     setIsLocationDisplayOn(onOff);
   }
   function changeIsCheckInOutDisplay(onOff) {
@@ -266,7 +291,8 @@ const NavbarSubComponent = ({
   function handleGuestNum(numOfGuest) {
     setGuestNum(numOfGuest);
   }
-  function getLocationData() { // TODO: fix
+  function getLocationData() {
+    // TODO: fix
     _getLocationData().then((data) => {
       const locationList = data.map((eachData) => {
         return eachData.place;
@@ -282,15 +308,50 @@ const NavbarSubComponent = ({
     });
     return locationList;
   }
+  const  a = () => {
+    if(typedLocation.length === [] || typedLocation == undefined) {
+      return false;
+    }else {
+      return true;
+    }
+  }
+
+  const b =() => {
+    if(filterLocation) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
   function handleLocationKeyDown(event) {
     const typedLocation = event.target.value;
     getLocationData();
     setTypedLocation(typedLocation);
     setFilteredLocation(filterLocation());
+
+    const isLocationSearchingOn = () => {
+      const isTypedLocation = a();
+      const isFilterdLocation = b();
+
+      if(isTypedLocation && isFilterdLocation) {
+        return true;
+      }
+    }
+    changeIsLocationDisPlay(isLocationSearchingOn);
+    console.log("filteredLocation",filteredLocation)
+    console.log('typedlocation',typedLocation)
+    console.log("지금!!!",isLocationDisplayOn);
+    
   }
   function handleOnModifyMode() {
     setSelectedLocation();
   }
+  const handleClickCancelBtn = () => {
+    setSelectedLocation("");
+    setTypedLocation("");
+  }
+
   return (
     <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <div>
@@ -301,14 +362,21 @@ const NavbarSubComponent = ({
               onClick={clickLocationBtn}
               experience={experience}
             >
-              <NavbarSubText padding>위치</NavbarSubText>
-              <NaberLocationInput
-                onClick={handleOnModifyMode}
-                onKeyUp={handleLocationKeyDown}
-                type="text"
-                placeholder={"어디로 여행가세요?"}
-                value={selectedLocation}
-              ></NaberLocationInput>
+              <div>
+                <NavbarSubText padding>위치</NavbarSubText>
+                <NaberLocationInput
+                  onClick={handleOnModifyMode}
+                  onKeyUp={handleLocationKeyDown}
+                  type="text"
+                  placeholder={"어디로 여행가세요?"}
+                  value={selectedLocation}
+                ></NaberLocationInput>
+              </div>
+              <TimesIconContainer typedLocation={typedLocation}>
+              <TimesIconWrapper onClick={handleClickCancelBtn}>
+                <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
+              </TimesIconWrapper>
+              </TimesIconContainer>
             </LocationTextContainer>
             <NavbarSubTextsContainer accommodation={accommodation}>
               <NavbarSubTextsWrapper>
