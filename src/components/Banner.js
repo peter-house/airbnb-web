@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
+import {useRef} from "react";
 
 const BannerBg = styled.div`
   background-image: url("https://a0.muscache.com/im/pictures/ddc7f01f-3fb3-483c-87e6-701dad52c930.jpg?im_w=2560");
@@ -48,10 +49,15 @@ const BannerBtn = styled.a`
   }
 `
 
-const Banner = () => {
+const Banner = ({getBannerBgRef}) => {
   const BannerTitle = ["슬기로운", <br />, "자연생활"];
+  const bannerBgRef = useRef();
+  
+  useEffect(()=> {
+    getBannerBgRef(bannerBgRef);
+  })
   return (
-    <BannerBg>
+    <BannerBg ref={bannerBgRef}>
       <BannerTexts>
         <BannerText>{BannerTitle}</BannerText>
         <BannerSubText>에어비앤비가 엄선한 위시리스트를 만나보세요.</BannerSubText>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import {useRef, useEffect} from "react";
 
 const GlobePageBg = styled.div`
   display: ${(props) => (props.isGlobePageOn ? "block" : "none")};
@@ -14,6 +15,7 @@ const GlobePageBg = styled.div`
   border-radius: 13px;
   background-color: white;
 `;
+
 const GlobeCloseBtn = styled.div`
   font-size: 20px;
   display: flex;
@@ -30,6 +32,7 @@ const GlobeCloseBtn = styled.div`
     background-color: #f7f7f7;
   }
 `;
+
 const GlobeTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,19 +48,45 @@ const GlobeTextWrapper = styled.div`
     background-color: #f7f7f7;
   }
 `;
+
 const SubText = styled.div`
   color: rgb(113, 113, 113);
 `;
 
-const GlobePage = ({closeGlobePage,isGlobePageOn}) => {
+const GlobePage = ({closeGlobePage, isGlobePageOn, handleGlobePage}) => {
+  const globePaggRef = useRef();
+
+  function handleClickOutside({ target }) {
+    if (globePaggRef.current.contains(target)) {
+      handleGlobePage(true);
+      return ture;
+    } else {
+      handleGlobePage(false);
+      return false;
+    }
+  }
+
+  const handleGlobalClick = () => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  };
+  
+  useEffect(() => {
+    handleGlobalClick();
+  }, []);
+
+
   function handleCloseGlobePage() {
     closeGlobePage();
+    event.stopPropagation();
   }
   function showAlert() {
     alert("한국어로 설정 되었습니다");
   }
   return (
-    <GlobePageBg isGlobePageOn={isGlobePageOn}>
+    <GlobePageBg ref={globePaggRef} isGlobePageOn={isGlobePageOn}>
       <GlobeCloseBtn onClick={handleCloseGlobePage}>X</GlobeCloseBtn>
       <h2>언어와 지역을 선택하세요</h2>
       <GlobeTextWrapper onClick={showAlert}>

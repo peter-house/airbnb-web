@@ -37,7 +37,7 @@ const HostingBtn = styled.button`
   backgroud-color: white;
   padding: 14px 24px;
   border-radius: 10px;
-  border-color: white:
+  border: 0;
   outline: none;
   &:focus {
     border-color: white:

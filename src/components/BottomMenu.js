@@ -97,8 +97,8 @@ const InstaIcon = styled.div`
 `;
 const BottomMenu = () => {
   const [bottomMenuList, setBottomMenuAPIs] = useState();
-  const getBottomMenuAPIs = () => {
-    fetch("http://localhost:3000/bottomMenus")
+  const getBottomMenuAPIs = async () => {
+    await fetch("http://localhost:3000/bottomMenus")
       .then((res) => res.json())
       .then((data) => {
         setBottomMenuAPIs(data);

@@ -2,9 +2,11 @@ import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchingNavbar from "./SearchingNavbar";
-import { useState } from "react";
-import { getRawformatDate } from "../../utils/date";
+import { useState, useEffect} from "react";
+import { getRawformatDate } from "../../utils/RawFormatDate";
+import { getFormatDate } from "../../utils/FormatDate";
 import { getLocationData as _getLocationData } from "../../apis";
+import { entries } from "lodash";
 
 const NavbarSubBg = styled.div`
   display: ${(props) => (props.isSubNavbarOn ? "none" : "block")};
@@ -30,18 +32,21 @@ const LocationTextContainer = styled.div`
       ? ("5px 0px 10px #ebebeb", "5px 0px 10px #ebebeb")
       : "none"};
   position: relative;
-  left: -21px;
+  left: -20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: ${(props) => (props.experience ? "39vw" : "20vw")};
-  height: 60px;
+  height: 62px;
   border: 1px solid transparent;
   border-radius: 30px;
   cursor: pointer;
+  &:focus {
   &:hover {
-    background-color: #ebebeb;
+    background-color: ${(props) =>
+      props.isLocationDisplayOn ? "white" : "#ebebeb"};
   }
+}
 `;
 const TimesIconWrapper = styled.label`
   margin-right: 10px;
@@ -59,14 +64,14 @@ const TimesIconWrapper = styled.label`
   }
 `;
 const TimesIconContainer = styled.div`
-  display: ${(props) => (props.typedLocation ? "block" : "none")}
-`
+  display: ${(props) => (props.cancelIconDisplay ? "block" : "none")};
+`;
 const NavbarSubText = styled.div`
   padding-left: ${(props) => (props.padding ? "20px" : "none")};
   font-size: 12px;
   font-weight: 800;
 `;
-const NaberLocationInput = styled.input`
+const NavbarLocationInput = styled.input`
   padding-left: 20px;
   background-color: transparent;
   border: none;
@@ -82,32 +87,36 @@ const NavbarSubUnderText = styled.div`
 `;
 const CheckInTextContainer = styled.div`
 box-shadow: ${(props) =>
-  props.isChechInOutDisplayOn ? "5px 0px 10px #ebebeb" : "none"};
+  props.checkInOutMode == "check-in" ? "5px 0px 10px #ebebeb" : "none"};
 display: flex;
 flex-direction: column;
 justify-content: center;
 width: 12vw;
-height: 60px;
+height: 62px;
 border: 1px solid transparent;
 border-radius: 30px;
 margin-left: -20px;
 cursor: pointer;
 &:hover {
-    background-color: #ebebeb;
+    background-color: ${(props) =>
+      props.checkInOutMode == "check-in" ? "white" : "#ebebeb"};
 }
 }
 `;
 const CheckOutTextContainer = styled.div`
+box-shadow: ${(props) =>
+  props.checkInOutMode == "check-out" ? "5px 0px 10px #ebebeb" : "none"};
 display: flex;
 flex-direction: column;
 justify-content: center;
 width: 12vw;
-height: 60px;
+height: 62px;
 border: 1px solid transparent;
 border-radius: 30px;
 cursor: pointer;
 &:hover {
-    background-color: #ebebeb;
+  background-color: ${(props) =>
+    props.checkInOutMode == "check-out" ? "white" : "#ebebeb"};
 }
 }
 `;
@@ -118,12 +127,13 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 width: 19.5vw;
-height: 60px;
+height: 62px;
 border: 1px solid transparent;
 border-radius: 30px;
 cursor: pointer;
 &:hover {
-    background-color: #ebebeb;
+  background-color: ${(props) =>
+    props.isPersonnelDisplayOn ? "white" : "#ebebeb"};
 }
 }
 `;
@@ -141,7 +151,7 @@ const NavbarSubTextsWrapper2 = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 28.35vw;
-  height: 60px;
+  height: 62px;
   border: 1px solid transparent;
   border-radius: 30px;
   cursor: pointer;
@@ -181,13 +191,15 @@ const NabarSubSearchingBtnWrapper = styled.a`
 `;
 
 const NavbarSubComponent = ({
+
   searchMode,
   accommodation,
   experience,
   isSubNavbarOn,
 }) => {
   const [isLocationDisplayOn, setIsLocationDisplayOn] = useState(false);
-  const [isChechInOutDisplayOn, setIsChechInOutDisplayOn] = useState(false);
+  const [isCheckInDisplayOn, setIsCheckInDisplayOn] = useState(false);
+  const [isCheckOutDisplayOn, setIsCheckOutDisplayOn] = useState(false);
   const [isPersonnelDisplayOn, setIsPersonnelDisplayOn] = useState(false);
   const [guestNum, setGuestNum] = useState(0);
   const [searchedLocation, setSearchedLocation] = useState([]);
@@ -199,8 +211,9 @@ const NavbarSubComponent = ({
   const [rawStartDate, setRawStartDate] = useState();
   const [rawEndDate, setRawEndDate] = useState();
   const [typedWord, setTypedWord] = useState();
-
-
+  const [cancelIconDisplay, setCancelIconDisplay] = useState(false);
+  const [triggerInput, setTriggerInput] = useState();
+  const [checkInOutMode, setCheckInOutMode] = useState();
 
   // TODO: convert to util function
   const splitSearchedLocation = selectedLocation
@@ -222,18 +235,26 @@ const NavbarSubComponent = ({
     "&place_id=ChIJ0z8xfjyifDURF7H5KqUsNKQ&source=structured_search_input_header&search_type=autocomplete_click";
 
 
+  const CHECK_INOUT_FOCUSE = {
+    CHECKIN: 'check-in',
+    CHECKOUT: 'check-out',
+  }
 
+  function onCheckInMode() {
+    setCheckInOutMode(CHECK_INOUT_FOCUSE.CHECKIN);
+  }
 
-
-
-    function changeIsLocationDisPlay(onOff) {
+  function changeIsLocationDisPlay(onOff) {
     setIsLocationDisplayOn(onOff);
   }
-  function changeIsCheckInOutDisplay(onOff) {
-    setIsChechInOutDisplayOn(onOff);
+  function changeIsCheckInDisplay(onOff) {
+    setIsCheckInDisplayOn(onOff);
   }
   function changeIsPersonnelDisplay(onOff) {
     setIsPersonnelDisplayOn(onOff);
+  }
+  function onTiriggerInput() {
+    setTriggerInput("startDate");
   }
 
   function handleStartDate(date) {
@@ -250,112 +271,127 @@ const NavbarSubComponent = ({
   function offLocationDisplay() {
     setIsLocationDisplayOn(false);
   }
-  function onChechInOutDisplay() {
-    setIsChechInOutDisplayOn(true);
+  function onCheckInDisplay() {
+    setIsCheckInDisplayOn(true);
   }
-  function getFormatDate(date) {
-    // TODO
-    let month = 1 + date.getMonth();
-    let day = date.getDate();
-    day = day >= 10 ? day : "0" + day;
-    let showingDate = month + "월 " + day + "일";
-    return showingDate;
-  }
+
   function selecteLocation(location) {
-    setSelectedLocation(location);
+    setSelectedLocation(location.place);
   }
   function clickLocationBtn(event) {
     setIsLocationDisplayOn(true);
-    setIsChechInOutDisplayOn(false);
+    setIsCheckInDisplayOn(false);
     setIsPersonnelDisplayOn(false);
+    setCheckInOutMode("");
     event.stopPropagation();
   }
   function clickCheckInBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
-    setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    setIsCheckInDisplayOn(true);
+    setIsCheckOutDisplayOn(false);
+    setTriggerInput("startDate");
+    setCheckInOutMode(CHECK_INOUT_FOCUSE.CHECKIN);
     event.stopPropagation();
   }
   function clickCheckOutBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
-    setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    setTriggerInput("endDate");
+    setCheckInOutMode(CHECK_INOUT_FOCUSE.CHECKOUT);
     event.stopPropagation();
   }
   function clickPesonnelBtn(event) {
     setIsLocationDisplayOn(false);
-    setIsChechInOutDisplayOn(false);
+    setIsCheckInDisplayOn(false);
     setIsPersonnelDisplayOn(!isPersonnelDisplayOn);
+    setCheckInOutMode("");
     event.stopPropagation();
   }
   function handleGuestNum(numOfGuest) {
     setGuestNum(numOfGuest);
   }
   function getLocationData() {
-    // TODO: fix
+    // TODO: fix /// Promise로 바꿔보기
     _getLocationData().then((data) => {
       const locationList = data.map((eachData) => {
-        return eachData.place;
+        return eachData;
       });
       setSearchedLocation(locationList);
     });
   }
   function filterLocation() {
-    const locationList = searchedLocation.filter((location) => {
-      if (location.includes(typedLocation)) {
+    const locationList = searchedLocation.filter(location => {
+      if (location.place.includes(typedLocation)) {
         return location;
       }
     });
     return locationList;
   }
-  const  a = () => {
-    if(typedLocation.length === [] || typedLocation == undefined) {
-      return false;
-    }else {
-      return true;
-    }
-  }
 
-  const b =() => {
-    if(filterLocation) {
+  const checkLocation = () => {
+    if (
+      (Array.isArray(filteredLocation) && filteredLocation.length == 0) ||
+      filteredLocation === undefined
+    ) {
+      return false;
+    } else {
       return true;
-    }else {
+    }
+  };
+
+  const checkTypedLocation = () => {
+    if (typedLocation) {
+      return true;
+    } else {
       return false;
     }
-  }
+  };
+
+  const isLocationSearchingOn = () => {
+    const isFilterdLocation = checkLocation();
+    const isTypedLocation = checkTypedLocation();
+    if (isFilterdLocation && isTypedLocation) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const offCanCelIcon = () => {
+    setCancelIconDisplay(false);
+  };
 
   function handleLocationKeyDown(event) {
     const typedLocation = event.target.value;
+    setCancelIconDisplay(typedLocation ? true : false);
     getLocationData();
     setTypedLocation(typedLocation);
     setFilteredLocation(filterLocation());
 
-    const isLocationSearchingOn = () => {
-      const isTypedLocation = a();
-      const isFilterdLocation = b();
-
-      if(isTypedLocation && isFilterdLocation) {
-        return true;
-      }
-    }
-    changeIsLocationDisPlay(isLocationSearchingOn);
-    console.log("filteredLocation",filteredLocation)
-    console.log('typedlocation',typedLocation)
-    console.log("지금!!!",isLocationDisplayOn);
-    
+    changeIsLocationDisPlay(isLocationSearchingOn());
   }
   function handleOnModifyMode() {
     setSelectedLocation();
   }
   const handleClickCancelBtn = () => {
+    setCancelIconDisplay(false);
     setSelectedLocation("");
     setTypedLocation("");
+  };
+
+  function onCheckOutMode() {
+    if(startDate && isCheckInDisplayOn) {setCheckInOutMode("check-out")}
   }
+
+  useEffect(() => {
+    onCheckOutMode();
+  })
 
   return (
     <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <div>
-        <ForAccommodationBg>
+        <ForAccommodationBg >
           <ForAccommodationTextsWrapper>
             <LocationTextContainer
               isLocationDisplayOn={isLocationDisplayOn}
@@ -364,24 +400,25 @@ const NavbarSubComponent = ({
             >
               <div>
                 <NavbarSubText padding>위치</NavbarSubText>
-                <NaberLocationInput
+                <NavbarLocationInput
                   onClick={handleOnModifyMode}
                   onKeyUp={handleLocationKeyDown}
                   type="text"
                   placeholder={"어디로 여행가세요?"}
                   value={selectedLocation}
-                ></NaberLocationInput>
+                ></NavbarLocationInput>
               </div>
-              <TimesIconContainer typedLocation={typedLocation}>
-              <TimesIconWrapper onClick={handleClickCancelBtn}>
-                <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
-              </TimesIconWrapper>
+              <TimesIconContainer cancelIconDisplay={cancelIconDisplay}>
+                <TimesIconWrapper onClick={handleClickCancelBtn}>
+                  <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
+                </TimesIconWrapper>
               </TimesIconContainer>
             </LocationTextContainer>
             <NavbarSubTextsContainer accommodation={accommodation}>
               <NavbarSubTextsWrapper>
                 <CheckInTextContainer
-                  isChechInOutDisplayOn={isChechInOutDisplayOn}
+                  checkInOutMode={checkInOutMode}
+                  isCheckInDisplayOn={isCheckInDisplayOn}
                   onClick={clickCheckInBtn}
                 >
                   <NavbarSubText padding>체크인</NavbarSubText>
@@ -389,7 +426,11 @@ const NavbarSubComponent = ({
                     {startDate || "날짜 입력"}
                   </NavbarSubUnderText>
                 </CheckInTextContainer>
-                <CheckOutTextContainer onClick={clickCheckOutBtn}>
+                <CheckOutTextContainer
+                checkInOutMode={checkInOutMode}
+                  isCheckOutDisplayOn={isCheckOutDisplayOn}
+                  onClick={clickCheckOutBtn}
+                >
                   <NavbarSubText padding>체크아웃</NavbarSubText>
                   <NavbarSubUnderText padding>
                     {endDate || "날짜 입력"}
@@ -429,17 +470,6 @@ const NavbarSubComponent = ({
                   </NavbarSubUnderText>
                 </div>
                 <NabarSubSearchingBtnWrapper
-                  href={
-                    "https://www.airbnb.co.kr/s/대구-수성구/experiences?tab_id=experience_tab&refinement_paths%5B%5D=%2Fexperiences&flexible_trip_dates%5B%5D=june&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
-                    rawStartDate +
-                    "&checkout=" +
-                    rawEndDate +
-                    "&query=" +
-                    splitSearchedLocation[0] +
-                    "%20" +
-                    splitSearchedLocation[1] +
-                    "&place_id=ChIJpY5rStwJZjURdivnHaeJ4-4&source=structured_search_input_header&search_type=autocomplete_click"
-                  }
                 >
                   <NavbarSearchIconLabel position>
                     <FontAwesomeIcon icon={["fas", "search"]} size="1x" />
@@ -451,10 +481,14 @@ const NavbarSubComponent = ({
         </ForAccommodationBg>
       </div>
       <SearchingNavbar
-        changeIsCheckInOutDisplay={changeIsCheckInOutDisplay}
+        onCheckInMode={onCheckInMode}
+        onTiriggerInput={onTiriggerInput}
+        triggerInput={triggerInput}
+        offCanCelIcon={offCanCelIcon}
+        changeIsCheckInDisplay={changeIsCheckInDisplay}
         changeIsPersonnelDisplay={changeIsPersonnelDisplay}
         changeIsLocationDisPlay={changeIsLocationDisPlay}
-        onChechInOutDisplay={onChechInOutDisplay}
+        onCheckInDisplay={onCheckInDisplay}
         offLocationDisplay={offLocationDisplay}
         handleStartDate={handleStartDate}
         handleEndDate={handleEndDate}
@@ -462,7 +496,8 @@ const NavbarSubComponent = ({
         filteredLocation={filteredLocation}
         handleGuestNum={handleGuestNum}
         isLocationDisplayOn={isLocationDisplayOn}
-        isChechInOutDisplayOn={isChechInOutDisplayOn}
+        isCheckInDisplayOn={isCheckInDisplayOn}
+        isCheckOutDisplayOn={isCheckOutDisplayOn}
         isPersonnelDisplayOn={isPersonnelDisplayOn}
         selecteLocation={selecteLocation}
       />

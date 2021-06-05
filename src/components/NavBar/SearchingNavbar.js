@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { DateRangePicker } from "react-dates";
+import { DateRangePicker} from "react-dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -9,20 +9,22 @@ import style from "../../components/react_dates_overrides.css";
 import moment from "moment";
 import "moment/locale/ko";
 
-const SearchingNavbarBg = styled.div``;
+const SearchingNavbarBg = styled.div`
+  z-index: 100;`;
 const LocationSearching = styled.div`
-  overflow-y: scroll;
   padding: 15px 15px;
   display: ${(props) => (props.isLocationDisplayOn ? "block" : "none")};
   position: absolute;
   top: 155px;
   left: 20vw;
   background-color: white;
-  width: 400px;
+  width: 470px;
   height: auto;
-  max-height: 270;
+  max-height: 310px;
   border-radius: 40px;
   z-index: 100;
+  box-shadow: 0 0 3px 1px #ebebeb;
+  overflow: hidden;
 
 `;
 const LocationText = styled.div``;
@@ -31,8 +33,10 @@ const LocationContentWrapper = styled.div`
   justify-content: start;
   align-items: center;
   margin: 15px;
+  border-radius: 20px;
   &:hover {
     cursor: pointer;
+    background-color: #f7f7f7;
   }
 `;
 const MapIconWrapper = styled.div`
@@ -46,16 +50,17 @@ const MapIconWrapper = styled.div`
   border-radius: 10px;
   margin-right: 20px;
 `;
-const CheckInOutSearching = styled.div`
-  display: ${(props) => (props.display ? "block" : "none")};
+const CheckInSearching = styled.div`
+  display: ${(props) => (props.isLocationSearchingOn ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 20vw;
-  background-color: white;
-  width: 59vw;
-  height: 400px;
+  left: 30vw;
+  background-color: transparent;
+  width: 37vw;
+  height: 300px;
   border-radius: 40px;
 `;
+
 const PersonnelSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
@@ -131,11 +136,14 @@ const LocationIconImg = styled.img`
   width: 47px;
   height: 47px;
 `;
+
 const SearchingNavbar = ({
-  changeIsCheckInOutDisplay,
+  onCheckInMode,
+  onTiriggerInput,
+  changeIsCheckInDisplay,
   changeIsPersonnelDisplay,
   changeIsLocationDisPlay,
-  onChechInOutDisplay,
+  onCheckInDisplay,
   offLocationDisplay,
   handleStartDate,
   handleEndDate,
@@ -143,9 +151,12 @@ const SearchingNavbar = ({
   filteredLocation,
   handleGuestNum,
   isLocationDisplayOn,
-  isChechInOutDisplayOn,
+  isCheckInDisplayOn,
+  isCheckOutDisplayOn,
   isPersonnelDisplayOn,
   selecteLocation,
+  offCanCelIcon,
+  triggerInput
 }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -155,9 +166,11 @@ const SearchingNavbar = ({
   const [personnelBabylNum, setPersonnelBabyNum] = useState(0);
   const [personnelNum, setPersonnelNum] = useState(0);
   const locationPageRef = useRef();
-  const checkInOutPageRef = useRef();
+  const checkInPageRef = useRef();
   const personnelPlageRef = useRef();
   moment.locale("ko");
+
+  const isLocationSearchingOn = (isCheckInDisplayOn || isCheckOutDisplayOn);
 
   function handleClickPlusBtn(years) {
     switch (years) {
@@ -185,12 +198,17 @@ const SearchingNavbar = ({
         break;
     }
   }
-  function handleClickLocation(event) {
-    let selectedPlace = event.target.innerHTML;
+  function handleClickLocation(placeId) {
+    const selectedPlace = filteredLocation.find(location => location.id === placeId)
     selecteLocation(selectedPlace);
     offLocationDisplay();
-    onChechInOutDisplay();
+    onCheckInDisplay();
+    offCanCelIcon(false);
+    onTiriggerInput();
+    onCheckInMode();
+    event.stopPropagation();
   }
+   
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
       changeIsLocationDisPlay(false);
@@ -198,12 +216,12 @@ const SearchingNavbar = ({
       changeIsLocationDisPlay(false);
     }
   }
-  function handleClickOutsideCheckInOut({ target }) {
-    if (checkInOutPageRef.current.contains(target)) {
-      changeIsCheckInOutDisplay(true);
+  function handleClickOutsideCheckIn({ target }) {
+    if (checkInPageRef.current.contains(target)) {
+      changeIsCheckInDisplay(true);
       return true;
     } else {
-      changeIsCheckInOutDisplay(false);
+      changeIsCheckInDisplay(false);
       return false;
     }
   }
@@ -218,8 +236,12 @@ const SearchingNavbar = ({
   }
   function handleClickOutside(target) {
     handleClickOutsideLocation(target);
-    handleClickOutsideCheckInOut(target);
+    handleClickOutsideCheckIn(target);
     handleClickOutsidePersonnel(target);
+  }
+  function handleSelect(ranges) {
+    setStartDate(ranges.selection.startDate);
+    setEndDate(ranges.selection.endDate);
   }
   
   const handleGlobalClick = () => {
@@ -233,18 +255,20 @@ const SearchingNavbar = ({
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     handleGuestNum(personnelNum);
+   
   });
-  return (
-    <SearchingNavbarBg>
+
+  const renderLocationSearching = () => {
+    return (
       <LocationSearching typedLocation={typedLocation} filteredLocation={filteredLocation} isLocationDisplayOn={isLocationDisplayOn} ref={locationPageRef}>
         {typedLocation ? (
-          filteredLocation.map((location, index) => {
+          filteredLocation.map(({id : placeId, place}, index) => {
             return (
-              <LocationContentWrapper key={index} onClick={handleClickLocation}>
+              <LocationContentWrapper key={index} onClick={() => handleClickLocation(placeId)}>
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
-                <LocationText>{location}</LocationText>
+                <LocationText>{place}</LocationText>
               </LocationContentWrapper>
             );
           })
@@ -257,9 +281,17 @@ const SearchingNavbar = ({
           </LocationContentWrapper>
         )}
       </LocationSearching>
-      <CheckInOutSearching
-        display={isChechInOutDisplayOn}
-        ref={checkInOutPageRef}
+    )
+  }
+
+  return (
+    <SearchingNavbarBg>
+      {renderLocationSearching()}
+      <CheckInSearching
+        isLocationSearchingOn={isLocationSearchingOn}
+        isCheckOutDisplayOn={isCheckOutDisplayOn}
+        isCheckInDisplayOn={isCheckInDisplayOn}
+        ref={checkInPageRef}
       >
         <DateRangePicker
           keepOpenOnDateSelect={true}
@@ -275,17 +307,11 @@ const SearchingNavbar = ({
             handleStartDate(startDate._d || "날짜 입력");
             handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
-          onFocusChange={({ startDate, endDate }) => {
-            setStartDate(startDate);
-            setEndDate(endDate);
-            handleStartDate(startDate._d || "날짜 입력");
-            handleEndDate(endDate ? endDate._d : "날짜 입력");
-          }}
           endDateId="end-date"
-          focusedInput={focusedInput}
+          focusedInput={focusedInput || triggerInput}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
-      </CheckInOutSearching>
+      </CheckInSearching>
       <PersonnelSearching
         display={isPersonnelDisplayOn}
         ref={personnelPlageRef}

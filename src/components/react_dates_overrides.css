@@ -2,7 +2,13 @@
 .DayPickerKeyboardShortcuts_buttonReset {
     display: none;
 }
-
+.DayPicker_transitionContainer{
+  border-radius: 0px;
+}
+.DateRangePicker_picker {
+  width: 200px;
+  height: 100px;
+}
 .DateRangePickerInput__withBorder {
   border: none;
   margin-left: 10px;
@@ -10,7 +16,7 @@
 
 .DateRangePickerInput{
   position: relative;
-  left: 20vw;  
+  left: 10vw;  
 }
 
 .DateRangePickerInput_arrow_svg {
@@ -22,6 +28,24 @@
   font-size: 14px;
   font-weight: 400;
 }
+.DateInput_fangStroke {
+  display: none;
+}
+.CalendarMonth{
+  overflow: hidden;
+  border-radius: 30px;
+}
+.CalendarMonthGrid{
+  width: 615px;
+  overflow: hidden;
+  border-radius: 30px;
+  position: relative;
+  left: -0;
+}
+.CalendarMonthGrid_1{
+  width: 615px !important;
+  height: 300px;
+}
 
 .DateInput_input:hover{
   background-color: transparent;
@@ -29,13 +53,20 @@
 
 .DateInput_input{
   background-color: transparent;
+  display: none;
+}
+.DayPickerNavigation_button__horizontalDefault {
+  overflow: hidden;
+  border: none;
+  border-radius: 30px;
 }
 
 .DayPicker__withBorder {
-  border: none;
-position: relative;
-top: -20px;
-left: -10vw;
+  overflow: hidden;
+  border-radius: 30px;
+  position: relative;
+  top: -65px;
+  left: -10vw;
 }
 
 .CalendarDay__default {
@@ -92,4 +123,6 @@ left: -10vw;
 .CalendarMonth_caption {
   margin-bottom: 10px;
 }
+
+
 

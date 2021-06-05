@@ -23,7 +23,7 @@ const SpecialWaysCotainer = styled.div`
 const SpecialWay = () => {
   const [specialPlaceAPI, setSpecialPlaceAPI] = useState();
   const getSpecialPlaceAPI = () => {
-    fetch("http://localhost:3000/specialPlaces")
+    fetch("http://localhost:3000/special_way")
       .then((res) => res.json())
       .then((data) => {
         setSpecialPlaceAPI(data);

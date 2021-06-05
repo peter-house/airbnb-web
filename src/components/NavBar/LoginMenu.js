@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { checkPropTypes } from "prop-types";
+import LoginPage from "./LoginPage";
+
 
 const UserMenuList = styled.div``;
 const UserMenuListWrapper = styled.div`
@@ -28,6 +30,20 @@ const Lists = styled.a`
     background-color: #f7f7f7;
   }
 `;
+const SingUP = styled.div`
+  color: black;
+  display: flex;
+  flex-direction: coloumn;
+  font-weight: ${(props) => (props.bold ? "bold" : "normal")};
+  padding: 5px 0 5px 15px;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+  }
+
+`
+
 const BorderLine = styled.div`
   position: relative;
   left: -10px;
@@ -39,13 +55,22 @@ const BorderLine = styled.div`
 `;
 const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
   const menuListRef = useRef();
+  const [isLoginPageOn, setIsLoginPageOn] = useState(false);
 
+  function handleLoginPage(bool) {
+    setIsLoginPageOn(bool);
+  }
+  function onLoginPage() {
+    setIsLoginPageOn(true);
+    event.stopPropagation();
+  }
   function handleClickOutside({ target }) {
     if (menuListRef.current.contains(target)) {
       changeIsUserMenuListOn(true);
       return true;
     } else {
       changeIsUserMenuListOn(false);
+      handleLoginPage(false);
       return false;
     }
   }
@@ -55,6 +80,7 @@ const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
       window.removeEventListener("click", handleClickOutside);
     };
   };
+  
   useEffect(() => {
     handleGlobalClick();
   }, []);
@@ -63,10 +89,14 @@ const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
     isUserMenuListOn && (
       <UserMenuListWrapper userMenu={isUserMenuListOn} ref={menuListRef}>
         <UserMenuList>
-          <Lists href={"https://www.airbnb.co.kr/login"} bold>
+          <SingUP onClick={onLoginPage}>
             회원가입
-          </Lists>
+          </SingUP>
           <Lists href={"https://www.airbnb.co.kr/login"}>로그인</Lists>
+          <LoginPage 
+          handleLoginPage={handleLoginPage} 
+          isLoginPageOn={isLoginPageOn}
+          />
           <BorderLine></BorderLine>
           <Lists href={"https://www.airbnb.co.kr/host/homes"}>
             숙소 호스트 되기
