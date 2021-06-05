@@ -37,7 +37,7 @@ const BorderLine = styled.div`
   border-radius: 30px;
   background-color: #c1c1c1;
 `;
-const LoginMenu = ({changeIsUserMenuListOn,isUserMenuListOn}) => {
+const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
   const menuListRef = useRef();
 
   function handleClickOutside({ target }) {
