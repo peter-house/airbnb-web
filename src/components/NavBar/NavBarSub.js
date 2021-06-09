@@ -59,8 +59,8 @@ const TimesIconWrapper = styled.label`
   }
 `;
 const TimesIconContainer = styled.div`
-  display: ${(props) => (props.typedLocation ? "block" : "none")}
-`
+  display: ${(props) => (props.typedLocation ? "block" : "none")};
+`;
 const NavbarSubText = styled.div`
   padding-left: ${(props) => (props.padding ? "20px" : "none")};
   font-size: 12px;
@@ -200,8 +200,6 @@ const NavbarSubComponent = ({
   const [rawEndDate, setRawEndDate] = useState();
   const [typedWord, setTypedWord] = useState();
 
-
-
   // TODO: convert to util function
   const splitSearchedLocation = selectedLocation
     ? selectedLocation.split(" ")
@@ -221,12 +219,7 @@ const NavbarSubComponent = ({
     splitSearchedLocation[1] +
     "&place_id=ChIJ0z8xfjyifDURF7H5KqUsNKQ&source=structured_search_input_header&search_type=autocomplete_click";
 
-
-
-
-
-
-    function changeIsLocationDisPlay(onOff) {
+  function changeIsLocationDisPlay(onOff) {
     setIsLocationDisplayOn(onOff);
   }
   function changeIsCheckInOutDisplay(onOff) {
@@ -308,41 +301,47 @@ const NavbarSubComponent = ({
     });
     return locationList;
   }
-  const  a = () => {
-    if(typedLocation.length === [] || typedLocation == undefined) {
-      return false;
-    }else {
-      return true;
-    }
-  }
 
-  const b =() => {
-    if(filterLocation) {
+  const a = () => {
+    if (typeof typedLocation === [] || typedLocation == undefined) {
+      console.log(false);
+      return false;
+    } else {
+      console.log(true);
       return true;
-    }else {
+    }
+  };
+
+  const b = () => {
+    if (filterLocation) {
+      return true;
+    } else {
       return false;
     }
-  }
+  };
 
   function handleLocationKeyDown(event) {
     const typedLocation = event.target.value;
+
     getLocationData();
     setTypedLocation(typedLocation);
+
     setFilteredLocation(filterLocation());
 
     const isLocationSearchingOn = () => {
       const isTypedLocation = a();
       const isFilterdLocation = b();
 
-      if(isTypedLocation && isFilterdLocation) {
+      if (isTypedLocation && isFilterdLocation) {
         return true;
       }
-    }
+    };
+
     changeIsLocationDisPlay(isLocationSearchingOn);
-    console.log("filteredLocation",filteredLocation)
-    console.log('typedlocation',typedLocation)
-    console.log("지금!!!",isLocationDisplayOn);
-    
+
+    console.log("filteredLocation", filteredLocation);
+    console.log("typedlocation", typedLocation);
+    console.log("지금!!!", isLocationDisplayOn);
   }
   function handleOnModifyMode() {
     setSelectedLocation();
@@ -350,7 +349,7 @@ const NavbarSubComponent = ({
   const handleClickCancelBtn = () => {
     setSelectedLocation("");
     setTypedLocation("");
-  }
+  };
 
   return (
     <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
@@ -373,9 +372,9 @@ const NavbarSubComponent = ({
                 ></NaberLocationInput>
               </div>
               <TimesIconContainer typedLocation={typedLocation}>
-              <TimesIconWrapper onClick={handleClickCancelBtn}>
-                <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
-              </TimesIconWrapper>
+                <TimesIconWrapper onClick={handleClickCancelBtn}>
+                  <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
+                </TimesIconWrapper>
               </TimesIconContainer>
             </LocationTextContainer>
             <NavbarSubTextsContainer accommodation={accommodation}>
