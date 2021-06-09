@@ -149,6 +149,7 @@ const SearchingNavbar = ({
   isChechInOutDisplayOn,
   isPersonnelDisplayOn,
   selecteLocation,
+  offCancelIcon,
 }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -188,11 +189,15 @@ const SearchingNavbar = ({
         break;
     }
   }
-  function handleClickLocation(event) {
-    let selectedPlace = event.target.innerHTML;
+  function handleClickLocation(event,location) {
+    console.log('this is location !!', location);
+    let selectedPlace = location.place;
+    console.log("-----??---",selectedPlace);
+
     selecteLocation(selectedPlace);
     offLocationDisplay();
     onChechInOutDisplay();
+    offCancelIcon();
 
     event.stopPropagation();
   }
@@ -243,13 +248,13 @@ const SearchingNavbar = ({
     <SearchingNavbarBg>
       <LocationSearching typedLocation={typedLocation} filteredLocation={filteredLocation} isLocationDisplayOn={isLocationDisplayOn} ref={locationPageRef}>
         {typedLocation ? (
-          filteredLocation.map((location, index) => {
+          filteredLocation.map((location) => {
             return (
-              <LocationContentWrapper key={index} onClick={handleClickLocation}>
+              <LocationContentWrapper key={location.id} onClick={() => handleClickLocation(event,location)}>
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
-                <LocationText>{location}</LocationText>
+                <LocationText>{location.place}</LocationText>
               </LocationContentWrapper>
             );
           })
