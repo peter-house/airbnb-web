@@ -16,7 +16,7 @@
 ![airbnb-main-image](./airbnb-video.gif)
 
 - Airbnb 사이트를 클론합니다.  https://www.airbnb.co.kr/
-- airbnb 메인페이지 이며, 검색되는 결과는 실제 airbnb페이지에 연결됩니다.
+- airbnb 메인페이지를 구현한 것이며, 검색되는 결과는 실제 airbnb페이지에 연결됩니다.
 
 
 >## Installation
