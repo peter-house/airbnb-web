@@ -101,7 +101,7 @@ const NavbarAccommodation = styled.div`
     background-color: black;
   }
   &:hover {
-    color: #484848;
+    color: #595757;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -125,7 +125,7 @@ const NavbarExperience = styled.div`
     background-color: black;
   }
   &:hover {
-    color: #484848;
+    color: #595757;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -148,7 +148,7 @@ const NavbarOnlineExperience = styled.div`
     border-radius: 30px;
   }
   &:hover {
-    color: #484848;
+    color: red;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -330,7 +330,7 @@ const NavBar = (
             scroll={isScrollToggled}
             href="https://www.airbnb.co.kr/host/homes"
           >
-            <div>호스트 되기</div>
+            <div>호스트 되기?</div>
           </HostLink>
           <NavbarMainRightGlobeIcon
             onClick={handleClickGlobeIcon}
