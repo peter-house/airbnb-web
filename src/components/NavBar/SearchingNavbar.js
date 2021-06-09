@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
@@ -5,22 +7,23 @@ import { DateRangePicker } from "react-dates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import style from "../../components/react_dates_overrides.css";
+import style from "../react_dates_overrides.css";
 import moment from "moment";
 import "moment/locale/ko";
 
-const SearchingNavbarBg = styled.div``;
+const SearchingNavbarBg = styled.div`
+`;
 const LocationSearching = styled.div`
-  overflow-y: scroll;
   padding: 15px 15px;
   display: ${(props) => (props.isLocationDisplayOn ? "block" : "none")};
+  overflow: hidden;
   position: absolute;
   top: 155px;
   left: 20vw;
   background-color: white;
   width: 400px;
   height: auto;
-  max-height: 270;
+  max-height: 300px;
   border-radius: 40px;
   z-index: 100;
 
@@ -50,10 +53,10 @@ const CheckInOutSearching = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
   position: absolute;
   top: 155px;
-  left: 20vw;
+  left: 40vw;
   background-color: white;
-  width: 59vw;
-  height: 400px;
+  width: 20vw;
+  height: 20vw;
   border-radius: 40px;
 `;
 const PersonnelSearching = styled.div`
@@ -190,6 +193,8 @@ const SearchingNavbar = ({
     selecteLocation(selectedPlace);
     offLocationDisplay();
     onChechInOutDisplay();
+
+    event.stopPropagation();
   }
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {

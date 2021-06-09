@@ -25,7 +25,7 @@ const PlacesContainer = styled.ul`
 const NearPlace = () => {
   const [placeList, setPlaceAPI] = useState();
   const getNearPlacesAPIs = () => {
-    fetch("http://localhost:3000/nearPlaces")
+    fetch("http://localhost:3000/place")
       .then((res) => res.json())
       .then((data) => {
         setPlaceAPI(data);

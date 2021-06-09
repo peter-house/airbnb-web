@@ -9,8 +9,7 @@
 }
 
 .DateRangePickerInput{
-  position: relative;
-  left: 20vw;  
+   
 }
 
 .DateRangePickerInput_arrow_svg {
@@ -32,10 +31,10 @@
 }
 
 .DayPicker__withBorder {
-  border: none;
-position: relative;
-top: -20px;
-left: -10vw;
+  border-radius: 30px;
+  position: relative;
+  top: -20px;
+  left: -10vw;
 }
 
 .CalendarDay__default {
@@ -92,4 +91,27 @@ left: -10vw;
 .CalendarMonth_caption {
   margin-bottom: 10px;
 }
+
+/* .DateInput_input {
+  클리되게하고 
+  display:none;
+} */
+
+.DateRangePicker_picker {
+  width: 10px;
+  height: 10px;
+}
+
+.CalendarMonthGrid_1 {
+  margin-top: 10px;
+  width: 600px !important;
+}
+.CalendarMonthGrid{
+  height: 285px;
+  width: 600px;
+}
+.CalendarMonthGrid_month__horizontal{
+  width: 290px;
+}
+
 
