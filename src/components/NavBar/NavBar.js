@@ -305,7 +305,7 @@ const NavBar = (
                   experience={isExperienceSubNarbarOn}
                   onClick={handleClickExperienceBtn} 
                 >
-                  체험
+                  체험?
                 </NavbarExperience>
               </div>
               <OnlineExperienceLink href={ONLINE_EXPERIENCE_LINK}>
@@ -330,7 +330,7 @@ const NavBar = (
             scroll={isScrollToggled}
             href="https://www.airbnb.co.kr/host/homes"
           >
-            <div>호스트 되기?</div>
+            <div>호스트 되기</div>
           </HostLink>
           <NavbarMainRightGlobeIcon
             onClick={handleClickGlobeIcon}
