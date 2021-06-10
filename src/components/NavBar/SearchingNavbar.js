@@ -56,7 +56,7 @@ const CheckInOutSearching = styled.div`
   left: 40vw;
   background-color: white;
   width: 20vw;
-  height: 20vw;
+  height: 15vw;
   border-radius: 40px;
 `;
 const PersonnelSearching = styled.div`
@@ -149,6 +149,7 @@ const SearchingNavbar = ({
   isChechInOutDisplayOn,
   isPersonnelDisplayOn,
   selecteLocation,
+  offCancelIcon,
 }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -188,11 +189,14 @@ const SearchingNavbar = ({
         break;
     }
   }
-  function handleClickLocation(event) {
-    let selectedPlace = event.target.innerHTML;
+  function handleClickLocation(event,location) {
+    console.log('this is location !!', location);
+    let selectedPlace = location.place;
+
     selecteLocation(selectedPlace);
     offLocationDisplay();
     onChechInOutDisplay();
+    offCancelIcon();
 
     event.stopPropagation();
   }
@@ -238,18 +242,21 @@ const SearchingNavbar = ({
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     handleGuestNum(personnelNum);
+    // setInterval(() => {
+    //   console.log("startdata", focusedInput);
+    // }, 1000);
   });
   return (
     <SearchingNavbarBg>
       <LocationSearching typedLocation={typedLocation} filteredLocation={filteredLocation} isLocationDisplayOn={isLocationDisplayOn} ref={locationPageRef}>
         {typedLocation ? (
-          filteredLocation.map((location, index) => {
+          filteredLocation.map((location) => {
             return (
-              <LocationContentWrapper key={index} onClick={handleClickLocation}>
+              <LocationContentWrapper key={location.id} onClick={() => handleClickLocation(event,location)}>
                 <MapIconWrapper>
                   <FontAwesomeIcon icon={["fas", "map-marker-alt"]} size="1x" />
                 </MapIconWrapper>
-                <LocationText>{location}</LocationText>
+                <LocationText>{location.place}</LocationText>
               </LocationContentWrapper>
             );
           })
@@ -287,7 +294,7 @@ const SearchingNavbar = ({
             handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           endDateId="end-date"
-          focusedInput={focusedInput}
+          focusedInput={focusedInput || "startDate"}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>

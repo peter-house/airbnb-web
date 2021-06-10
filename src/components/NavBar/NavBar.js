@@ -2,16 +2,16 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useRef } from "react"; 
+import { useState, useRef } from "react";
 import NavbarSubComponent from "./NavBarSub";
 import LoginMenu from "./LoginMenu"; // TODO
 import GlobePage from "./GlobePage"; // TODO
 
 const SEARCH_MODE = {
-  ACCOMMDATION: 'ACCOMMDATION',
-  EXPERIENCE: 'EXPERIENCE',
-}
-const ONLINE_EXPERIENCE_LINK = "https://www.airbnb.co.kr/s/experiences/online"
+  ACCOMMDATION: "ACCOMMDATION",
+  EXPERIENCE: "EXPERIENCE",
+};
+const ONLINE_EXPERIENCE_LINK = "https://www.airbnb.co.kr/s/experiences/online";
 
 const NavbarBg = styled.div`
   z-index: 100;
@@ -69,7 +69,7 @@ const NavbarSubSeachIconLabel = styled.div`
   color: white;
   width: 35px;
   height: 35px;
-  background-color: ff385c;
+  background-color: #ff385c;
   margin-right: 10px;
 `;
 const ScrolledMiddleTextContainer = styled.div`
@@ -101,7 +101,7 @@ const NavbarAccommodation = styled.div`
     background-color: black;
   }
   &:hover {
-    color: #484848;
+    color: #595757;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -125,7 +125,7 @@ const NavbarExperience = styled.div`
     background-color: black;
   }
   &:hover {
-    color: #484848;
+    color: #595757;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -148,7 +148,7 @@ const NavbarOnlineExperience = styled.div`
     border-radius: 30px;
   }
   &:hover {
-    color: #484848;
+    color: red;
     cursor: pointer;
     &:after {
       opacity: 1;
@@ -193,7 +193,6 @@ const NavbarMainRightIcons = styled.div`
   &:hover {
     cursor: pointer;
     box-shadow: 0 2px 2px 2px #ddd;
-
   }
 `;
 const HostLink = styled.a`
@@ -217,14 +216,14 @@ const HostLink = styled.a`
   }
 `;
 
-const NavBar = (
- {bannerRef}) => {
+const NavBar = ({ bannerRef }) => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
   // TODO: currentTab: ACCOMMDATION or EXPERIENCE
   const [searchMode, setSearchMode] = useState(SEARCH_MODE.ACCOMMDATION);
   // setSearchMode(SEARCH_MODE.EXPERIENCE);
-  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
+  const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] =
+    useState(true);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
   const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isGlobePageOn, setIsgelobePageOn] = useState(false);
@@ -237,8 +236,6 @@ const NavBar = (
   // });
 
   // const abc = observer.observe(menuListBtnRef.current);
-
-
 
   // TODO: apply intersection observer(https://developer.mozilla.org/ko/docs/Web/API/Intersection_Observer_API)
   window.addEventListener("scroll", () => {
@@ -255,11 +252,12 @@ const NavBar = (
 
   const closeGlobePage = () => {
     setIsgelobePageOn(false);
-  }
+  };
   const handleGlobePage = (bool) => {
-    setIsgelobePageOn(bool)
-  }
-  function changeIsUserMenuListOn(onOff) { // TODO: fix
+    setIsgelobePageOn(bool);
+  };
+  function changeIsUserMenuListOn(onOff) {
+    // TODO: fix
     setIsUserMenuListOn(onOff);
   }
   function clickAccommodationBtn() {
@@ -297,13 +295,13 @@ const NavBar = (
                   accomodation={isAccommodationSubNavbarOn}
                   onClick={clickAccommodationBtn}
                 >
-                  숙소
+                  숙소?
                 </NavbarAccommodation>
               </div>
               <div>
                 <NavbarExperience
                   experience={isExperienceSubNarbarOn}
-                  onClick={handleClickExperienceBtn} 
+                  onClick={handleClickExperienceBtn}
                 >
                   체험
                 </NavbarExperience>

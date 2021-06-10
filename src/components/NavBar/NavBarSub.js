@@ -59,7 +59,7 @@ const TimesIconWrapper = styled.label`
   }
 `;
 const TimesIconContainer = styled.div`
-  display: ${(props) => (props.typedLocation ? "block" : "none")};
+  display: ${(props) => (props.isCancelIconOn ? "block" : "none")};
 `;
 const NavbarSubText = styled.div`
   padding-left: ${(props) => (props.padding ? "20px" : "none")};
@@ -199,6 +199,7 @@ const NavbarSubComponent = ({
   const [rawStartDate, setRawStartDate] = useState();
   const [rawEndDate, setRawEndDate] = useState();
   const [typedWord, setTypedWord] = useState();
+  const [isCancelIconOn, setIsCancelIconOn] = useState(false);
 
   // TODO: convert to util function
   const splitSearchedLocation = selectedLocation
@@ -219,6 +220,9 @@ const NavbarSubComponent = ({
     splitSearchedLocation[1] +
     "&place_id=ChIJ0z8xfjyifDURF7H5KqUsNKQ&source=structured_search_input_header&search_type=autocomplete_click";
 
+  const offCancelIcon = () => {
+    setIsCancelIconOn(false);
+  }
   function changeIsLocationDisPlay(onOff) {
     setIsLocationDisplayOn(onOff);
   }
@@ -288,14 +292,14 @@ const NavbarSubComponent = ({
     // TODO: fix
     _getLocationData().then((data) => {
       const locationList = data.map((eachData) => {
-        return eachData.place;
+        return eachData;
       });
       setSearchedLocation(locationList);
     });
   }
   function filterLocation() {
     const locationList = searchedLocation.filter((location) => {
-      if (location.includes(typedLocation)) {
+      if (location.place.includes(typedLocation)) {
         return location;
       }
     });
@@ -322,9 +326,10 @@ const NavbarSubComponent = ({
 
   function handleLocationKeyDown(event) {
     const typedLocation = event.target.value;
-
+    
     getLocationData();
     setTypedLocation(typedLocation);
+    setIsCancelIconOn(true);
 
     setFilteredLocation(filterLocation());
 
@@ -351,6 +356,15 @@ const NavbarSubComponent = ({
     setTypedLocation("");
   };
 
+  const handleCancelIcon = () => {
+    if(typedLocation && isLocationDisplayOn) {
+      setIsCancelIconOn(true);
+    }else{
+      setIsCancelIconOn(false);
+    }
+  }
+  
+
   return (
     <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <div>
@@ -371,7 +385,7 @@ const NavbarSubComponent = ({
                   value={selectedLocation}
                 ></NaberLocationInput>
               </div>
-              <TimesIconContainer typedLocation={typedLocation}>
+              <TimesIconContainer isCancelIconOn={isCancelIconOn}>
                 <TimesIconWrapper onClick={handleClickCancelBtn}>
                   <FontAwesomeIcon icon={["fas", "times"]} size="1x" />
                 </TimesIconWrapper>
@@ -464,6 +478,7 @@ const NavbarSubComponent = ({
         isChechInOutDisplayOn={isChechInOutDisplayOn}
         isPersonnelDisplayOn={isPersonnelDisplayOn}
         selecteLocation={selecteLocation}
+        offCancelIcon={offCancelIcon}
       />
     </NavbarSubBg>
   );
