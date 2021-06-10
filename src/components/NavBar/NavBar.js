@@ -295,7 +295,7 @@ const NavBar = ({ bannerRef }) => {
                   accomodation={isAccommodationSubNavbarOn}
                   onClick={clickAccommodationBtn}
                 >
-                  숙소
+                  숙소?
                 </NavbarAccommodation>
               </div>
               <div>

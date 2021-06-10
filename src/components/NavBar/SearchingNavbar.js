@@ -56,7 +56,7 @@ const CheckInOutSearching = styled.div`
   left: 40vw;
   background-color: white;
   width: 20vw;
-  height: 20vw;
+  height: 15vw;
   border-radius: 40px;
 `;
 const PersonnelSearching = styled.div`
@@ -192,7 +192,6 @@ const SearchingNavbar = ({
   function handleClickLocation(event,location) {
     console.log('this is location !!', location);
     let selectedPlace = location.place;
-    console.log("-----??---",selectedPlace);
 
     selecteLocation(selectedPlace);
     offLocationDisplay();
@@ -243,6 +242,9 @@ const SearchingNavbar = ({
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     handleGuestNum(personnelNum);
+    // setInterval(() => {
+    //   console.log("startdata", focusedInput);
+    // }, 1000);
   });
   return (
     <SearchingNavbarBg>
@@ -292,7 +294,7 @@ const SearchingNavbar = ({
             handleEndDate(endDate ? endDate._d : "날짜 입력");
           }}
           endDateId="end-date"
-          focusedInput={focusedInput}
+          focusedInput={focusedInput || "startDate"}
           onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
         />
       </CheckInOutSearching>

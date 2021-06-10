@@ -33,7 +33,7 @@
 .DayPicker__withBorder {
   border-radius: 30px;
   position: relative;
-  top: -20px;
+  top: -65px;
   left: -10vw;
 }
 
@@ -92,10 +92,9 @@
   margin-bottom: 10px;
 }
 
-/* .DateInput_input {
-  클리되게하고 
+.DateInput_input {
   display:none;
-} */
+}
 
 .DateRangePicker_picker {
   width: 10px;
@@ -114,4 +113,15 @@
   width: 290px;
 }
 
+.DayPicker_transitionContainer {
+  height: 320px !important;
+}
 
+
+.DateInput_fangStroke{
+  display: none;
+}
+
+.DayPickerNavigation_button{
+  border: none;
+}
