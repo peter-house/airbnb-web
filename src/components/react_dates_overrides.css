@@ -117,11 +117,15 @@
   height: 320px !important;
 }
 
-
 .DateInput_fangStroke{
   display: none;
 }
 
 .DayPickerNavigation_button{
   border: none;
+}
+
+.DayPickerNavigation_button:hover {
+  border: none;
+  outline: none;
 }

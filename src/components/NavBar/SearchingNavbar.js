@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
@@ -25,7 +23,7 @@ const LocationSearching = styled.div`
   height: auto;
   max-height: 300px;
   border-radius: 40px;
-  z-index: 100;
+  z-index: auto;
 
 `;
 const LocationText = styled.div``;
@@ -242,9 +240,6 @@ const SearchingNavbar = ({
     handleGlobalClick();
     setPersonnelNum(personnelAdultlNum + personnelChildlNum);
     handleGuestNum(personnelNum);
-    // setInterval(() => {
-    //   console.log("startdata", focusedInput);
-    // }, 1000);
   });
   return (
     <SearchingNavbarBg>

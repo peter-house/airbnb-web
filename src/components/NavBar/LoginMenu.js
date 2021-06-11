@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useRef } from "react";
 import { checkPropTypes } from "prop-types";
 
+
 const UserMenuList = styled.div``;
 const UserMenuListWrapper = styled.div`
   // display: ${(props) => (props.isUserMenuListOn ? "block" : "none")};
@@ -55,6 +56,11 @@ const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
       window.removeEventListener("click", handleClickOutside);
     };
   };
+
+  const handleLoginPageOn = () => {
+
+  }
+
   useEffect(() => {
     handleGlobalClick();
   }, []);
@@ -63,7 +69,7 @@ const LoginMenu = ({ changeIsUserMenuListOn, isUserMenuListOn }) => {
     isUserMenuListOn && (
       <UserMenuListWrapper userMenu={isUserMenuListOn} ref={menuListRef}>
         <UserMenuList>
-          <Lists href={"https://www.airbnb.co.kr/login"} bold>
+          <Lists onClick={handleLoginPageOn} bold>
             회원가입
           </Lists>
           <Lists href={"https://www.airbnb.co.kr/login"}>로그인</Lists>

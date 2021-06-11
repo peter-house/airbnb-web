@@ -4,7 +4,8 @@ import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const LoginPageBg = styled.div`
-  display: ${(props) => (props.isLoginPageOn ? "block" : "none")};
+  // display: ${(props) => (props.isLoginPageOn ? "block" : "none")};
+  display: "block";
   position: absolute;
   top: -50px;
   left: -45vw;

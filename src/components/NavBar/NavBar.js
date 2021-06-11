@@ -6,6 +6,7 @@ import { useState, useRef } from "react";
 import NavbarSubComponent from "./NavBarSub";
 import LoginMenu from "./LoginMenu"; // TODO
 import GlobePage from "./GlobePage"; // TODO
+import LoginPage from "./LoginPage";
 
 const SEARCH_MODE = {
   ACCOMMDATION: "ACCOMMDATION",
@@ -328,7 +329,7 @@ const NavBar = ({ bannerRef }) => {
             scroll={isScrollToggled}
             href="https://www.airbnb.co.kr/host/homes"
           >
-            <div>호스트 되기</div>
+            <div>호스트 되기?</div>
           </HostLink>
           <NavbarMainRightGlobeIcon
             onClick={handleClickGlobeIcon}
@@ -360,6 +361,7 @@ const NavBar = ({ bannerRef }) => {
           />
         </NavbarMainRight>
       </NavbarMain>
+      <LoginPage/>
       <div>
         <NavbarSubComponent
           scroll={isScrollToggled}
