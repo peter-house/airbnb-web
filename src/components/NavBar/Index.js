@@ -1,11 +1,10 @@
-// TODO: rename to index.jsx
 import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useRef } from "react"; 
 import NavbarSubComponent from "./NavBarSub";
-import LoginMenu from "./LoginMenu"; // TODO
-import GlobePage from "./GlobePage"; // TODO
+import LoginMenu from "./LoginMenu"; 
+import GlobePage from "./GlobePage"; 
 
 const SEARCH_MODE = {
   ACCOMMDATION: 'ACCOMMDATION',
@@ -19,7 +18,6 @@ const NavbarBg = styled.div`
   width: 100%;
   background-color: transparent;
 `;
-// TODO: font-family
 const NavbarMain = styled.div`
   display: flex;
   justify-content: space-between;
@@ -219,16 +217,16 @@ const HostLink = styled.a`
 const Index = () => {
   const [isScrollToggled, setIsScrollToggled] = useState(false);
   const [isSubNavbarOn, setIsSubNavbarOn] = useState(false);
-  // TODO: currentTab: ACCOMMDATION or EXPERIENCE
+  
   const [searchMode, setSearchMode] = useState(SEARCH_MODE.ACCOMMDATION);
-  // setSearchMode(SEARCH_MODE.EXPERIENCE);
+  
   const [isAccommodationSubNavbarOn, setIsAccommodationSubNavbarOn] = useState(true);
   const [isExperienceSubNarbarOn, setIsExperienceSubNarbarOn] = useState(false);
   const [isUserMenuListOn, setIsUserMenuListOn] = useState(false);
   const [isGlobePageOn, setIsgelobePageOn] = useState(false);
   const menuListBtnRef = useRef();
 
-  // TODO: apply intersection observer(https://developer.mozilla.org/ko/docs/Web/API/Intersection_Observer_API)
+  
   window.addEventListener("scroll", () => {
     const scrollPosition = window.scrollY;
     const NAVBAR_POSITION = 70;
@@ -244,7 +242,7 @@ const Index = () => {
   const closeGlobePage = () => {
     setIsgelobePageOn(false);
   }
-  function changeIsUserMenuListOn(onOff) { // TODO: fix
+  function changeIsUserMenuListOn(onOff) { 
     setIsUserMenuListOn(onOff);
   }
   function clickAccommodationBtn() {
