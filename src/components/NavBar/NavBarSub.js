@@ -201,12 +201,12 @@ const NavbarSubComponent = ({
   const [typedWord, setTypedWord] = useState();
   const [isCancelIconOn, setIsCancelIconOn] = useState(false);
 
-  // TODO: convert to util function
+  
   const splitSearchedLocation = selectedLocation
     ? selectedLocation.split(" ")
     : " ";
 
-  // TODO: convert to util function
+ 
   const searchBtnUrl =
     "https://www.airbnb.co.kr/s/대한민국-서울-용산구/homes?tab_id=home_tab&refinement_paths%5B%5D=%2Fhomes&flexible_trip_dates%5B%5D=april&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=" +
     rawStartDate +
@@ -251,7 +251,6 @@ const NavbarSubComponent = ({
     setIsChechInOutDisplayOn(true);
   }
   function getFormatDate(date) {
-    // TODO
     let month = 1 + date.getMonth();
     let day = date.getDate();
     day = day >= 10 ? day : "0" + day;
@@ -271,25 +270,26 @@ const NavbarSubComponent = ({
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
     setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    handleCancelIcon();
     event.stopPropagation();
   }
   function clickCheckOutBtn(event) {
     setIsLocationDisplayOn(false);
     setIsPersonnelDisplayOn(false);
-    setIsChechInOutDisplayOn(!isChechInOutDisplayOn);
+    setIsChechInOutDisplayOn(true);
     event.stopPropagation();
   }
   function clickPesonnelBtn(event) {
     setIsLocationDisplayOn(false);
     setIsChechInOutDisplayOn(false);
     setIsPersonnelDisplayOn(!isPersonnelDisplayOn);
+    handleCancelIcon();
     event.stopPropagation();
   }
   function handleGuestNum(numOfGuest) {
     setGuestNum(numOfGuest);
   }
   function getLocationData() {
-    // TODO: fix
     _getLocationData().then((data) => {
       const locationList = data.map((eachData) => {
         return eachData;
@@ -306,17 +306,15 @@ const NavbarSubComponent = ({
     return locationList;
   }
 
-  const a = () => {
+  const CheckIsTypedLocation = () => {
     if (typeof typedLocation === [] || typedLocation == undefined) {
-      console.log(false);
       return false;
     } else {
-      console.log(true);
       return true;
     }
   };
 
-  const b = () => {
+  const CheckIsFilterLocation = () => {
     if (filterLocation) {
       return true;
     } else {
@@ -334,8 +332,8 @@ const NavbarSubComponent = ({
     setFilteredLocation(filterLocation());
 
     const isLocationSearchingOn = () => {
-      const isTypedLocation = a();
-      const isFilterdLocation = b();
+      const isTypedLocation = CheckIsTypedLocation();
+      const isFilterdLocation = CheckIsFilterLocation();
 
       if (isTypedLocation && isFilterdLocation) {
         return true;
@@ -343,10 +341,6 @@ const NavbarSubComponent = ({
     };
 
     changeIsLocationDisPlay(isLocationSearchingOn);
-
-    console.log("filteredLocation", filteredLocation);
-    console.log("typedlocation", typedLocation);
-    console.log("지금!!!", isLocationDisplayOn);
   }
   function handleOnModifyMode() {
     setSelectedLocation();
@@ -357,14 +351,9 @@ const NavbarSubComponent = ({
   };
 
   const handleCancelIcon = () => {
-    if(typedLocation && isLocationDisplayOn) {
-      setIsCancelIconOn(true);
-    }else{
-      setIsCancelIconOn(false);
-    }
+    setIsCancelIconOn(false);
   }
   
-
   return (
     <NavbarSubBg isSubNavbarOn={isSubNavbarOn}>
       <div>
@@ -479,6 +468,7 @@ const NavbarSubComponent = ({
         isPersonnelDisplayOn={isPersonnelDisplayOn}
         selecteLocation={selecteLocation}
         offCancelIcon={offCancelIcon}
+        handleCancelIcon={handleCancelIcon}
       />
     </NavbarSubBg>
   );

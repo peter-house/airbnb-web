@@ -21,7 +21,7 @@ const LocationSearching = styled.div`
   background-color: white;
   width: 400px;
   height: auto;
-  max-height: 300px;
+  max-height: 308px;
   border-radius: 40px;
   z-index: auto;
 
@@ -148,6 +148,7 @@ const SearchingNavbar = ({
   isPersonnelDisplayOn,
   selecteLocation,
   offCancelIcon,
+  handleCancelIcon,
 }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -188,7 +189,6 @@ const SearchingNavbar = ({
     }
   }
   function handleClickLocation(event,location) {
-    console.log('this is location !!', location);
     let selectedPlace = location.place;
 
     selecteLocation(selectedPlace);
@@ -200,9 +200,10 @@ const SearchingNavbar = ({
   }
   function handleClickOutsideLocation({ target }) {
     if (locationPageRef.current.contains(target)) {
-      changeIsLocationDisPlay(false);
+      changeIsLocationDisPlay(true);
     } else {
       changeIsLocationDisPlay(false);
+      handleCancelIcon();
     }
   }
   function handleClickOutsideCheckInOut({ target }) {
@@ -211,6 +212,7 @@ const SearchingNavbar = ({
       return true;
     } else {
       changeIsCheckInOutDisplay(false);
+
       return false;
     }
   }

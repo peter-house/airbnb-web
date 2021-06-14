@@ -91,7 +91,7 @@
             "subText": "숙박과 식사가 포함된 며칠 일정의 여행"
         }
     ],
-    "bottomMenus": [ // TODO: remove
+    "bottomMenus": [ 
         {
             "INTRODUCE_MENUS": [
                 "에어비앤비 이용 방법",
@@ -137,7 +137,7 @@
             ]
         }
     ],
-    "location" : [ // TODO: 데이터 채우기
+    "location" : [ 
         {
             "id": 1,
            "place":"서울 용산구"
